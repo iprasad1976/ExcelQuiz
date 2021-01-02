@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ExcelQuizUtilities
+namespace ExcelQuizDTO
 {
     public class Class1
     {

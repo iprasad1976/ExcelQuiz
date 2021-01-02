@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>ExamDB</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{08c912bd-598f-47ad-a0aa-6c68a0cf1959}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>ExamDB</RootNamespace>
+    <AssemblyName>ExamDB</AssemblyName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Stored Procedures\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\CandidateLoginRequest.sql" />
+    <Build Include="dbo\Tables\CandidateLogin.sql" />
+    <Build Include="dbo\Tables\AdminLogin.sql" />
+    <Build Include="dbo\Tables\Exam.sql" />
+    <Build Include="dbo\Tables\QuestionType.sql" />
+    <Build Include="dbo\Tables\ComplexityLevel.sql" />
+    <Build Include="dbo\Tables\Question.sql" />
+    <Build Include="dbo\Tables\QuestionOptions.sql" />
+    <Build Include="dbo\Tables\ExamQuestion.sql" />
+    <Build Include="dbo\Tables\ExamCandidate.sql" />
+    <Build Include="dbo\Tables\ExamCandidateAttempt.sql" />
+    <Build Include="dbo\Tables\ExamCandidateAttemptQuestions.sql" />
+    <Build Include="dbo\Tables\ExamCandidateAttemptQuestionAnswers.sql" />
+    <Build Include="dbo\Tables\CandidateLoginToken.sql" />
+    <Build Include="dbo\Tables\AdminLoginToken.sql" />
+    <Build Include="dbo\Stored Procedures\DeleteExam.sql" />
+    <Build Include="dbo\Stored Procedures\GetExam.sql" />
+    <Build Include="dbo\Stored Procedures\SearchExams.sql" />
+    <Build Include="dbo\Stored Procedures\AddEditQuestion.sql" />
+    <Build Include="dbo\Stored Procedures\DeleteQuestion.sql" />
+    <Build Include="dbo\Stored Procedures\GetQuestion.sql" />
+    <Build Include="dbo\Stored Procedures\SearchQuestions.sql" />
+    <Build Include="dbo\Stored Procedures\DeleteRequestedLogin.sql" />
+    <Build Include="dbo\Stored Procedures\GetCandidateToken.sql" />
+    <Build Include="dbo\Stored Procedures\GetAdminToken.sql" />
+    <Build Include="dbo\Stored Procedures\GetListExam.sql" />
+    <Build Include="dbo\Stored Procedures\GetCandidateExamInfo.sql" />
+    <Build Include="dbo\Stored Procedures\CandidateExamStart.sql" />
+    <Build Include="dbo\Stored Procedures\GetNextPrevQuestion.sql" />
+    <Build Include="dbo\Stored Procedures\GetQuestionOptions.sql" />
+    <Build Include="dbo\Stored Procedures\SubmitAnswers.sql" />
+    <Build Include="dbo\Stored Procedures\CalculateMarks.sql" />
+    <Build Include="dbo\Stored Procedures\AddCadidateLogins.sql" />
+    <Build Include="dbo\Stored Procedures\DownloadCadidateLoginIds.sql" />
+    <Build Include="dbo\Stored Procedures\SearchRequests.sql" />
+    <Build Include="dbo\Stored Procedures\GetListRequestsByRequestedEmail.sql" />
+    <Build Include="dbo\Stored Procedures\AddEditExam.sql" />
+  </ItemGroup>
+</Project>

@@ -3,13 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamQuizAPI", "ExamQuizAPI\ExamQuizAPI.csproj", "{898C7FD6-1381-4773-9BA6-EEEB857742E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExamQuizAPI", "ExamQuizAPI\ExamQuizAPI.csproj", "{898C7FD6-1381-4773-9BA6-EEEB857742E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelQuizUI", "ExcelQuizUI\ExcelQuizUI.csproj", "{F5974710-D300-4B3E-A46E-6089C235CCCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelQuizUI", "ExcelQuizUI\ExcelQuizUI.csproj", "{F5974710-D300-4B3E-A46E-6089C235CCCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelQuizRepository", "ExcelQuizRepository\ExcelQuizRepository.csproj", "{66474A32-5BCA-4A93-9359-1F507D2BE81F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelQuizUtilities", "ExcelQuizUtilities\ExcelQuizUtilities.csproj", "{398B4070-B347-41B2-B3C0-F62B46612B5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelQuizUtilities", "ExcelQuizUtilities\ExcelQuizUtilities.csproj", "{398B4070-B347-41B2-B3C0-F62B46612B5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelQuizRepository", "ExcelQuizRepository\ExcelQuizRepository.csproj", "{C48A68CE-9B65-4F07-9AC1-19BC1F94B9C8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelQuizDTO", "ExcelQuizDTO\ExcelQuizDTO.csproj", "{078A2D72-43FA-4CA8-A817-5B661A6B6D95}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelQuizData", "ExcelQuizData\ExcelQuizData.csproj", "{EC26B62B-00C1-40C2-8897-7559DAD7EA99}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ExamDB", "ExamDB\ExamDB.sqlproj", "{08C912BD-598F-47AD-A0AA-6C68A0CF1959}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,14 +31,28 @@ Global
 		{F5974710-D300-4B3E-A46E-6089C235CCCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5974710-D300-4B3E-A46E-6089C235CCCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5974710-D300-4B3E-A46E-6089C235CCCA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{66474A32-5BCA-4A93-9359-1F507D2BE81F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66474A32-5BCA-4A93-9359-1F507D2BE81F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{66474A32-5BCA-4A93-9359-1F507D2BE81F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66474A32-5BCA-4A93-9359-1F507D2BE81F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{398B4070-B347-41B2-B3C0-F62B46612B5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{398B4070-B347-41B2-B3C0-F62B46612B5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{398B4070-B347-41B2-B3C0-F62B46612B5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{398B4070-B347-41B2-B3C0-F62B46612B5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C48A68CE-9B65-4F07-9AC1-19BC1F94B9C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C48A68CE-9B65-4F07-9AC1-19BC1F94B9C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C48A68CE-9B65-4F07-9AC1-19BC1F94B9C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C48A68CE-9B65-4F07-9AC1-19BC1F94B9C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{078A2D72-43FA-4CA8-A817-5B661A6B6D95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{078A2D72-43FA-4CA8-A817-5B661A6B6D95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{078A2D72-43FA-4CA8-A817-5B661A6B6D95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{078A2D72-43FA-4CA8-A817-5B661A6B6D95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC26B62B-00C1-40C2-8897-7559DAD7EA99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC26B62B-00C1-40C2-8897-7559DAD7EA99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC26B62B-00C1-40C2-8897-7559DAD7EA99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC26B62B-00C1-40C2-8897-7559DAD7EA99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08C912BD-598F-47AD-A0AA-6C68A0CF1959}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08C912BD-598F-47AD-A0AA-6C68A0CF1959}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08C912BD-598F-47AD-A0AA-6C68A0CF1959}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{08C912BD-598F-47AD-A0AA-6C68A0CF1959}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08C912BD-598F-47AD-A0AA-6C68A0CF1959}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08C912BD-598F-47AD-A0AA-6C68A0CF1959}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
