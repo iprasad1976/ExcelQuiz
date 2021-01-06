@@ -38,6 +38,23 @@ namespace ExamQuizAPI.Models.DB
         public virtual DbSet<QuestionType> QuestionTypes { get; set; }
 
         public virtual DbSet<SpGetToken> GetToken { get; set; }
+        public virtual DbSet<SpListExam> GetExamList { get; set; }
+        public virtual DbSet<SpCandidateExamInfo> GetCandidateExamInformation { get; set; }
+        public virtual DbSet<SpNextPrevQuestion> GetNextPrevQues { get; set; }
+        public virtual DbSet<SpQuestionOptions> GetQuesOptions { get; set; }
+        public virtual DbSet<SpCalculateMarks> CalMarks { get; set; }
+        public virtual DbSet<SpAddCadidateLogins> AddCandidateLogins { get; set; }
+        public virtual DbSet<SpDownloadCadidateLoginIds> DownloadCadidateLoginId { get; set; }
+        public virtual DbSet<SpSearchRequests> SearchRequest { get; set; }
+        public virtual DbSet<SpGetListRequestsByRequestedEmail> ListRequestsByRequestedEmail { get; set; }
+        public virtual DbSet<SpGetExam> GetExamDetails { get; set; }
+        public virtual DbSet<SpSearchExams> SearchExamsDtl { get; set; }
+        public virtual DbSet<SpGetQuestion> GetQuestionDtl { get; set; }
+        public virtual DbSet<SpGetQuestionOptions> GetQuestionOptionsDtl { get; set; }
+        public virtual DbSet<SpSearchQuestions> SearchQuestion { get; set; }
+        public virtual DbSet<SpUpdateCommand> UpdatedRows { get; set; }
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -457,6 +474,347 @@ namespace ExamQuizAPI.Models.DB
                 throw ex;
             }
 
+        }
+
+        public async Task<List<SpListExam>> GetListExam(string userId)
+        {
+            // Initialization.  
+            SpGetToken result = new SpGetToken();
+
+            try
+            {
+                return await this.GetExamList.FromSqlInterpolated<SpListExam>($"Execute GetListExam {userId}").ToListAsync();
+                //this.Database.ExecuteSqlInterpolatedAsync(
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        public async Task<List<SpCandidateExamInfo>> GetCandidateExamInfo(int examId, string userId)
+        {
+            // Initialization.  
+            SpGetToken result = new SpGetToken();
+
+            try
+            {
+                return await this.GetCandidateExamInformation.FromSqlInterpolated<SpCandidateExamInfo>($"Execute GetCandidateExamInfo {examId}, {userId}").ToListAsync();
+                //this.Database.ExecuteSqlInterpolatedAsync(
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        public async Task<List<SpNextPrevQuestion>> GetNextPrevQuestion(int examId, string userId,string token, int seqNo)
+        {
+            // Initialization.  
+            SpGetToken result = new SpGetToken();
+
+            try
+            {
+                return await this.GetNextPrevQues.FromSqlInterpolated<SpNextPrevQuestion>($"Execute GetNextPrevQuestion {examId}, {userId}, {token}, {seqNo}").ToListAsync();
+                //this.Database.ExecuteSqlInterpolatedAsync(
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        public async Task<List<SpQuestionOptions>> GetQuestionOptions(int examId, string userId, string token, int seqNo)
+        {
+            // Initialization.  
+            SpGetToken result = new SpGetToken();
+
+            try
+            {
+                return await this.GetQuesOptions.FromSqlInterpolated<SpQuestionOptions>($"Execute GetQuestionOptions {examId}, {userId}, {token}, {seqNo}").ToListAsync();
+                //this.Database.ExecuteSqlInterpolatedAsync(
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        public async Task<List<SpCalculateMarks>> CalculateMarks(int examId, string userId, string token)
+        {
+            // Initialization.  
+            SpGetToken result = new SpGetToken();
+
+            try
+            {
+                return await this.CalMarks.FromSqlInterpolated<SpCalculateMarks>($"Execute CalculateMarks {examId}, {userId}, {token}").ToListAsync();
+                //this.Database.ExecuteSqlInterpolatedAsync(
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        public async Task<List<SpAddCadidateLogins>> AddCadidateLogins(string requestedPersonEmail, int noOfRequestedUserId, int noOfAttempt, string examIds, DateTime validFrom, DateTime validTo, string adminUserId)
+        {
+            // Initialization.  
+            SpGetToken result = new SpGetToken();
+
+            try
+            {
+                return await this.AddCandidateLogins.FromSqlInterpolated<SpAddCadidateLogins>($"Execute AddCadidateLogins {requestedPersonEmail}, {noOfRequestedUserId}, {noOfAttempt}, {examIds}, {validFrom}, {validTo},{adminUserId}").ToListAsync();
+                //this.Database.ExecuteSqlInterpolatedAsync(
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<SpDownloadCadidateLoginIds>> DownloadCadidateLoginIds(int candidateLoginRequestId)
+        {
+            // Initialization.  
+            SpGetToken result = new SpGetToken();
+
+            try
+            {
+                return await this.DownloadCadidateLoginId.FromSqlInterpolated<SpDownloadCadidateLoginIds>($"Execute DownloadCadidateLoginIds {candidateLoginRequestId}").ToListAsync();
+                //this.Database.ExecuteSqlInterpolatedAsync(
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<SpSearchRequests>> SearchRequests(string search)
+        {
+            // Initialization.  
+            SpGetToken result = new SpGetToken();
+
+            try
+            {
+                return await this.SearchRequest.FromSqlInterpolated<SpSearchRequests>($"Execute SearchRequests {search}").ToListAsync();
+                //this.Database.ExecuteSqlInterpolatedAsync(
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<SpGetListRequestsByRequestedEmail>> GetListRequestsByRequestedEmail(string requestedPersonEmail)
+        {
+            // Initialization.  
+            SpGetToken result = new SpGetToken();
+
+            try
+            {
+                return await this.ListRequestsByRequestedEmail.FromSqlInterpolated<SpGetListRequestsByRequestedEmail>($"Execute GetListRequestsByRequestedEmail {requestedPersonEmail}").ToListAsync();
+                //this.Database.ExecuteSqlInterpolatedAsync(
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<SpGetExam>> GetExam(int examId)
+        {
+            // Initialization.  
+            SpGetToken result = new SpGetToken();
+
+            try
+            {
+                return await this.GetExamDetails.FromSqlInterpolated<SpGetExam>($"Execute GetExam {examId}").ToListAsync();
+                //this.Database.ExecuteSqlInterpolatedAsync(
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<SpSearchExams>> SearchExams(string search)
+        {
+            // Initialization.  
+            SpGetToken result = new SpGetToken();
+
+            try
+            {
+                return await this.SearchExamsDtl.FromSqlInterpolated<SpSearchExams>($"Execute SearchExams {search}").ToListAsync();
+                //this.Database.ExecuteSqlInterpolatedAsync(
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<SpGetQuestion>> GetQuestion(int questionId)
+        {
+            // Initialization.  
+            SpGetToken result = new SpGetToken();
+
+            try
+            {
+                return await this.GetQuestionDtl.FromSqlInterpolated<SpGetQuestion>($"Execute GetQuestion {questionId}").ToListAsync();
+                //this.Database.ExecuteSqlInterpolatedAsync(
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<SpGetQuestionOptions>> GetQuestionOptions(int questionId)
+        {
+            // Initialization.  
+            SpGetToken result = new SpGetToken();
+
+            try
+            {
+                return await this.GetQuestionOptionsDtl.FromSqlInterpolated<SpGetQuestionOptions>($"Execute GetQuestionOptions {questionId}").ToListAsync();
+                //this.Database.ExecuteSqlInterpolatedAsync(
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<SpSearchQuestions>> SearchQuestions(string search)
+        {
+            // Initialization.  
+            SpGetToken result = new SpGetToken();
+
+            try
+            {
+                return await this.SearchQuestion.FromSqlInterpolated<SpSearchQuestions>($"Execute SearchQuestions {search}").ToListAsync();
+                //this.Database.ExecuteSqlInterpolatedAsync(
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<SpUpdateCommand>> SubmitAnswers(int examId, string userId, string token, int seqNo, string selectedOptionIds)
+        {
+            // Initialization.  
+            SpGetToken result = new SpGetToken();
+
+            try
+            {
+                return await this.UpdatedRows.FromSqlInterpolated<SpUpdateCommand>($"Execute SubmitAnswers {examId}, {userId}, {token}, {seqNo}, {selectedOptionIds}").ToListAsync();
+                //this.Database.ExecuteSqlInterpolatedAsync(
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<SpUpdateCommand>> DeleteRequestedLogin(string candidateLoginRequestId, string adminUserId)
+        {
+            // Initialization.  
+            SpGetToken result = new SpGetToken();
+
+            try
+            {
+                return await this.UpdatedRows.FromSqlInterpolated<SpUpdateCommand>($"Execute DeleteRequestedLogin {candidateLoginRequestId}, {adminUserId}").ToListAsync();
+                //this.Database.ExecuteSqlInterpolatedAsync(
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<SpUpdateCommand>> AddEditExam(int examId, string examName, int totalMarks, int passingPercentage, string instructions, int duration, string adminUserId)
+        {
+            // Initialization.  
+            SpGetToken result = new SpGetToken();
+
+            try
+            {
+                return await this.UpdatedRows.FromSqlInterpolated<SpUpdateCommand>($"Execute AddEditExam {examId}, {examName}, {totalMarks}, {passingPercentage}, {instructions}, {duration}, {adminUserId}").ToListAsync();
+                //this.Database.ExecuteSqlInterpolatedAsync(
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<SpUpdateCommand>> DeleteExam(int examId, string totalMarksadminUserId)
+        {
+            // Initialization.  
+            SpGetToken result = new SpGetToken();
+
+            try
+            {
+                return await this.UpdatedRows.FromSqlInterpolated<SpUpdateCommand>($"Execute DeleteExam {examId}, {totalMarksadminUserId}").ToListAsync();
+                //this.Database.ExecuteSqlInterpolatedAsync(
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<SpUpdateCommand>> AddEditQuestion(int questionId, int questionTypeId, string question, int noofOption, int markValue, int complexityLevelId, string examIds, string options, string adminUserId)
+        {
+            // Initialization.  
+            SpGetToken result = new SpGetToken();
+
+            try
+            {
+                return await this.UpdatedRows.FromSqlInterpolated<SpUpdateCommand>($"Execute AddEditQuestion {questionId}, {questionTypeId}, {question}, {noofOption}, {markValue},{complexityLevelId}, {examIds}, {options}, {adminUserId}").ToListAsync();
+                //this.Database.ExecuteSqlInterpolatedAsync(
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<SpUpdateCommand>> DeleteQuestion(int questionId, string adminUserId)
+        {
+            // Initialization.  
+            SpGetToken result = new SpGetToken();
+
+            try
+            {
+                return await this.UpdatedRows.FromSqlInterpolated<SpUpdateCommand>($"Execute DeleteQuestion {questionId}, {adminUserId}").ToListAsync();
+                //this.Database.ExecuteSqlInterpolatedAsync(
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<SpUpdateCommand>> CandidateExamStart(int examId, string userId, string token, string candidateName, string candidateEmailId, string candidatePhone)
+        {
+            // Initialization.  
+            SpGetToken result = new SpGetToken();
+
+            try
+            {
+                return await this.UpdatedRows.FromSqlInterpolated<SpUpdateCommand>($"Execute CandidateExamStart {examId}, {userId}, {token}, {candidateName}, {candidateEmailId}, {candidatePhone}").ToListAsync();
+                //this.Database.ExecuteSqlInterpolatedAsync(
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
