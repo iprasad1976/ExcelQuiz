@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ExamQuizAPI.Models;
 using ExamQuizAPI.Models.DB;
 using ExcelQuiz.Data;
 using ExcelQuiz.Repository.Dal;
@@ -16,38 +17,37 @@ namespace ExamQuizAPI.Controllers
     {
         private readonly ILogger<CandidateController> _logger;
         private readonly ExamDBContext _context;
+        private string _userId = string.Empty;
+        private string _token = string.Empty;
         public CandidateController(ILogger<CandidateController> logger, ExamDBContext context)
         {
             _logger = logger;
             _context = context;
+
+            if (Request.Headers.ContainsKey("UserId"))
+                _userId = Request.Headers["UserId"].ToString();
+            if (Request.Headers.ContainsKey("Token"))
+                _userId = Request.Headers["Token"].ToString();
         }
 
-        [HttpGet("CandidateLogin")]
-        public SpGetToken CandidateLogin(string userId, string password)
+        [HttpPost("CandidateLogin")]
+        public SpGetToken CandidateLogin(LoginModel loginModel)
         {
-            var result = _context.GetCandidateToken(userId, password).Result;
-            if (result != null)
-                return result.FirstOrDefault();
-            else
-                return new SpGetToken();
-
+            var result = _context.GetCandidateToken(loginModel.UserId, loginModel.Password).Result;
+            return result.FirstOrDefault();
         }
 
         [HttpGet("GetListExam")]
-        public SpListExam GetListExam(string userId)
+        public List<SpListExam> GetListExam(string userId)
         {
             var result = _context.GetListExam(userId).Result;
-            if (result != null)
-                return result.FirstOrDefault();
-            else
-                return new SpListExam();
-
+            return result;
         }
 
         [HttpGet("GetCandidateExamInfo")]
-        public SpCandidateExamInfo GetCandidateExamInfo(int examId, string userId)
+        public SpCandidateExamInfo GetCandidateExamInfo(int examId)
         {
-            var result = _context.GetCandidateExamInfo(examId,userId).Result;
+            var result = _context.GetCandidateExamInfo(examId, _userId).Result;
             if (result != null)
                 return result.FirstOrDefault();
             else
@@ -55,10 +55,10 @@ namespace ExamQuizAPI.Controllers
 
         }
 
-        [HttpGet("GetNextPrevQuestion")]
-        public SpNextPrevQuestion GetNextPrevQuestion(int examId, string userId, string token, int seqNo)
+        [HttpPost("GetNextPrevQuestion")]
+        public SpNextPrevQuestion GetNextPrevQuestion(NextPrevQuestionModel nextPrevQuestionModel)
         {
-            var result = _context.GetNextPrevQuestion(examId, userId, token, seqNo).Result;
+            var result = _context.GetNextPrevQuestion(nextPrevQuestionModel.ExamId, _userId, _token, nextPrevQuestionModel.SeqNo).Result;
             if (result != null)
                 return result.FirstOrDefault();
             else
@@ -66,21 +66,17 @@ namespace ExamQuizAPI.Controllers
 
         }
 
-        [HttpGet("GetQuestionOptions")]
-        public SpQuestionOptions GetQuestionOptions(int examId, string userId, string token, int seqNo)
+        [HttpPost("GetQuestionOptions")]
+        public List<SpQuestionOptions> GetQuestionOptions(NextPrevQuestionModel nextPrevQuestionModel)
         {
-            var result = _context.GetQuestionOptions(examId, userId, token, seqNo).Result;
-            if (result != null)
-                return result.FirstOrDefault();
-            else
-                return new SpQuestionOptions();
-
+            var result = _context.GetQuestionOptions(nextPrevQuestionModel.ExamId, _userId, _token, nextPrevQuestionModel.SeqNo).Result;
+            return result; ;
         }
 
         [HttpGet("CalculateMarks")]
-        public SpCalculateMarks CalculateMarks(int examId, string userId, string token)
+        public SpCalculateMarks CalculateMarks(int examId)
         {
-            var result = _context.CalculateMarks(examId, userId, token).Result;
+            var result = _context.CalculateMarks(examId, _userId, _token).Result;
             if (result != null)
                 return result.FirstOrDefault();
             else
@@ -88,10 +84,12 @@ namespace ExamQuizAPI.Controllers
 
         }
 
-        [HttpGet("SubmitAnswers")]
-        public SpUpdateCommand SubmitAnswers(int examId, string userId, string token, int seqNo, string selectedOptionIds)
+        [HttpPost("SubmitAnswers")]
+        public SpUpdateCommand SubmitAnswers(SubmitAnswerModel submitAnswerModel)
         {
-            var result = _context.SubmitAnswers(examId, userId, token, seqNo,selectedOptionIds).Result;
+            string selectedOptionIds = string.Join(',', submitAnswerModel.SelectedOptionIds);
+
+            var result = _context.SubmitAnswers(submitAnswerModel.ExamId, _userId, _token, submitAnswerModel.SeqNo, selectedOptionIds).Result;
             if (result != null)
                 return result.FirstOrDefault();
             else
@@ -99,10 +97,10 @@ namespace ExamQuizAPI.Controllers
 
         }
 
-        [HttpGet("CandidateExamStart")]
-        public SpUpdateCommand CandidateExamStart(int examId, string userId, string token, string candidateName, string candidateEmailId, string candidatePhone)
+        [HttpPost("CandidateExamStart")]
+        public SpUpdateCommand CandidateExamStart(ExamStartModel examStartModel)
         {
-            var result = _context.CandidateExamStart(examId, userId, token, candidateName, candidateEmailId, candidatePhone).Result;
+            var result = _context.CandidateExamStart(examStartModel.ExamId, _userId, _token, examStartModel.CandidateName, examStartModel.CandidateEmailId, examStartModel.CandidatePhone).Result;
             if (result != null)
                 return result.FirstOrDefault();
             else

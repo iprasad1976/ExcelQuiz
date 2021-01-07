@@ -17,5 +17,7 @@ BEGIN
 			Duration = @duration, ModifiedBy = @AdminUserId, ModifiedDate = @dt WHERE IsActive = 'Y' AND ExamId = @examId
 	
   END
+
+  SELECT @examId AS UpdatedId, 'Success' AS 'Status'
 END
 

@@ -8,9 +8,9 @@ using ExamQuizAPI.Models;
 
 namespace ExamQuizAPI.Models
 {
-    public class LoginViewModel
+    public class LoginModel
     {
-     //   [Display(Name = "Admin Token")]
-        // public SpGetAdminToken AdminToken { get; set; }
+        public string UserId { get; set; }
+        public string Password { get; set; }
     }
 }

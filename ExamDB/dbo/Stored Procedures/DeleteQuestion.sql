@@ -8,5 +8,7 @@ BEGIN
 
 	UPDATE Question Set IsActive = 'N', ModifiedBy = @adminUserId, ModifiedDate = @dt  WHERE QuestionId = @questionId AND IsActive = 'Y'
 	UPDATE QuestionOptions Set IsActive = 'N', ModifiedBy = @adminUserId, ModifiedDate = @dt  WHERE QuestionId = @questionId AND IsActive = 'Y'
+
+	SELECT @questionId AS UpdatedId, 'Success' AS 'Status'
 END
 

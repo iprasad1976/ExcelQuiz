@@ -60,4 +60,6 @@ BEGIN
 			SET @counter = @counter + 1
 		END
 	END
+
+	SELECT @examCandidateAttemptId AS UpdatedId, 'Success' AS 'Status'
 END

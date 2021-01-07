@@ -28,5 +28,7 @@ BEGIN
 		UPDATE ExamCandidateAttemptQuestions SET  IsAnswerCorrect = @isAnswerCorrect, GainScore = @score, AttemptTime = GETDATE()
 			WHERE ExamCandidateAttemptQuestionsId = @examCandidateAttemptQuestionsId 
 	
+	
+	SELECT @examCandidateAttemptQuestionsId AS UpdatedId, 'Success' AS 'Status'
 END
 

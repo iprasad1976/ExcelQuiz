@@ -68,5 +68,8 @@ BEGIN
 		INSERT INTO QuestionOptions (QuestionId, SlNo, [Option], IsCorrect, CreatedBy, CreatedDate, ModifiedBy, ModifiedDate, IsActive)
 			SELECT @questionId, SlNo, Options, IsCorrect, @adminUserId, @dt, @adminUserId, @dt, 'Y' FROM @optionTable WHERE Operation = 'A'
   END
+
+  SELECT @questionId AS UpdatedId, 'Success' AS 'Status'
+
 END
 

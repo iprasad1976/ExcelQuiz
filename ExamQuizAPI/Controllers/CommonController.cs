@@ -27,7 +27,7 @@ namespace ExamQuizAPI.Controllers
         [HttpGet("GetQuiz")]
         public string GetQuiz(string examId)
         {
-                return "";
+            return "";
 
         }
 
@@ -37,5 +37,5 @@ namespace ExamQuizAPI.Controllers
             return "Hello";
         }
 
-        }
     }
+}

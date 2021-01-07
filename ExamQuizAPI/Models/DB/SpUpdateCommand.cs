@@ -6,6 +6,7 @@ namespace ExamQuizAPI.Models.DB
     [Keyless]
     public class SpUpdateCommand
     {
-        public int UpdatedRows { get; set; }
+       public int UpdatedId { get; set; }
+       public string Status { get; set; }
     }
 }

@@ -26,5 +26,7 @@ BEGIN
 			WHERE IsActive = 'Y' AND CandidateLoginRequestId = @candidateLoginRequestId
 
 	END
+
+	SELECT @candidateLoginRequestId AS UpdatedId, 'Success' AS 'Status'
 END
 
