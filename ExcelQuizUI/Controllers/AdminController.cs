@@ -8,7 +8,7 @@ namespace ExcelQuizUI.Controllers
 {
     public class AdminController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Login()
         {
             return View();
         }
