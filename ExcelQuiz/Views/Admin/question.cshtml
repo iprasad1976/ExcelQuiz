@@ -1,0 +1,221 @@
+﻿@{
+    Layout = "../Shared/_AdminLayout.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#yesNo').css('display', 'block');
+        $('#mcqSs').css('display', 'none');
+        $('#mcqMs').css('display', 'none');
+        $('#optNoofOption').attr("disabled", "disabled");
+
+        $('select[name="optQuestionType"]').change(function () {
+            var val = $('#optQuestionType').val();
+            if (val == 'mcqSs') {
+                $('#mcqSs').css('display', 'block');
+                $('#yesNo').css('display', 'none');
+                $('#mcqMs').css('display', 'none');
+                $('#optNoofOption').removeAttr("disabled");
+            }
+            else if (val == 'mcqMs') {
+                 $('#mcqMs').css('display', 'block');
+                 $('#yesNo').css('display', 'none');
+                 $('#mcqSs').css('display', 'none');
+                $('#optNoofOption').removeAttr("disabled");
+            }
+            else
+            {
+                $('#yesNo').css('display', 'block');
+                $('#mcqSs').css('display', 'none');
+                $('#mcqMs').css('display', 'none');
+                $('#optNoofOption').val('2');
+                $('#optNoofOption').attr("disabled", "disabled");
+            }
+           
+        });
+
+        $('select[name="optNoofOption"]').change(function () {
+        
+            var val = $('#optNoofOption').val();
+                
+            var optionTypeId = $('#optQuestionType').val();
+            if (optionTypeId == 'mcqMs' || optionTypeId == 'mcqSs') {
+                showHideOptions(val, optionTypeId);
+            }
+        });
+
+        function showHideOptions(number, optionTypeId) {
+            for (var num = 1; num <= 6; num++) {
+
+                if (num <= parseInt(number))
+                    $('#' + optionTypeId + '_opt' + num).css('display', 'block');
+                else
+                    $('#' + optionTypeId + '_opt' + num).css('display', 'none');
+            }
+
+        }
+    });
+</script>
+<div class="row">
+    <div class="col-12 col-s-12"></div>
+</div>
+<div class="row">
+    <div class="col-1 col-s-1"></div>
+    <div class="col-10 col-s-10">
+        <div class="row">
+            <div class="col-2 col-s-2"><strong>Question:</strong></div>
+            <div class="col-10 col-s-10"><textarea value="" maxlength="500"></textarea></div>
+        </div>
+        <div class="row">
+            <div class="col-2 col-s-2"><strong>For Quiz:</strong></div>
+            <div class="col-10 col-s-10 left">
+                <select name="optQuiz" id="optQuiz" class="multi" multiple>
+                    <option value="quiz1">Quiz 1</option>
+                    <option value="quiz2">Quiz 2</option>
+                    <option value="quiz3">Quiz 3</option>
+                    <option value="quiz4">Quiz 4</option>
+                    <option value="quiz5">Quiz 5</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 col-s-2"><strong>Marks:</strong></div>
+            <div class="col-10 col-s-10"><input type="text" value="" /></div>
+        </div>
+        <div class="row">
+            <div class="col-2 col-s-2"><strong>Question Type:</strong></div>
+            <div class="col-10 col-s-10">
+                <select name="optQuestionType" id="optQuestionType" class="multi">
+                    <option value="yesNo">Yes/No</option>
+                    <option value="mcqSs">Multi Choice Single Selection</option>
+                    <option value="mcqMs">Multi Choice Multi Selection</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 col-s-2"><strong>No. of option:</strong></div>
+            <div class="col-10 col-s-10 left">
+                <select name="optNoofOption" id="optNoofOption" class="multi">
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 col-s-2"><strong></strong></div>
+            <div class="col-4 col-s-4"><strong>Options</strong></div>
+            <div class="col-4 col-s-4"><strong>Is Correct</strong></div>
+            <div class="col-2 col-s-2"></div>
+        </div>
+        <div class="row" id="yesNo">
+            <div class="col-12 col-s-12">
+                <div class="row" id="yesNo_opt1">
+                    <div class="col-2 col-s-2"><strong>Yes</strong></div>
+                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
+                    <div class="col-4 col-s-4"><input type="radio" name="rdYesNo" /></div>
+                    <div class="col-2 col-s-2"></div>
+                </div>
+                <div class="row" id="yesNo_opt2">
+                    <div class="col-2 col-s-2"><strong>No</strong></div>
+                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
+                    <div class="col-4 col-s-4"><input type="radio" name="rdYesNo" /></div>
+                    <div class="col-2 col-s-2"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="mcqSs">
+            <div class="col-12 col-s-12">
+                <div class="row" id="mcqSs_opt1">
+                    <div class="col-2 col-s-2"><strong>Option 1</strong></div>
+                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
+                    <div class="col-4 col-s-4"><input type="radio" name="rdMcqSs" /></div>
+                    <div class="col-2 col-s-2"></div>
+                </div>
+                <div class="row" id="mcqSs_opt2">
+                    <div class="col-2 col-s-2"><strong>Option 2</strong></div>
+                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
+                    <div class="col-4 col-s-4"><input type="radio" name="rdMcqSs" /></div>
+                    <div class="col-2 col-s-2"></div>
+                </div>
+                <div class="row" id="mcqSs_opt3">
+                    <div class="col-2 col-s-2"><strong>Option 3</strong></div>
+                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
+                    <div class="col-4 col-s-4"><input type="radio" name="rdMcqSs" /></div>
+                    <div class="col-2 col-s-2"></div>
+                </div>
+                <div class="row" id="mcqSs_opt4">
+                    <div class="col-2 col-s-2"><strong>Option 4</strong></div>
+                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
+                    <div class="col-4 col-s-4"><input type="radio" name="rdMcqSs" /></div>
+                    <div class="col-2 col-s-2"></div>
+                </div>
+                <div class="row" id="mcqSs_opt5">
+                    <div class="col-2 col-s-2"><strong>Option 5</strong></div>
+                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
+                    <div class="col-4 col-s-4"><input type="radio" name="rdMcqSs" /></div>
+                    <div class="col-2 col-s-2"></div>
+                </div>
+                <div class="row" id="mcqSs_opt6">
+                    <div class="col-2 col-s-2"><strong>Option 6</strong></div>
+                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
+                    <div class="col-4 col-s-4"><input type="radio" name="rdMcqSs" /></div>
+                    <div class="col-2 col-s-2"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="mcqMs">
+            <div class="col-12 col-s-12">
+                <div class="row" id="mcqMs_opt1">
+                    <div class="col-2 col-s-2"><strong>Option 1</strong></div>
+                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
+                    <div class="col-4 col-s-4"><input type="checkbox" /></div>
+                    <div class="col-2 col-s-2"></div>
+                </div>
+                <div class="row" id="mcqMs_opt2">
+                    <div class="col-2 col-s-2"><strong>Option 2</strong></div>
+                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
+                    <div class="col-4 col-s-4"><input type="checkbox" /></div>
+                    <div class="col-2 col-s-2"></div>
+                </div>
+                <div class="row" id="mcqMs_opt3">
+                    <div class="col-2 col-s-2"><strong>Option 3</strong></div>
+                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
+                    <div class="col-4 col-s-4"><input type="checkbox" /></div>
+                    <div class="col-2 col-s-2"></div>
+                </div>
+                <div class="row" id="mcqMs_opt4">
+                    <div class="col-2 col-s-2"><strong>Option 4</strong></div>
+                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
+                    <div class="col-4 col-s-4"><input type="checkbox" /></div>
+                    <div class="col-2 col-s-2"></div>
+                </div>
+                <div class="row" id="mcqMs_opt5">
+                    <div class="col-2 col-s-2"><strong>Option 5</strong></div>
+                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
+                    <div class="col-4 col-s-4"><input type="checkbox" /></div>
+                    <div class="col-2 col-s-2"></div>
+                </div>
+                <div class="row" id="mcqMs_opt6">
+                    <div class="col-2 col-s-2"><strong>Option 6</strong></div>
+                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
+                    <div class="col-4 col-s-4"><input type="checkbox" /></div>
+                    <div class="col-2 col-s-2"></div>
+                </div>
+            </div>
+            </div>
+        <div class="row">
+            <div class="col-4 col-s-4"></div>
+            <div class="col-2 col-s-2 center-block">
+                <input type="button" class="button" value="Save" />
+            </div>
+            <div class="col-2 col-s-2 center-block">
+                <input type="button" class="button" value="Reset" />
+            </div>
+            <div class="col-4 col-s-4"></div>
+        </div>
+    </div>
+    <div class="col-1 col-s-1"></div>
+</div>
+

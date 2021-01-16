@@ -17,6 +17,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelQuizData", "ExcelQuizD
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ExamDB", "ExamDB\ExamDB.sqlproj", "{08C912BD-598F-47AD-A0AA-6C68A0CF1959}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactExamUI", "ReactExamUI\ReactExamUI.csproj", "{CBF636F5-49FF-4592-98AC-61863D1A2040}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelQuiz", "ExcelQuiz\ExcelQuiz.csproj", "{62A06985-E0B9-415F-9633-DB0239A8CC09}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +57,14 @@ Global
 		{08C912BD-598F-47AD-A0AA-6C68A0CF1959}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08C912BD-598F-47AD-A0AA-6C68A0CF1959}.Release|Any CPU.Build.0 = Release|Any CPU
 		{08C912BD-598F-47AD-A0AA-6C68A0CF1959}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{CBF636F5-49FF-4592-98AC-61863D1A2040}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBF636F5-49FF-4592-98AC-61863D1A2040}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBF636F5-49FF-4592-98AC-61863D1A2040}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBF636F5-49FF-4592-98AC-61863D1A2040}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62A06985-E0B9-415F-9633-DB0239A8CC09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62A06985-E0B9-415F-9633-DB0239A8CC09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62A06985-E0B9-415F-9633-DB0239A8CC09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62A06985-E0B9-415F-9633-DB0239A8CC09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

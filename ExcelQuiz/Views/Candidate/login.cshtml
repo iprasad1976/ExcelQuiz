@@ -1,0 +1,44 @@
+﻿@{
+    Layout = "../Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnLogin").click(function () {
+             window.location = "Index";
+        });
+       
+    });
+</script>
+<div class="row">
+    <div class="col-12 col-s-12"></div>
+</div>
+<div class="row">
+    <div class="col-1 col-s-1"></div>
+    <div class="col-10 col-s-10">
+        <div class="row">
+            <div class="col-4 col-s-4"></div>
+            <div class="col-1 col-s-1 right"><strong>Login:</strong></div>
+            <div class="col-7 col-s-7">
+                <input type="text" value="" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 col-s-4"></div>
+            <div class="col-1 col-s-1 right"><strong>Password:</strong></div>
+            <div class="col-7 col-s-7">
+                <input type="text" value="" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 col-s-4"></div>
+            <div class="col-2 col-s-2 center-block">
+                <input type="button" class="button" value="Login" id="btnLogin"/>
+            </div>
+            <div class="col-2 col-s-2 center-block">
+                <input type="reset" class="button" value="Reset" />
+            </div>
+            <div class="col-4 col-s-4"></div>
+        </div>
+    </div>
+    <div class="col-1 col-s-1"></div>
+</div>

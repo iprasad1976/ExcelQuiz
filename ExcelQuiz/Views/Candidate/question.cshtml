@@ -1,0 +1,175 @@
+﻿@{
+    Layout = "../Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    var counter = 1;
+    
+    $(document).ready(function () {
+        $("#questNumber").html('Question ' + counter);
+        $('#yesNo').css('display', 'block');
+        $('#mcqSs').css('display', 'none');
+        $('#mcqMs').css('display', 'none');
+        $("#btnPrev").attr('disabled', 'disabled');
+        $('input:button').click(function () {
+            
+            var randomnumber = Math.floor(Math.random() * 4) + 2;
+            var val = $(this).val();
+            if(val== 'Next')
+                counter++;
+            if(val== 'Previous')
+               counter--;
+
+             $("#questNumber").html('Question ' + counter);
+
+             if (counter == 1) 
+                 $("#btnPrev").attr('disabled', 'disabled');
+             if (counter == 2) 
+                 $("#btnPrev").removeAttr('disabled');
+             if (counter == 20)
+                   $("#btnNext").val('Submit');
+             if (counter == 19)
+                 $("#btnNext").val('Next');
+
+            if (counter%3 == 1) {
+                $('#mcqSs').css('display', 'block');
+                $('#yesNo').css('display', 'none');
+                $('#mcqMs').css('display', 'none');
+                showHideOptions(randomnumber, 'mcqSs');
+            }
+            else if (counter%3 == 2) {
+                 $('#mcqMs').css('display', 'block');
+                 $('#yesNo').css('display', 'none');
+                $('#mcqSs').css('display', 'none');
+                showHideOptions(randomnumber, 'mcqMs');
+            }
+            else
+            {
+                $('#yesNo').css('display', 'block');
+                $('#mcqSs').css('display', 'none');
+                $('#mcqMs').css('display', 'none');
+            }
+
+        });
+            
+        function showHideOptions(number, optionTypeId) {
+            for (var num = 1; num <= 6; num++) {
+
+                if (num <= parseInt(number))
+                    $('#' + optionTypeId + '_opt' + num).css('display', 'block');
+                else
+                    $('#' + optionTypeId + '_opt' + num).css('display', 'none');
+            }
+        }
+    });
+</script>
+<div class="row">
+    <div class="col-12 col-s-12"></div>
+</div>
+<div class="row">
+    <div class="col-1 col-s-1"></div>
+    <div class="col-10 col-s-10">
+        <div class="row">
+            <div class="col-2 col-s-2"><strong><span id="questNumber"></span>:</strong></div>
+            <div class="col-10 col-s-10"><strong><span>What are the event handlers that we have for the Global.asax file?</span></strong></div>
+        </div>
+        <div class="row" id="yesNo">
+            <div class="col-12 col-s-12">
+                <div class="row">
+                    <div class="col-2 col-s-2"></div>
+                    <div class="col-1 col-s-1"><input type="radio" name="rdYesNo" /></div>
+                    <div class="col-9 col-s-9"><strong>Yes</strong></div>
+                </div>
+                <div class="row">
+                    <div class="col-2 col-s-2"></div>
+                    <div class="col-1 col-s-1"><input type="radio" name="rdYesNo" /></div>
+                    <div class="col-9 col-s-9"><strong>No</strong></div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="mcqSs">
+            <div class="col-12 col-s-12">
+                <div class="row" id="mcqSs_opt1">
+                    <div class="col-2 col-s-2"></div>
+                    <div class="col-1 col-s-1"><input type="radio" name="rdMcqSs" /></div>
+                    <div class="col-9 col-s-9"><strong>Option 1</strong></div>
+                </div>
+                <div class="row" id="mcqSs_opt2">
+                    <div class="col-2 col-s-2"></div>
+                    <div class="col-1 col-s-1"><input type="radio" name="rdMcqSs" /></div>
+                    <div class="col-9 col-s-9"><strong>Option 2</strong></div>
+                </div>
+                <div class="row" id="mcqSs_opt3">
+                    <div class="col-2 col-s-2"></div>
+                    <div class="col-1 col-s-1"><input type="radio" name="rdMcqSs" /></div>
+                    <div class="col-9 col-s-9"><strong>Option 3</strong></div>
+                </div>
+                <div class="row" id="mcqSs_opt4">
+                    <div class="col-2 col-s-2"></div>
+                    <div class="col-1 col-s-1"><input type="radio" name="rdMcqSs" /></div>
+                    <div class="col-9 col-s-9"><strong>Option 4</strong></div>
+                </div>
+                <div class="row" id="mcqSs_opt5">
+                    <div class="col-2 col-s-2"></div>
+                    <div class="col-1 col-s-1"><input type="radio" name="rdMcqSs" /></div>
+                    <div class="col-9 col-s-9"><strong>Option 5</strong></div>
+                </div>
+                <div class="row" id="mcqSs_opt6">
+                    <div class="col-2 col-s-2"></div>
+                    <div class="col-1 col-s-1"><input type="radio" name="rdMcqSs" /></div>
+                    <div class="col-9 col-s-9"><strong>Option 6</strong></div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="mcqMs">
+            <div class="col-12 col-s-12">
+                <div class="row" id="mcqMs_opt1">
+                    <div class="col-2 col-s-2"></div>
+                    <div class="col-1 col-s-1"><input type="checkbox" /></div>
+                    <div class="col-9 col-s-9"><strong>Option 1</strong></div>
+                </div>
+                <div class="row" id="mcqMs_opt2">
+                    <div class="col-2 col-s-2"></div>
+                    <div class="col-1 col-s-1"><input type="checkbox" /></div>
+                    <div class="col-9 col-s-9"><strong>Option 2</strong></div>
+                </div>
+                <div class="row" id="mcqMs_opt3">
+                    <div class="col-2 col-s-2"></div>
+                    <div class="col-1 col-s-1"><input type="checkbox" /></div>
+                    <div class="col-9 col-s-9"><strong>Option 3</strong></div>
+                </div>
+                <div class="row" id="mcqMs_opt4">
+                    <div class="col-2 col-s-2"></div>
+                    <div class="col-1 col-s-1"><input type="checkbox" /></div>
+                    <div class="col-9 col-s-9"><strong>Option 4</strong></div>
+                </div>
+                <div class="row" id="mcqMs_opt5">
+                    <div class="col-2 col-s-2"></div>
+                    <div class="col-1 col-s-1"><input type="checkbox" /></div>
+                    <div class="col-9 col-s-9"><strong>Option 5</strong></div>
+                </div>
+                <div class="row" id="mcqMs_opt6">
+                    <div class="col-2 col-s-2"></div>
+                    <div class="col-1 col-s-1"><input type="checkbox" /></div>
+                    <div class="col-9 col-s-9"><strong>Option 6</strong></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 col-s-2"></div>
+            <div class="col-2 col-s-2"><strong>Question Feedback:</strong></div>
+            <div class="col-8 col-s-8"><textarea value="" maxlength="500"></textarea></div>
+        </div>
+        <div class="row">
+            <div class="col-4 col-s-4"></div>
+            <div class="col-2 col-s-2 center-block">
+                <input type="button" id="btnPrev" class="button" value="Previous" />
+            </div>
+            <div class="col-2 col-s-2 center-block">
+                <input type="button" id="btnNext" class="button" value="Next" />
+            </div>
+            <div class="col-4 col-s-4"></div>
+        </div>
+    </div>
+    <div class="col-1 col-s-1"></div>
+</div>
+
