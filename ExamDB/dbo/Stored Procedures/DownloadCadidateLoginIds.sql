@@ -5,7 +5,7 @@
 CREATE   PROC DownloadCadidateLoginIds(@candidateLoginRequestId int)
 AS
 BEGIN
-  SELECT RequestId, RequestDate, UserId, [Password], TotalNoofAttempts, ExamName, ValidFrom, ValidTo, RequestDate
+  SELECT RequestId, RequestDate, UserId, [Password], TotalNoofAttempts, ExamName, ValidFrom, ValidTo
 		FROM CandidateLoginRequest a
 		INNER JOIN CandidateLogin b ON a.CandidateLoginRequestId= b.CandidateLoginRequestId 
 		INNER JOIN ExamCandidate c ON b.CandidateLoginId = c.CandidateLoginId

@@ -49,7 +49,7 @@ BEGIN
 			FROM STRING_SPLIT(@ExamIds, ',') a
 			CROSS JOIN (SELECT CandidateLoginId FROM CandidateLogin WHERE CandidateLoginRequestId = @candidateLoginRequestId AND IsActive = 'Y') b
 
-  SELECT RequestId, RequestDate, UserId, [Password], TotalNoofAttempts, ExamName, ValidFrom, ValidTo, RequestDate
+  SELECT RequestId, RequestDate, UserId, [Password], TotalNoofAttempts, ExamName, ValidFrom, ValidTo
 		FROM CandidateLoginRequest a
 		INNER JOIN CandidateLogin b ON a.CandidateLoginRequestId = b.CandidateLoginRequestId 
 		INNER JOIN ExamCandidate c ON b.CandidateLoginId = c.CandidateLoginId
