@@ -24,6 +24,6 @@ BEGIN
 		INSERT INTO AdminLoginToken (AdminLoginId, Token, LoginStartTime, LoginEndTime) values (@adminLoginId, @token, @dt, DATEADD(d, 1, @dt))
 	END	
 	
-	SELECT @token AS Token, @dt As LoginStart, DATEADD(d, 8, @dt) As LoginEnd
+	SELECT @token AS Token, @dt As LoginStart, DATEADD(d, 1, @dt) As LoginEnd
 END
 
