@@ -6,6 +6,7 @@ using ExamQuizAPI.Models.DB;
 using ExcelQuiz.Repository.Framework;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -30,6 +31,7 @@ namespace ExamQuizAPI
         {
             services.AddControllers();
             services.AddDbContext<ExamDBContext>(op => op.UseSqlServer(Configuration.GetConnectionString("Database")));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

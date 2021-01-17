@@ -6,6 +6,7 @@ using ExamQuizAPI.Models;
 using ExamQuizAPI.Models.DB;
 using ExcelQuiz.Data;
 using ExcelQuiz.Repository.Dal;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -16,18 +17,20 @@ namespace ExamQuizAPI.Controllers
     public class CandidateController : ControllerBase
     {
         private readonly ILogger<CandidateController> _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor = null;
         private readonly ExamDBContext _context;
         private string _userId = string.Empty;
         private string _token = string.Empty;
-        public CandidateController(ILogger<CandidateController> logger, ExamDBContext context)
+        public CandidateController(ILogger<CandidateController> logger, ExamDBContext context, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _context = context;
 
-            if (Request.Headers.ContainsKey("UserId"))
-                _userId = Request.Headers["UserId"].ToString();
-            if (Request.Headers.ContainsKey("Token"))
-                _userId = Request.Headers["Token"].ToString();
+            _httpContextAccessor = httpContextAccessor;
+            if (_httpContextAccessor.HttpContext.Request.Headers.ContainsKey("UserId"))
+                _userId = _httpContextAccessor.HttpContext.Request.Headers["UserId"].ToString();
+            if (_httpContextAccessor.HttpContext.Request.Headers.ContainsKey("Token"))
+                _token = _httpContextAccessor.HttpContext.Request.Headers["Token"].ToString();
         }
 
         [HttpPost("CandidateLogin")]
