@@ -1,12 +1,48 @@
-﻿@{
+﻿@model ExcelQuiz.Models.LoginModel
+@{
     Layout = "../Shared/_Layout.cshtml";
 }
 <script type="text/javascript">
     $(document).ready(function () {
+        var urlSubmitLogin = '@Url.Action("Login")';
+
         $("#btnLogin").click(function () {
-             window.location = "Index";
+            var data = {};
+            data.userId = $("#userId").val();
+            data.password = $("#password").val();
+            $.ajax({
+                url: urlSubmitLogin,
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data),
+                success: function (data) {
+                    if (data == true) {
+                        window.location = "Index";
+                    }
+                    else {
+                        var x = document.getElementById("loginFailureTag");
+                        x.style.display = "block";
+                        ClearLoginFields();
+                    }
+                },
+                error: function () {
+                    var x = document.getElementById("loginFailureTag");
+                    x.style.display = "block";
+                    ClearLoginFields();
+
+                }
+            });
         });
-       
+        $("#btnReset").click(function () {
+            ClearLoginFields();
+            var x = document.getElementById("loginFailureTag");
+            x.style.display = "none";
+        });
+
+        function ClearLoginFields() {
+            $("#userId").val("");
+            $("#password").val("");
+        };
     });
 </script>
 <div class="row">
@@ -17,25 +53,32 @@
     <div class="col-10 col-s-10">
         <div class="row">
             <div class="col-4 col-s-4"></div>
-            <div class="col-1 col-s-1 right"><strong>Login:</strong></div>
+            <div class="col-1 col-s-1 right"><strong>Login</strong></div>
             <div class="col-7 col-s-7">
-                <input type="text" value="" />
+                <input id="userId" type="text" placeholder="Enter your username..." value="" />
             </div>
         </div>
         <div class="row">
             <div class="col-4 col-s-4"></div>
-            <div class="col-1 col-s-1 right"><strong>Password:</strong></div>
+            <div class="col-1 col-s-1 right"><strong>Password</strong></div>
             <div class="col-7 col-s-7">
-                <input type="text" value="" />
+                <input id="password" type="password" placeholder="Enter your password..." value="" />
             </div>
+        </div>
+        <div id="loginFailureTag" class="row" style="display:none">
+            <div class="col-4 col-s-4"></div>
+            <div class="col-4 col-s-4">
+                <label style="color:red">Invalid Credentials</label>
+            </div>
+            <div class="col-4 col-s-4"></div>
         </div>
         <div class="row">
             <div class="col-4 col-s-4"></div>
             <div class="col-2 col-s-2 center-block">
-                <input type="button" class="button" value="Login" id="btnLogin"/>
+                <input type="button" class="button" value="Login" id="btnLogin" />
             </div>
             <div class="col-2 col-s-2 center-block">
-                <input type="reset" class="button" value="Reset" />
+                <input type="reset" class="button" value="Reset" id="btnReset"/>
             </div>
             <div class="col-4 col-s-4"></div>
         </div>
