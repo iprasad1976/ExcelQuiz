@@ -1,12 +1,48 @@
-﻿@{
+﻿@model ExcelQuiz.Models.LoginModel
+@{
     Layout = "../Shared/_Layout.cshtml";
 }
 <script type="text/javascript">
     $(document).ready(function () {
+        var urlSubmitLogin = '@Url.Action("Login")';
+
         $("#btnLogin").click(function () {
-            window.location = "Index";
+            var data = {};
+            data.userId = $("#userId").val();
+            data.password = $("#password").val();
+            $.ajax({
+                url: urlSubmitLogin,
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data),
+                success: function (data) {
+                    if (data == true) {
+                        window.location = "Index";
+                    }
+                    else {
+                        var x = document.getElementById("loginFailureTag");
+                        x.style.display = "block";
+                        ClearLoginFields();
+                    }
+                },
+                error: function () {
+                    var x = document.getElementById("loginFailureTag");
+                    x.style.display = "block";
+                    ClearLoginFields();
+
+                }
+            });
+        });
+        $("#btnReset").click(function () {
+            ClearLoginFields();
+            var x = document.getElementById("loginFailureTag");
+            x.style.display = "none";
         });
 
+        function ClearLoginFields() {
+            $("#userId").val("");
+            $("#password").val("");
+        };
     });
 </script>
 
@@ -32,6 +68,9 @@
                     <div style="margin-bottom: 25px" class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                         <input id="login-password" type="password" class="form-control" name="password" placeholder="password" />
+                    </div>
+                   <div id="loginFailureTag" class="col-sm-12 controls" style="display:none">
+                        <label style="color:red">Invalid Credentials</label>
                     </div>
                     <div style="margin-top:10px" class="form-group">
                         <div class="col-sm-12 controls">

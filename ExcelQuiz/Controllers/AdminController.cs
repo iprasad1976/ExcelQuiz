@@ -10,7 +10,6 @@ namespace ExcelQuiz.Controllers
 {
     public class AdminController : Controller
     {
-        private string _baseURI = ConfigurationManager.AppSettings["baseURI"];
         // GET: Admin
         public ActionResult Index()
         {
@@ -32,13 +31,31 @@ namespace ExcelQuiz.Controllers
             return View();
         }
 
+
+        [HttpGet]
         public ActionResult Login()
         {
-            LoginModel loginModel = new LoginModel();
-            loginModel.UserId = "dbarmera";
-            loginModel.Password = "12345";            
-            var a = WebApiProxy.WebAPIPostCall<LoginModel,GetToken>("Admin/AdminLogin", loginModel);
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(LoginModel loginModel)
+        {
+            bool isValid = false;
+            try
+            {
+                var a = WebApiProxy.WebAPIPostCall<LoginModel, TokenModel>("Admin/AdminLogin", loginModel);
+
+                if ((a.Result.LoginStart <= DateTime.Now) && (a.Result.LoginEnd >= DateTime.Now) && (!a.Result.Token.Equals(string.Empty)))
+                {
+                    isValid = true;
+                }
+            }
+            catch (Exception)
+            {
+                return Json(isValid);
+            }
+            return Json(isValid);
         }
 
 

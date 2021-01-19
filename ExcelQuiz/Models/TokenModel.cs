@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ExcelQuiz.Models
 {
-    public class GetToken
+    public class TokenModel
     {
         public string Token { get; set; }
         public DateTime? LoginStart { get; set; }
