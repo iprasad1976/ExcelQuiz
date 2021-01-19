@@ -30,6 +30,9 @@
                 $('#optNoofOption').val('2');
                 $('#optNoofOption').attr("disabled", "disabled");
             }
+
+            var valOp = $('#optNoofOption').val();
+            showHideOptions(valOp, val);
            
         });
 
@@ -55,167 +58,190 @@
         }
     });
 </script>
-<div class="row">
-    <div class="col-12 col-s-12"></div>
-</div>
-<div class="row">
-    <div class="col-1 col-s-1"></div>
-    <div class="col-10 col-s-10">
-        <div class="row">
-            <div class="col-2 col-s-2"><strong>Question:</strong></div>
-            <div class="col-10 col-s-10"><textarea value="" maxlength="500"></textarea></div>
-        </div>
-        <div class="row">
-            <div class="col-2 col-s-2"><strong>For Quiz:</strong></div>
-            <div class="col-10 col-s-10 left">
-                <select name="optQuiz" id="optQuiz" class="multi" multiple>
-                    <option value="quiz1">Quiz 1</option>
-                    <option value="quiz2">Quiz 2</option>
-                    <option value="quiz3">Quiz 3</option>
-                    <option value="quiz4">Quiz 4</option>
-                    <option value="quiz5">Quiz 5</option>
-                </select>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-2 col-s-2"><strong>Marks:</strong></div>
-            <div class="col-10 col-s-10"><input type="text" value="" /></div>
-        </div>
-        <div class="row">
-            <div class="col-2 col-s-2"><strong>Question Type:</strong></div>
-            <div class="col-10 col-s-10">
-                <select name="optQuestionType" id="optQuestionType" class="multi">
-                    <option value="yesNo">Yes/No</option>
-                    <option value="mcqSs">Multi Choice Single Selection</option>
-                    <option value="mcqMs">Multi Choice Multi Selection</option>
-                </select>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-2 col-s-2"><strong>No. of option:</strong></div>
-            <div class="col-10 col-s-10 left">
-                <select name="optNoofOption" id="optNoofOption" class="multi">
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                </select>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-2 col-s-2"><strong></strong></div>
-            <div class="col-4 col-s-4"><strong>Options</strong></div>
-            <div class="col-4 col-s-4"><strong>Is Correct</strong></div>
-            <div class="col-2 col-s-2"></div>
-        </div>
-        <div class="row" id="yesNo">
-            <div class="col-12 col-s-12">
-                <div class="row" id="yesNo_opt1">
-                    <div class="col-2 col-s-2"><strong>Yes</strong></div>
-                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
-                    <div class="col-4 col-s-4"><input type="radio" name="rdYesNo" /></div>
-                    <div class="col-2 col-s-2"></div>
-                </div>
-                <div class="row" id="yesNo_opt2">
-                    <div class="col-2 col-s-2"><strong>No</strong></div>
-                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
-                    <div class="col-4 col-s-4"><input type="radio" name="rdYesNo" /></div>
-                    <div class="col-2 col-s-2"></div>
-                </div>
-            </div>
-        </div>
-        <div class="row" id="mcqSs">
-            <div class="col-12 col-s-12">
-                <div class="row" id="mcqSs_opt1">
-                    <div class="col-2 col-s-2"><strong>Option 1</strong></div>
-                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
-                    <div class="col-4 col-s-4"><input type="radio" name="rdMcqSs" /></div>
-                    <div class="col-2 col-s-2"></div>
-                </div>
-                <div class="row" id="mcqSs_opt2">
-                    <div class="col-2 col-s-2"><strong>Option 2</strong></div>
-                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
-                    <div class="col-4 col-s-4"><input type="radio" name="rdMcqSs" /></div>
-                    <div class="col-2 col-s-2"></div>
-                </div>
-                <div class="row" id="mcqSs_opt3">
-                    <div class="col-2 col-s-2"><strong>Option 3</strong></div>
-                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
-                    <div class="col-4 col-s-4"><input type="radio" name="rdMcqSs" /></div>
-                    <div class="col-2 col-s-2"></div>
-                </div>
-                <div class="row" id="mcqSs_opt4">
-                    <div class="col-2 col-s-2"><strong>Option 4</strong></div>
-                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
-                    <div class="col-4 col-s-4"><input type="radio" name="rdMcqSs" /></div>
-                    <div class="col-2 col-s-2"></div>
-                </div>
-                <div class="row" id="mcqSs_opt5">
-                    <div class="col-2 col-s-2"><strong>Option 5</strong></div>
-                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
-                    <div class="col-4 col-s-4"><input type="radio" name="rdMcqSs" /></div>
-                    <div class="col-2 col-s-2"></div>
-                </div>
-                <div class="row" id="mcqSs_opt6">
-                    <div class="col-2 col-s-2"><strong>Option 6</strong></div>
-                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
-                    <div class="col-4 col-s-4"><input type="radio" name="rdMcqSs" /></div>
-                    <div class="col-2 col-s-2"></div>
-                </div>
-            </div>
-        </div>
-        <div class="row" id="mcqMs">
-            <div class="col-12 col-s-12">
-                <div class="row" id="mcqMs_opt1">
-                    <div class="col-2 col-s-2"><strong>Option 1</strong></div>
-                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
-                    <div class="col-4 col-s-4"><input type="checkbox" /></div>
-                    <div class="col-2 col-s-2"></div>
-                </div>
-                <div class="row" id="mcqMs_opt2">
-                    <div class="col-2 col-s-2"><strong>Option 2</strong></div>
-                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
-                    <div class="col-4 col-s-4"><input type="checkbox" /></div>
-                    <div class="col-2 col-s-2"></div>
-                </div>
-                <div class="row" id="mcqMs_opt3">
-                    <div class="col-2 col-s-2"><strong>Option 3</strong></div>
-                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
-                    <div class="col-4 col-s-4"><input type="checkbox" /></div>
-                    <div class="col-2 col-s-2"></div>
-                </div>
-                <div class="row" id="mcqMs_opt4">
-                    <div class="col-2 col-s-2"><strong>Option 4</strong></div>
-                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
-                    <div class="col-4 col-s-4"><input type="checkbox" /></div>
-                    <div class="col-2 col-s-2"></div>
-                </div>
-                <div class="row" id="mcqMs_opt5">
-                    <div class="col-2 col-s-2"><strong>Option 5</strong></div>
-                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
-                    <div class="col-4 col-s-4"><input type="checkbox" /></div>
-                    <div class="col-2 col-s-2"></div>
-                </div>
-                <div class="row" id="mcqMs_opt6">
-                    <div class="col-2 col-s-2"><strong>Option 6</strong></div>
-                    <div class="col-4 col-s-4"><textarea maxlength="200"></textarea></div>
-                    <div class="col-4 col-s-4"><input type="checkbox" /></div>
-                    <div class="col-2 col-s-2"></div>
-                </div>
-            </div>
-            </div>
-        <div class="row">
-            <div class="col-4 col-s-4"></div>
-            <div class="col-2 col-s-2 center-block">
-                <input type="button" class="button" value="Save" />
-            </div>
-            <div class="col-2 col-s-2 center-block">
-                <input type="button" class="button" value="Reset" />
-            </div>
-            <div class="col-4 col-s-4"></div>
-        </div>
+<form id="questionForm" action="#" method="post">
+    <div class="row">
+        <div class="col-12 col-s-12"></div>
     </div>
-    <div class="col-1 col-s-1"></div>
-</div>
-
+    <div class="row">
+        <div class="col-1 col-s-1"></div>
+        <div class="col-10 col-s-10">
+            <div class="row">
+                <div class="col-2 col-s-2"><strong>Question:</strong></div>
+                <div class="col-10 col-s-10"><textarea value="" maxlength="500"></textarea></div>
+            </div>
+            <div class="row">
+                <div class="col-2 col-s-2"><strong>For Quiz:</strong></div>
+                <div class="col-8 col-s-8">
+                    <div class="row headerRow">
+                        <div class="col-1 col-s-1"></div>
+                        <div class="col-6 col-s-6">Quiz Name</div>
+                        <div class="col-4 col-s-4" style="text-align:center">Marks</div>
+                    </div>
+                    <div class="row tablecontent">
+                        <div class="col-12 col-s-12">
+                            <div class="row">
+                                <div class="col-1 col-s-1"><input type="checkbox" /></div>
+                                <div class="col-6 col-s-6">Quiz 1</div>
+                                <div class="col-4 col-s-4" style="text-align:center"><input type="text" value="" style="width:50px;" /></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1 col-s-1"><input type="checkbox" /></div>
+                                <div class="col-6 col-s-6">Quiz 2</div>
+                                <div class="col-4 col-s-4" style="text-align:center"><input type="text" value="" style="width:50px;" /></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1 col-s-1"><input type="checkbox" /></div>
+                                <div class="col-6 col-s-6">Quiz 3</div>
+                                <div class="col-4 col-s-4" style="text-align:center"><input type="text" value="" style="width:50px;" /></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1 col-s-1"><input type="checkbox" /></div>
+                                <div class="col-6 col-s-6">Quiz 4</div>
+                                <div class="col-4 col-s-4" style="text-align:center"><input type="text" value="" style="width:50px;" /></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1 col-s-1"><input type="checkbox" /></div>
+                                <div class="col-6 col-s-6">Quiz 5</div>
+                                <div class="col-4 col-s-4" style="text-align:center"><input type="text" value="" style="width:50px;" /></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2 col-s-2"></div>
+            </div>
+            <div class="row">
+                <div class="col-2 col-s-2"><strong>Question Type:</strong></div>
+                <div class="col-4 col-s-4">
+                    <select name="optQuestionType" id="optQuestionType" class="multi">
+                        <option value="yesNo">Yes/No</option>
+                        <option value="mcqSs">Multi Choice Single Selection</option>
+                        <option value="mcqMs">Multi Choice Multi Selection</option>
+                    </select>
+                </div>
+                <div class="col-2 col-s-2"><strong>No. of option:</strong></div>
+                <div class="col-4 col-s-4" style="width:100px;">
+                    <select name="optNoofOption" id="optNoofOption" class="multi">
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row" style="border-bottom:2px solid black">
+                <div class="col-2 col-s-2"><strong></strong></div>
+                <div class="col-6 col-s-6"><strong>Options</strong></div>
+                <div class="col-2 col-s-2"><strong>Is Correct</strong></div>
+                <div class="col-2 col-s-2"></div>
+            </div>
+            <div class="row" id="yesNo">
+                <div class="col-12 col-s-12">
+                    <div class="row" id="yesNo_opt1">
+                        <div class="col-2 col-s-2"><strong>Option 1</strong></div>
+                        <div class="col-6 col-s-6">Yes</div>
+                        <div class="col-2 col-s-2"><input type="radio" name="rdYesNo" /></div>
+                        <div class="col-2 col-s-2"></div>
+                    </div>
+                    <div class="row" id="yesNo_opt2">
+                        <div class="col-2 col-s-2"><strong>Option 2</strong></div>
+                        <div class="col-6 col-s-6">No</div>
+                        <div class="col-2 col-s-2"><input type="radio" name="rdYesNo" /></div>
+                        <div class="col-2 col-s-2"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="mcqSs">
+                <div class="col-12 col-s-12">
+                    <div class="row" id="mcqSs_opt1">
+                        <div class="col-2 col-s-2"><strong>Option 1</strong></div>
+                        <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                        <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
+                        <div class="col-2 col-s-2"></div>
+                    </div>
+                    <div class="row" id="mcqSs_opt2">
+                        <div class="col-2 col-s-2"><strong>Option 2</strong></div>
+                        <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                        <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
+                        <div class="col-2 col-s-2"></div>
+                    </div>
+                    <div class="row" id="mcqSs_opt3">
+                        <div class="col-2 col-s-2"><strong>Option 3</strong></div>
+                        <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                        <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
+                        <div class="col-2 col-s-2"></div>
+                    </div>
+                    <div class="row" id="mcqSs_opt4">
+                        <div class="col-2 col-s-2"><strong>Option 4</strong></div>
+                        <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                        <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
+                        <div class="col-2 col-s-2"></div>
+                    </div>
+                    <div class="row" id="mcqSs_opt5">
+                        <div class="col-2 col-s-2"><strong>Option 5</strong></div>
+                        <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                        <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
+                        <div class="col-2 col-s-2"></div>
+                    </div>
+                    <div class="row" id="mcqSs_opt6">
+                        <div class="col-2 col-s-2"><strong>Option 6</strong></div>
+                        <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                        <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
+                        <div class="col-2 col-s-2"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="mcqMs">
+                <div class="col-12 col-s-12">
+                    <div class="row" id="mcqMs_opt1">
+                        <div class="col-2 col-s-2"><strong>Option 1</strong></div>
+                        <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                        <div class="col-2 col-s-2"><input type="checkbox" /></div>
+                        <div class="col-2 col-s-2"></div>
+                    </div>
+                    <div class="row" id="mcqMs_opt2">
+                        <div class="col-2 col-s-2"><strong>Option 2</strong></div>
+                        <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                        <div class="col-2 col-s-2"><input type="checkbox" /></div>
+                        <div class="col-2 col-s-2"></div>
+                    </div>
+                    <div class="row" id="mcqMs_opt3">
+                        <div class="col-2 col-s-2"><strong>Option 3</strong></div>
+                        <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                        <div class="col-2 col-s-2"><input type="checkbox" /></div>
+                        <div class="col-2 col-s-2"></div>
+                    </div>
+                    <div class="row" id="mcqMs_opt4">
+                        <div class="col-2 col-s-2"><strong>Option 4</strong></div>
+                        <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                        <div class="col-2 col-s-2"><input type="checkbox" /></div>
+                        <div class="col-2 col-s-2"></div>
+                    </div>
+                    <div class="row" id="mcqMs_opt5">
+                        <div class="col-2 col-s-2"><strong>Option 5</strong></div>
+                        <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                        <div class="col-2 col-s-2"><input type="checkbox" /></div>
+                        <div class="col-2 col-s-2"></div>
+                    </div>
+                    <div class="row" id="mcqMs_opt6">
+                        <div class="col-2 col-s-2"><strong>Option 6</strong></div>
+                        <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                        <div class="col-2 col-s-2"><input type="checkbox" /></div>
+                        <div class="col-2 col-s-2"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 col-s-4"></div>
+                <div class="col-2 col-s-2 center-block">
+                    <input type="button" class="button" value="Save" />
+                </div>
+                <div class="col-2 col-s-2 center-block">
+                    <input type="reset" class="button" value="Reset" />
+                </div>
+                <div class="col-4 col-s-4"></div>
+            </div>
+        </div>
+        <div class="col-1 col-s-1"></div>
+    </div>
+</form>

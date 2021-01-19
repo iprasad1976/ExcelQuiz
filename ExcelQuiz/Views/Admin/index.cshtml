@@ -15,40 +15,111 @@ $(document).ready(function () {
     <div class="col-1 col-s-1"></div>
     <div class="col-10 col-s-10">
         <div class="row">
-            <div class="col-1 col-s-1 right"><strong>Search:</strong>&nbsp;&nbsp;&nbsp;</div>
-            <div class="col-11 col-s-11 left"><input type="text" value="" /></div>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                <input type="text" class="form-control" name="search" value="" placeholder="search">
+            </div>
         </div>
-        <div class="row"><div class="col-12 col-s-12" id="addNew"><strong><u>Add New</u></strong></div></div>
+        <div class="row" style="text-align:right"><div class="col-12 col-s-12" id="addNew"><strong><u>Add New</u></strong></div></div>
         <div class="row headerRow">
-            <div class="col-3 col-s-3 tdCol">Requested Email</div>
-            <div class="col-2 col-s-2 tdCol">Request ID</div>
-            <div class="col-2 col-s-2 tdCol">Valid From</div>
-            <div class="col-2 col-s-2 tdCol">Valid To</div>
-            <div class="col-3 col-s-3 tdCol">Actions</div>
+            <div class="col-3 col-s-3">Requested Email</div>
+            <div class="col-2 col-s-2">Request ID</div>
+            <div class="col-2 col-s-2">Valid From</div>
+            <div class="col-2 col-s-2">Valid To</div>
+            <div class="col-3 col-s-3" style="text-align:center">Actions</div>
         </div>
-        <div    >
-            <div class="row">
-                <div class="col-3 col-s-3 tdCol">prased.indra@gmail.com</div>
-                <div class="col-2 col-s-2 tdCol">REQ0001</div>
-                <div class="col-2 col-s-2 tdCol">25/01/2021</div>
-                <div class="col-2 col-s-2 tdCol">24/01/2022</div>
-                <div class="col-3 col-s-3 tdCol"><a href="#">Delete</a> &nbsp; &nbsp; <a href="#">Download</a></div>
-            </div>
-            <div class="row">
-                <div class="col-3 col-s-3 tdCol">prased.indra@gmail.com</div>
-                <div class="col-2 col-s-2 tdCol">REQ0001</div>
-                <div class="col-2 col-s-2 tdCol">25/01/2021</div>
-                <div class="col-2 col-s-2 tdCol">24/01/2022</div>
-                <div class="col-3 col-s-3 tdCol"><a href="#">Delete</a> &nbsp; &nbsp; <a href="#">Download</a></div>
-            </div>
-            <div class="row">
-                <div class="col-3 col-s-3 tdCol">prased.indra@gmail.com</div>
-                <div class="col-2 col-s-2 tdCol">REQ0001</div>
-                <div class="col-2 col-s-2 tdCol">25/01/2021</div>
-                <div class="col-2 col-s-2 tdCol">24/01/2022</div>
-                <div class="col-3 col-s-3 tdCol"><a href="#">Delete</a> &nbsp; &nbsp; <a href="#">Download</a></div>
+        <div class="row tablecontent">
+            <div class="col-12 col-s-12">
+                <div class="row">
+                    <div class="col-4 col-s-4">prased.indra@gmail.com</div>
+                    <div class="col-2 col-s-2">REQ0001</div>
+                    <div class="col-2 col-s-2">25/01/2021</div>
+                    <div class="col-2 col-s-2">24/01/2022</div>
+                    <div class="col-1 col-s-1"><a href="#">Delete</a></div>
+                    <div class="col-1 col-s-1"><a href="#">Download</a></div>
+                </div>
+                <div class="row">
+                    <div class="col-4 col-s-4">prased.indra@gmail.com</div>
+                    <div class="col-2 col-s-2">REQ0001</div>
+                    <div class="col-2 col-s-2">25/01/2021</div>
+                    <div class="col-2 col-s-2">24/01/2022</div>
+                    <div class="col-1 col-s-1"><a href="#">Delete</a></div>
+                    <div class="col-1 col-s-1"><a href="#">Download</a></div>
+                </div>
+                <div class="row">
+                    <div class="col-4 col-s-4">prased.indra@gmail.com</div>
+                    <div class="col-2 col-s-2">REQ0001</div>
+                    <div class="col-2 col-s-2">25/01/2021</div>
+                    <div class="col-2 col-s-2">24/01/2022</div>
+                    <div class="col-1 col-s-1"><a href="#">Delete</a></div>
+                    <div class="col-1 col-s-1"><a href="#">Download</a></div>
+                </div>
+                <div class="row">
+                    <div class="col-4 col-s-4">prased.indra@gmail.com</div>
+                    <div class="col-2 col-s-2">REQ0001</div>
+                    <div class="col-2 col-s-2">25/01/2021</div>
+                    <div class="col-2 col-s-2">24/01/2022</div>
+                    <div class="col-1 col-s-1"><a href="#">Delete</a></div>
+                    <div class="col-1 col-s-1"><a href="#">Download</a></div>
+                </div>
+                <div class="row">
+                    <div class="col-4 col-s-4">prased.indra@gmail.com</div>
+                    <div class="col-2 col-s-2">REQ0001</div>
+                    <div class="col-2 col-s-2">25/01/2021</div>
+                    <div class="col-2 col-s-2">24/01/2022</div>
+                    <div class="col-1 col-s-1"><a href="#">Delete</a></div>
+                    <div class="col-1 col-s-1"><a href="#">Download</a></div>
+                </div>
+                <div class="row">
+                    <div class="col-4 col-s-4">prased.indra@gmail.com</div>
+                    <div class="col-2 col-s-2">REQ0001</div>
+                    <div class="col-2 col-s-2">25/01/2021</div>
+                    <div class="col-2 col-s-2">24/01/2022</div>
+                    <div class="col-1 col-s-1"><a href="#">Delete</a></div>
+                    <div class="col-1 col-s-1"><a href="#">Download</a></div>
+                </div>
+                <div class="row">
+                    <div class="col-4 col-s-4">prased.indra@gmail.com</div>
+                    <div class="col-2 col-s-2">REQ0001</div>
+                    <div class="col-2 col-s-2">25/01/2021</div>
+                    <div class="col-2 col-s-2">24/01/2022</div>
+                    <div class="col-1 col-s-1"><a href="#">Delete</a></div>
+                    <div class="col-1 col-s-1"><a href="#">Download</a></div>
+                </div>
+                <div class="row">
+                    <div class="col-4 col-s-4">prased.indra@gmail.com</div>
+                    <div class="col-2 col-s-2">REQ0001</div>
+                    <div class="col-2 col-s-2">25/01/2021</div>
+                    <div class="col-2 col-s-2">24/01/2022</div>
+                    <div class="col-1 col-s-1"><a href="#">Delete</a></div>
+                    <div class="col-1 col-s-1"><a href="#">Download</a></div>
+                </div>
+                <div class="row">
+                    <div class="col-4 col-s-4">prased.indra@gmail.com</div>
+                    <div class="col-2 col-s-2">REQ0001</div>
+                    <div class="col-2 col-s-2">25/01/2021</div>
+                    <div class="col-2 col-s-2">24/01/2022</div>
+                    <div class="col-1 col-s-1"><a href="#">Delete</a></div>
+                    <div class="col-1 col-s-1"><a href="#">Download</a></div>
+                </div>
+                <div class="row">
+                    <div class="col-4 col-s-4">prased.indra@gmail.com</div>
+                    <div class="col-2 col-s-2">REQ0001</div>
+                    <div class="col-2 col-s-2">25/01/2021</div>
+                    <div class="col-2 col-s-2">24/01/2022</div>
+                    <div class="col-1 col-s-1"><a href="#">Delete</a></div>
+                    <div class="col-1 col-s-1"><a href="#">Download</a></div>
+                </div>
+                <div class="row">
+                    <div class="col-4 col-s-4">prased.indra@gmail.com</div>
+                    <div class="col-2 col-s-2">REQ0001</div>
+                    <div class="col-2 col-s-2">25/01/2021</div>
+                    <div class="col-2 col-s-2">24/01/2022</div>
+                    <div class="col-1 col-s-1"><a href="#">Delete</a></div>
+                    <div class="col-1 col-s-1"><a href="#">Download</a></div>
+                </div>
             </div>
         </div>
-    </div>
+    </div> 
     <div class="col-1 col-s-1"></div>
 </div>
