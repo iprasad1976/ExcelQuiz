@@ -14,22 +14,29 @@
             
             var randomnumber = Math.floor(Math.random() * 4) + 2;
             var val = $(this).val();
-            if(val== 'Next')
+            if(val== 'Next' || val== '>>')
                 counter++;
-            if(val== 'Previous')
+            if(val== 'Previous' || val== '<<')
                counter--;
 
              $("#questNumber").html('Question ' + counter);
 
-             if (counter == 1) 
-                 $("#btnPrev").attr('disabled', 'disabled');
-             if (counter == 2) 
-                 $("#btnPrev").removeAttr('disabled');
-             if (counter == 20)
-                   $("#btnNext").val('Submit');
-             if (counter == 19)
-                 $("#btnNext").val('Next');
-
+            if (counter == 1) {
+                $("#btnPrev").attr('disabled', 'disabled');
+                $("#btnPrev1").attr('disabled', 'disabled');
+            }
+            if (counter == 2) {
+                $("#btnPrev").removeAttr('disabled');
+                $("#btnPrev1").removeAttr('disabled');
+            }
+            if (counter == 20) {
+                $("#btnNext").val('Submit');
+                $("#btnNext1").val('Submit');
+            }
+            if (counter == 19) {
+                $("#btnNext").val('Next');
+                $("#btnNext1").val('Next');
+            }
             if (counter%3 == 1) {
                 $('#mcqSs').css('display', 'block');
                 $('#yesNo').css('display', 'none');
@@ -66,11 +73,14 @@
     <div class="col-12 col-s-12"></div>
 </div>
 <div class="row">
-    <div class="col-1 col-s-1"></div>
+    <div class="col-1 col-s-1" style="height:35vw;"><input type="button" id="btnPrev1" class="button centerPlace" value="<<" /></div>
     <div class="col-10 col-s-10">
         <div class="row">
             <div class="col-2 col-s-2"><strong><span id="questNumber"></span>:</strong></div>
             <div class="col-10 col-s-10"><strong><span>What are the event handlers that we have for the Global.asax file?</span></strong></div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-s-12"></div>
         </div>
         <div class="row" id="yesNo">
             <div class="col-12 col-s-12">
@@ -155,21 +165,26 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-2 col-s-2"></div>
-            <div class="col-2 col-s-2"><strong>Question Feedback:</strong></div>
-            <div class="col-8 col-s-8"><textarea value="" maxlength="500"></textarea></div>
+            <div class="col-12 col-s-12"></div>
         </div>
         <div class="row">
+            <div class="col-12 col-s-12"></div>
+        </div>
+        <div class="row bottomPlace">
+            <div class="col-3 col-s-3"><strong>Question Feedback:</strong></div>
+            <div class="col-9 col-s-9"><textarea value="" maxlength="500" style="width:400px;height:75px;"></textarea></div>
+        </div>
+        <div class="row" style="display:none;">
             <div class="col-4 col-s-4"></div>
-            <div class="col-2 col-s-2 center-block">
+            <div class="col-2 col-s-2" style="text-align:center">
                 <input type="button" id="btnPrev" class="button" value="Previous" />
             </div>
-            <div class="col-2 col-s-2 center-block">
+            <div class="col-2 col-s-2" style="text-align:center">
                 <input type="button" id="btnNext" class="button" value="Next" />
             </div>
             <div class="col-4 col-s-4"></div>
         </div>
     </div>
-    <div class="col-1 col-s-1"></div>
+    <div class="col-1 col-s-1" style="height:35vw;"><input type="button" id="btnNext1" class="button centerPlace" value=">>" /></div>
 </div>
 

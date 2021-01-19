@@ -211,3 +211,15 @@ body {
 .tdCol{
     padding:5px;
 }
+
+.centerPlace {
+    margin: 0;
+    position: absolute;
+    top: 40%;
+}
+
+.bottomPlace {
+    margin: 0;
+    position: absolute;
+    top: 70%;
+}
