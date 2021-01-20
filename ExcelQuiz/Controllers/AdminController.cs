@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ExcelQuiz.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ExcelQuiz.Controllers
 {
@@ -18,7 +19,7 @@ namespace ExcelQuiz.Controllers
             {
                 if (search == null) search = string.Empty;
 
-                result= WebApiProxy.WebAPIGetCall<List<CandidateRequestModel>>($"Admin/SearchRequests?search={search}").Result;
+                result = WebApiProxy.WebAPIGetCall<List<CandidateRequestModel>>($"Admin/SearchRequests?search={search}").Result;
             }
             catch (Exception ex)
             {
@@ -30,19 +31,42 @@ namespace ExcelQuiz.Controllers
 
         public ActionResult Candidate()
         {
+            ViewBag.ExamList = GetExamList().Select(x => new SelectListItem
+            {
+                Text = x.ExamName.ToString(),
+                Value = x.ExamId.ToString()
+            });
             return View();
         }
-        //[HttpPost]
-        //public ActionResult Candidate()
-        //{
-        //    return View();
-        //}
 
-        private List<ExamModel> GetQuizList()
+        [HttpPost]
+        public ActionResult Candidate(CandidateLoginModel candidateLoginModel)
+        {
+            bool isSuccessful = false;
+            try
+            {
+                candidateLoginModel.RequestDate = DateTime.Now;
+                candidateLoginModel.ValidFrom = Convert.ToDateTime(candidateLoginModel.ValidFrom);
+                candidateLoginModel.ValidTo = Convert.ToDateTime(candidateLoginModel.ValidTo);
+                var result = WebApiProxy.WebAPIPostCall<CandidateLoginModel, CandidateLoginModel>("Admin/AddCadidateLogins", candidateLoginModel);
+
+                if (result.Result != null)
+                {
+                    isSuccessful = true;
+                }
+            }
+            catch (Exception)
+            {
+                return Json(isSuccessful);
+            }
+            return Json(isSuccessful);
+        }
+
+        private List<ExamModel> GetExamList()
         {
             List<ExamModel> result = new List<ExamModel>();
             try
-            {          
+            {
                 result = WebApiProxy.WebAPIGetCall<List<ExamModel>>($"Admin/SearchExams?search={string.Empty}").Result;
             }
             catch (Exception ex)
@@ -50,6 +74,7 @@ namespace ExcelQuiz.Controllers
                 ViewBag.ErrorMessage = ex.Message;
             }
 
+            //return Json(result,JsonRequestBehavior.AllowGet);
             return result;
         }
 
