@@ -45,9 +45,7 @@ namespace ExcelQuiz.Controllers
             bool isSuccessful = false;
             try
             {
-                candidateLoginModel.RequestDate = DateTime.Now;
-                candidateLoginModel.ValidFrom = Convert.ToDateTime(candidateLoginModel.ValidFrom);
-                candidateLoginModel.ValidTo = Convert.ToDateTime(candidateLoginModel.ValidTo);
+                candidateLoginModel.RequestDate = DateTime.Now;             
                 var result = WebApiProxy.WebAPIPostCall<CandidateLoginModel, CandidateLoginModel>("Admin/AddCadidateLogins", candidateLoginModel);
 
                 if (result.Result != null)
@@ -73,8 +71,6 @@ namespace ExcelQuiz.Controllers
             {
                 ViewBag.ErrorMessage = ex.Message;
             }
-
-            //return Json(result,JsonRequestBehavior.AllowGet);
             return result;
         }
 
@@ -90,6 +86,22 @@ namespace ExcelQuiz.Controllers
         public ActionResult Quiz()
         {
             return View();
+        }
+        [HttpPost]
+        public ActionResult Quiz(ExamModel examModel)
+        {
+
+            bool isSuccessful = false;
+            try
+            {                
+                var result = WebApiProxy.WebAPIPostCall<ExamModel, UpdateCommandModel>("Admin/AddEditExam", examModel);
+                isSuccessful = result.Result.Status.Equals("Success") ? true : false;                
+            }
+            catch (Exception)
+            {
+                return Json(isSuccessful);
+            }
+            return Json(isSuccessful);
         }
 
         public ActionResult QuizList(string search)
@@ -113,6 +125,20 @@ namespace ExcelQuiz.Controllers
         {
             //var a = WebApiProxy.WebAPIGetCall<ExamModel>("Admin/GetExam?examId=1");
             return View();
+        }
+        private List<ExamModel> GetQuizList()
+        {
+            List<ExamModel> result = new List<ExamModel>();
+            try
+            {
+                result = WebApiProxy.WebAPIGetCall<List<ExamModel>>($"Admin/SearchExams?search={string.Empty}").Result;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+            }
+
+            return result;
         }
 
         public ActionResult QuestionList(int? examid, string search)

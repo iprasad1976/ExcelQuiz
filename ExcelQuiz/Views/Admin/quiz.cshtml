@@ -4,6 +4,40 @@
 @{
     Layout = "../Shared/_AdminLayout.cshtml";
 }
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var urlSubmitNewQuestion = '@Url.Action("Quiz")';
+
+        $("#btnSave").click(function () {
+
+         
+            var data = {};            
+            data.ExamName = $("#divQuizName").val();
+            data.TotalMarks = $("#divTotalMarks").val();
+            data.PassingPercentage = $("#divPassPercent").val();            
+            data.Instructions = $("#divInstruction").val();            
+            data.Duration = $("#divDuration").val();
+
+            $.ajax({
+                url: urlSubmitNewQuestion,
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data),
+                success: function (data) {
+                    if (data == true) {
+                        window.location = "quizList";
+                    }
+
+                },
+                error: function () {
+                    alert("New Question Creation failed, Try Again");
+
+                }
+            });
+        });
+    });
+</script>
 <form id="quizForm" action="#" method="post">
     <div class="row">
         <div class="col-12 col-s-12"></div>
@@ -13,7 +47,7 @@
         <div class="col-10 col-s-10">
             <div class="row">
                 <div class="col-2 col-s-2"><strong>Quiz Name:</strong></div>
-                <div class="col-10 col-s-10 left"><input type="text" value="" style="width:450px;" /></div>
+                <div class="col-10 col-s-10 left"><input type="text" value="" style="width:450px;" id="divQuizName"/></div>
             </div>
             <div class="row">
                 <div class="col-12 col-s-12"></div>
@@ -23,11 +57,11 @@
             </div>
             <div class="row">
                 <div class="col-2 col-s-2"><strong>Total Marks:</strong></div>
-                <div class="col-1 col-s-1"><input type="text" value="" style="width:50px;" /></div>
+                <div class="col-1 col-s-1"><input type="text" value="" style="width:50px;" id="divTotalMarks"/></div>
                 <div class="col-2 col-s-2"><strong>Passing Percentage:</strong></div>
-                <div class="col-1 col-s-1"><input type="text" value="" style="width:50px;" /></div>
+                <div class="col-1 col-s-1"><input type="text" value="" style="width:50px;" id="divPassPercent"/></div>
                 <div class="col-2 col-s-2"><strong>Duration (mins):</strong></div>
-                <div class="col-4 col-s-4"><input type="text" value="" style="width:50px;" /></div>
+                <div class="col-4 col-s-4"><input type="text" value="" style="width:50px;" id="divDuration"/></div>
             </div>
             <div class="row">
                 <div class="col-12 col-s-12"></div>
@@ -37,7 +71,7 @@
             </div>
             <div class="row">
                 <div class="col-2 col-s-2"><strong>Instructions:</strong></div>
-                <div class="col-8 col-s-8 left"><textarea maxlength="500"></textarea></div>
+                <div class="col-8 col-s-8 left"><textarea maxlength="500" id="divInstruction"></textarea></div>
                 <div class="col-2 col-s-2"></div>
             </div>
             <div class="row">
@@ -46,7 +80,7 @@
             <div class="row">
                 <div class="col-4 col-s-4"></div>
                 <div class="col-2 col-s-2 center-block">
-                    <input type="button" class="button" value="Save" />
+                    <input type="button" class="button" value="Save" id="btnSave"/>
                 </div>
                 <div class="col-2 col-s-2 center-block">
                     <input type="reset" class="button" value="Reset" />
