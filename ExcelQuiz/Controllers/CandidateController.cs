@@ -31,6 +31,11 @@ namespace ExcelQuiz.Controllers
             return View();
         }
 
+        public ActionResult Logout()
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
         [HttpPost]
         public ActionResult Login(LoginModel loginModel)
         {

@@ -67,12 +67,12 @@ namespace ExamQuizAPI.Controllers
         [HttpGet("SearchRequests")]
         public List<SpSearchRequests> SearchRequests(string search)
         {
-            var result = _context.SearchRequests(search).Result;
+            var result = _context.SearchRequests("%" + search + "%").Result;
             return result;
         }
 
         [HttpGet("GetListRequestsByRequestedEmail")]
-        public List<SpGetListRequestsByRequestedEmail> GetListRequestsByRequestedEmail(string requestedPersonEmail)
+        public List<SpSearchRequests> GetListRequestsByRequestedEmail(string requestedPersonEmail)
         {
             var result = _context.GetListRequestsByRequestedEmail(requestedPersonEmail).Result;
             return result;
@@ -91,7 +91,7 @@ namespace ExamQuizAPI.Controllers
         [HttpGet("SearchExams")]
         public List<SpSearchExams> SearchExams(string search)
         {
-            var result = _context.SearchExams(search).Result;
+            var result = _context.SearchExams("%" + search + "%").Result;
             return result;
         }
 
@@ -114,14 +114,14 @@ namespace ExamQuizAPI.Controllers
         }
 
         [HttpGet("SearchQuestions")]
-        public List<SpSearchQuestions> SearchQuestions(string search)
+        public List<SpSearchQuestions> SearchQuestions(int examId, string search)
         {
-            var result = _context.SearchQuestions(search).Result;
+            var result = _context.SearchQuestions(examId, "%" + search + "%").Result;
             return result;
         }
 
         [HttpGet("DeleteRequestedLogin")]
-        public SpUpdateCommand DeleteRequestedLogin(string candidateLoginRequestId)
+        public SpUpdateCommand DeleteRequestedLogin(int candidateLoginRequestId)
         {
             var result = _context.DeleteRequestedLogin(candidateLoginRequestId, _userId).Result;
             return result.FirstOrDefault();

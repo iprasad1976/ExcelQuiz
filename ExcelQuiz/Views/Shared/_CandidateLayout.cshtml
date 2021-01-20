@@ -7,51 +7,27 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
-    <script src="~/Scripts/common.js"></script>
     <link rel="stylesheet" href="~/Content/style.css">
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#leftmenu li").click(function () {
-                var val = $(this).html();
-                var action = '';
-                if (val == 'Candidate Management')
-                    action = 'CandidateList';
-                if (val == 'Quiz Management')
-                    action = 'QuizList';
-                if (val == 'Question Management')
-                    action = 'QuestionList';
-
-                window.location = action;
-
-            });
-
-        });
-    </script>
 </head>
 <body>
     <div class="header">
         <div class="row">
             <div class="col-3 col-s-3"><img src="~/Content/images/mark-how-logo.gif" style="height:80px;width:80px" /></div>
-            <div class="col-7 col-s-8"><h1 text>Excel Quiz</h1></div>
-            <div class="col-2 col-2-12 linkmenu">
+            <div class="col-7 col-s-7"><h1 text>Excel Quiz</h1></div>
+            <div class="col-2 col-s-2 linkmenu">
                 <ul>
                     <li>
-                        @Html.ActionLink("Logout", "Logout", "Admin")
+                        @Html.ActionLink("Logout", "Logout", "Candidate")
                     </li>
                     <li>
-                        @Html.ActionLink("Change Password", "ChangePassword", "Admin")
+                        Question: 4/20
                     </li>
                 </ul>
             </div>
         </div>
     </div>
-    <div class="row content">
-         <div class="col-3 col-s-3 menu"  id="leftmenu">
-            <ul>
-                <li>Candidate Management</li>
-                <li>Quiz Management</li>
-                <li>Question Management</li>
-            </ul>
+    <div class="row row-eq-height content">
+        <div class="col-3 col-s-3 nomenu">
         </div>
         <div class="col-9 col-s-9 body-content">
             @RenderBody()
@@ -61,7 +37,6 @@
         <p>&copy; @DateTime.Now.Year - Excel Quiz</p>
     </div>
 
- 
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

@@ -11,25 +11,82 @@ namespace ExcelQuiz.Controllers
     public class AdminController : Controller
     {
         // GET: Admin
-        public ActionResult Index()
+        public ActionResult CandidateList(string search)
         {
-            return View();
+            List<CandidateRequestModel> result = new List<CandidateRequestModel>();
+            try
+            {
+                if (search == null) search = string.Empty;
+
+                result= WebApiProxy.WebAPIGetCall<List<CandidateRequestModel>>($"Admin/SearchRequests?search={search}").Result;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+            }
+
+            return View(result);
         }
+
         public ActionResult Candidate()
         {
             return View();
         }
 
+        public ActionResult Logout()
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
         public ActionResult Quiz()
         {
             return View();
         }
 
+        public ActionResult QuizList(string search)
+        {
+            List<ExamModel> result = new List<ExamModel>();
+            try
+            {
+                if (search == null) search = string.Empty;
+
+                result = WebApiProxy.WebAPIGetCall<List<ExamModel>>($"Admin/SearchExams?search={search}").Result;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+            }
+
+            return View(result);
+        }
+
         public ActionResult Question()
         {
-            var a = WebApiProxy.WebAPIGetCall<ExamModel>("Admin/GetExam?examId=1");
+            //var a = WebApiProxy.WebAPIGetCall<ExamModel>("Admin/GetExam?examId=1");
             return View();
         }
+
+        public ActionResult QuestionList(int examid, string search)
+        {
+            List<ExamModel> result = new List<ExamModel>();
+            try
+            {
+                if (search == null) search = string.Empty;
+
+                result = WebApiProxy.WebAPIGetCall<List<ExamModel>>($"Admin/SearchQuestions?examid={examid}&search={search}").Result;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+            }
+
+            return View(result);
+        }
+
 
 
         [HttpGet]

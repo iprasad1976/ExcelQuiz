@@ -5,10 +5,10 @@ using System.Web;
 
 namespace ExcelQuiz.Models
 {
-    public class ExamModel
+    public class QuestionModel
     {
-        public int ExamId { get; set; }
-        public string ExamName { get; set; }
+        public int QuestionId { get; set; }
+        public string Question { get; set; }
         public int TotalMarks { get; set; }
         public int PassingPercentage { get; set; }
         public string Instructions { get; set; }

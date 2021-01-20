@@ -1,0 +1,56 @@
+﻿@{
+    Layout = "../Shared/_AdminLayout.cshtml";
+}
+<script type="text/javascript">
+$(document).ready(function () {
+       $("#addNew").click(function () {
+              window.location = "question";
+       });
+});
+</script>
+<div class="row">
+    <div class="col-12 col-s-12"></div>
+</div>
+<div class="row">
+    <div class="col-1 col-s-1"></div>
+    <div class="col-10 col-s-10">
+        <div class="row">
+            <div class="col-1 col-s-1"><strong>Quiz:</strong></div>
+            <div class="col-11 col-s-11">
+                <select name="quiz" id="selQuiz" class="multi">
+                    <option value="1">Quiz 1</option>
+                    <option value="2">Quiz 2</option>
+                    <option value="3">Quiz 3</option>
+                </select>
+            </div>
+        </div>
+        <div class="row"><div class="col-12 col-s-12"></div></div>
+        <div class="row">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                <input type="text" class="form-control" name="search" value="" placeholder="search">
+            </div>
+        </div>
+        <div class="row" style="text-align:right"><div class="col-12 col-s-12" id="addNew"><strong><u>Add New</u></strong></div></div>
+        <div class="row headerRow">
+            <div class="col-3 col-s-3">Question</div>
+            <div class="col-2 col-s-2">Score</div>
+            <div class="col-2 col-s-2">Option Type</div>
+            <div class="col-2 col-s-2">No. of Options</div>
+            <div class="col-3 col-s-3" style="text-align:center">Actions</div>
+        </div>
+        <div class="row tablecontent">
+            <div class="col-12 col-s-12">
+                <div class="row">
+                    <div class="col-4 col-s-4">Question 1</div>
+                    <div class="col-2 col-s-2">6</div>
+                    <div class="col-2 col-s-2">MCQ-M</div>
+                    <div class="col-2 col-s-2">4</div>
+                    <div class="col-1 col-s-1"><a href="question">Edit</a></div>
+                    <div class="col-1 col-s-1"><a href="#">Delete</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-1 col-s-1"></div>
+</div>

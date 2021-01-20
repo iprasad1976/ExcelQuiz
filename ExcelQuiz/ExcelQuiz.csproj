@@ -130,6 +130,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CandidateLoginModel.cs" />
+    <Compile Include="Models\CandidateRequestModel.cs" />
+    <Compile Include="Models\QuestionModel.cs" />
     <Compile Include="Models\ExamModel.cs" />
     <Compile Include="Models\TokenModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -150,6 +152,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\common.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -174,7 +177,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Admin\index.cshtml" />
+    <Content Include="Views\Admin\candidateList.cshtml" />
     <Content Include="Views\Candidate\index.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Admin\candidate.cshtml" />
@@ -184,6 +187,9 @@
     <Content Include="Views\Candidate\score.cshtml" />
     <Content Include="Views\Candidate\login.cshtml" />
     <Content Include="Views\Admin\login.cshtml" />
+    <Content Include="Views\Admin\quizList.cshtml" />
+    <Content Include="Views\Admin\questionList.cshtml" />
+    <Content Include="Views\Shared\_CandidateLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

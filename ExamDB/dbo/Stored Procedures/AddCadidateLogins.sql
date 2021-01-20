@@ -21,10 +21,10 @@ BEGIN
 	SELECT @reqCount = COUNT(1) FROM CandidateLoginRequest WHERE RequestedPersonEmail = @requestedPersonEmail 
 	SET @reqCount = @reqCount + 1
 	Declare @requestId varchar(20)
-	SET @requestId = 'REQ' + REPLACE(STR(@reqCount,5),' ','0')
+	SET @requestId = 'REQ' + REPLACE(STR(@reqCount,7),' ','0')
 	
-	INSERT INTO CandidateLoginRequest ([RequestId], [RequestDate], [RequestedPersonEmail], [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate], [IsActive]) 
-		VALUES (@requestId, @dt, @requestedPersonEmail, @adminUserId, @dt, @adminUserId, @dt, 'Y')
+	INSERT INTO CandidateLoginRequest ([RequestId], [RequestDate], [RequestedPersonEmail], ValidFrom, ValidTo, NoofLoginRequest, NoofAttempt, [CreatedBy], [CreatedDate], [ModifiedBy], [ModifiedDate], [IsActive]) 
+		VALUES (@requestId, @dt, @requestedPersonEmail, @validFrom, @validTo, @noOfRequestedUserId, @noOfAttempt, @adminUserId, @dt, @adminUserId, @dt, 'Y')
 
     SET @candidateLoginRequestId = SCOPE_IDENTITY()
 
@@ -49,7 +49,7 @@ BEGIN
 			FROM STRING_SPLIT(@ExamIds, ',') a
 			CROSS JOIN (SELECT CandidateLoginId FROM CandidateLogin WHERE CandidateLoginRequestId = @candidateLoginRequestId AND IsActive = 'Y') b
 
-  SELECT RequestId, RequestDate, UserId, [Password], TotalNoofAttempts, ExamName, ValidFrom, ValidTo
+  SELECT RequestId, RequestDate, UserId, [Password], TotalNoofAttempts, ExamName, a.ValidFrom, a.ValidTo
 		FROM CandidateLoginRequest a
 		INNER JOIN CandidateLogin b ON a.CandidateLoginRequestId = b.CandidateLoginRequestId 
 		INNER JOIN ExamCandidate c ON b.CandidateLoginId = c.CandidateLoginId

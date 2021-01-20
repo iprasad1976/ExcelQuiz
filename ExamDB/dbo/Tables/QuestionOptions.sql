@@ -3,7 +3,7 @@
     [QuestionId]        INT             NOT NULL,
     [SlNo]              INT             NOT NULL,
     [Option]            NVARCHAR (1000) NOT NULL,
-    [IsCorrect]         INT             NOT NULL,
+    [IsCorrect]         BIT             NOT NULL,
     [CreatedBy]         NVARCHAR (20)   NOT NULL,
     [CreatedDate]       DATETIME        NOT NULL,
     [ModifiedBy]        NVARCHAR (20)   NOT NULL,

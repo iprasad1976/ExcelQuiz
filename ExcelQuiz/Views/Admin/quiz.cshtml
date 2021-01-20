@@ -1,57 +1,60 @@
-﻿@{
+﻿@using ExcelQuiz.Models;
+@model ExamModel
+
+@{
     Layout = "../Shared/_AdminLayout.cshtml";
 }
-    <form id="quizForm" action="#" method="post">
-        <div class="row">
-            <div class="col-12 col-s-12"></div>
-        </div>
-        <div class="row">
-            <div class="col-1 col-s-1"></div>
-            <div class="col-10 col-s-10">
-                <div class="row">
-                    <div class="col-2 col-s-2"><strong>Quiz Name:</strong></div>
-                    <div class="col-10 col-s-10 left"><input type="text" value="" style="width:450px;" /></div>
+<form id="quizForm" action="#" method="post">
+    <div class="row">
+        <div class="col-12 col-s-12"></div>
+    </div>
+    <div class="row">
+        <div class="col-1 col-s-1"></div>
+        <div class="col-10 col-s-10">
+            <div class="row">
+                <div class="col-2 col-s-2"><strong>Quiz Name:</strong></div>
+                <div class="col-10 col-s-10 left"><input type="text" value="" style="width:450px;" /></div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-s-12"></div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-s-12"></div>
+            </div>
+            <div class="row">
+                <div class="col-2 col-s-2"><strong>Total Marks:</strong></div>
+                <div class="col-1 col-s-1"><input type="text" value="" style="width:50px;" /></div>
+                <div class="col-2 col-s-2"><strong>Passing Percentage:</strong></div>
+                <div class="col-1 col-s-1"><input type="text" value="" style="width:50px;" /></div>
+                <div class="col-2 col-s-2"><strong>Duration (mins):</strong></div>
+                <div class="col-4 col-s-4"><input type="text" value="" style="width:50px;" /></div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-s-12"></div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-s-12"></div>
+            </div>
+            <div class="row">
+                <div class="col-2 col-s-2"><strong>Instructions:</strong></div>
+                <div class="col-8 col-s-8 left"><textarea maxlength="500"></textarea></div>
+                <div class="col-2 col-s-2"></div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-s-12"></div>
+            </div>
+            <div class="row">
+                <div class="col-4 col-s-4"></div>
+                <div class="col-2 col-s-2 center-block">
+                    <input type="button" class="button" value="Save" />
                 </div>
-                <div class="row">
-                    <div class="col-12 col-s-12"></div>
+                <div class="col-2 col-s-2 center-block">
+                    <input type="reset" class="button" value="Reset" />
                 </div>
-                <div class="row">
-                    <div class="col-12 col-s-12"></div>
-                </div>
-                <div class="row">
-                    <div class="col-2 col-s-2"><strong>Total Marks:</strong></div>
-                    <div class="col-1 col-s-1"><input type="text" value="" style="width:50px;" /></div>
-                    <div class="col-2 col-s-2"><strong>Passing Percentage:</strong></div>
-                    <div class="col-1 col-s-1"><input type="text" value="" style="width:50px;" /></div>
-                    <div class="col-2 col-s-2"><strong>Duration (mins):</strong></div>
-                    <div class="col-4 col-s-4"><input type="text" value="" style="width:50px;" /></div>
-                </div>
-                <div class="row">
-                    <div class="col-12 col-s-12"></div>
-                </div>
-                <div class="row">
-                    <div class="col-12 col-s-12"></div>
-                </div>
-                <div class="row">
-                    <div class="col-2 col-s-2"><strong>Instructions:</strong></div>
-                    <div class="col-8 col-s-8 left"><textarea maxlength="500"></textarea></div>
-                    <div class="col-2 col-s-2"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-s-12"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-4 col-s-4"></div>
-                        <div class="col-2 col-s-2 center-block">
-                            <input type="button" class="button" value="Save" />
-                        </div>
-                        <div class="col-2 col-s-2 center-block">
-                            <input type="reset" class="button" value="Reset" />
-                        </div>
-                        <div class="col-4 col-s-4"></div>
-                    </div>
+                <div class="col-4 col-s-4"></div>
+            </div>
 
-                </div>
-            <div class="col-1 col-s-1"></div>
         </div>
-    </form>
+        <div class="col-1 col-s-1"></div>
+    </div>
+</form>

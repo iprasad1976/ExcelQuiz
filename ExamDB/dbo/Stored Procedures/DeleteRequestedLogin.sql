@@ -1,6 +1,6 @@
 ﻿
 -- This SP is used to get list of Candidate for download or send email
-CREATE   PROC DeleteRequestedLogin(@candidateLoginRequestId nvarchar(250), @adminUserId nvarchar(20))
+CREATE   PROC DeleteRequestedLogin(@candidateLoginRequestId int, @adminUserId nvarchar(20))
 AS
 BEGIN
 	Declare @dt datetime = getdate()

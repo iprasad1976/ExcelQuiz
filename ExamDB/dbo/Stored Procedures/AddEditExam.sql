@@ -10,6 +10,7 @@ BEGIN
   BEGIN
 	INSERT INTO Exam (ExamName, TotalMarks, PassingPercentage, Instructions, Duration, CreatedBy, CreatedDate, ModifiedBy, ModifiedDate, IsActive)
 			VALUES (@examName, @totalMarks, @passingPercentage, @instructions, @duration, @adminUserId, @dt, @adminUserId, @dt, 'Y')
+    SET @examId = SCOPE_IDENTITY()
   END
   ELSE
   BEGIN
