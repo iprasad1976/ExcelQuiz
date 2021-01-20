@@ -14,4 +14,13 @@ namespace ExcelQuiz.Models
         public int MarkValue { get; set; }
         public string ComplexityLevel { get; set; }
     }
+
+    public class QuestionViewModel
+    {
+        public List<QuestionModel> QuestionModels { get; set; }
+        public List<ExamModel> ExamModels { get; set; }
+        public int SelectedExam { get; set; }
+
+        public string SearchText { get; set; }
+    }
 }

@@ -116,6 +116,7 @@ namespace ExamQuizAPI.Controllers
         [HttpGet("SearchQuestions")]
         public List<SpSearchQuestions> SearchQuestions(int examId, string search)
         {
+            if (search == null) search = string.Empty;
             var result = _context.SearchQuestions(examId, "%" + search + "%").Result;
             return result;
         }

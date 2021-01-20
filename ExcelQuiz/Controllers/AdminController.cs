@@ -115,21 +115,29 @@ namespace ExcelQuiz.Controllers
             return View();
         }
 
-        public ActionResult QuestionList(int examid, string search)
+        public ActionResult QuestionList(int? examid, string search)
         {
-            List<ExamModel> result = new List<ExamModel>();
+            QuestionViewModel questionView = new QuestionViewModel();
+            questionView.ExamModels = GetQuizList();
+
+            List<ExamModel> exams = new List<ExamModel>();
             try
             {
                 if (search == null) search = string.Empty;
+                
+                if (!examid.HasValue) examid = 0;
+                if (examid.Value == 0 && questionView.ExamModels.Count > 0) examid = questionView.ExamModels[0].ExamId;
 
-                result = WebApiProxy.WebAPIGetCall<List<ExamModel>>($"Admin/SearchQuestions?examid={examid}&search={search}").Result;
+                questionView.SelectedExam = examid.Value;
+                questionView.SearchText = search;
+                questionView.QuestionModels = WebApiProxy.WebAPIGetCall<List<QuestionModel>>($"Admin/SearchQuestions?examid={examid}&search={search}").Result;
             }
             catch (Exception ex)
             {
                 ViewBag.ErrorMessage = ex.Message;
             }
 
-            return View(result);
+            return View(questionView);
         }
 
 
