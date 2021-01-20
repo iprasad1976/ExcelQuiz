@@ -32,6 +32,26 @@ namespace ExcelQuiz.Controllers
         {
             return View();
         }
+        //[HttpPost]
+        //public ActionResult Candidate()
+        //{
+        //    return View();
+        //}
+
+        private List<ExamModel> GetQuizList()
+        {
+            List<ExamModel> result = new List<ExamModel>();
+            try
+            {          
+                result = WebApiProxy.WebAPIGetCall<List<ExamModel>>($"Admin/SearchExams?search={string.Empty}").Result;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+            }
+
+            return result;
+        }
 
         public ActionResult Logout()
         {
@@ -114,8 +134,5 @@ namespace ExcelQuiz.Controllers
             }
             return Json(isValid);
         }
-
-
-
     }
 }
