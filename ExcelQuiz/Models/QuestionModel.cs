@@ -9,9 +9,9 @@ namespace ExcelQuiz.Models
     {
         public int QuestionId { get; set; }
         public string Question { get; set; }
-        public int TotalMarks { get; set; }
-        public int PassingPercentage { get; set; }
-        public string Instructions { get; set; }
-        public int Duration { get; set; }
+        public string QuestionType  { get; set; }
+        public int NoOfOption { get; set; }
+        public int MarkValue { get; set; }
+        public string ComplexityLevel { get; set; }
     }
 }
