@@ -1,59 +1,77 @@
 ﻿@{
     Layout = "../Shared/_AdminLayout.cshtml";
 }
-<form id="candidateForm" action="#" method="post">
-    <div class="row">
-        <div class="col-11">
-            <div class="row">
-                <div class="col-2"><strong>Requester Email:</strong></div>
-                <div class="col-3"><input type="text" value="" style="width:300px" /></div>
-            </div>
-            <div class="row">
-                <div class="col-2"><strong>How many user you want to create:</strong></div>
-                <div class="col-3"><input type="text" value="" style="width:80px" /></div>
-            </div>
-            <div class="row">
-                <div class="col-2 col-s-2"><strong>For Quiz</strong></div>
-                <div class="col-8">
-                    <select name="optQuiz" id="optQuiz" class="multi" multiple size="5">
-                        <option value="quiz1">Quiz 1</option>
-                        <option value="quiz2">Quiz 2</option>
-                        <option value="quiz3">Quiz 3</option>
-                        <option value="quiz4">Quiz 4</option>
-                        <option value="quiz5">Quiz 5</option>
-                    </select>
-                </div>
-                <div class="col-2 col-s-2"></div>
-            </div>
-            <div class="row">
-                <div class="col-2 col-s-2"><strong>Valid From:</strong></div>
-                <div class="col-2 col-s-2">
-                    <div class="input-group date" data-provide="datepicker">
-                        <input type="text" class="form-control">
-                        <div class="input-group-addon">
-                            <span class="glyphicon glyphicon-th"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-1" style="width:20px"><strong>To:</strong></div>
-                <div class="col-2">
-                    <div class="input-group date" data-provide="datepicker">
-                        <input type="text" class="form-control">
-                        <div class="input-group-addon">
-                            <span class="glyphicon glyphicon-th"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-2"></div>
-                <div class="col-1">
-                    <input type="button" class="button" value="Save" />
-                </div>
-                <div class="col-1">
-                    <input type="reset" class="button" value="Reset" />
-                </div>
-            </div>
+    <form id="candidateForm" action="#" method="post">
+        <div class="row">
+            <div class="col-12 col-s-12"></div>
         </div>
-    </div>
-</form>
+        <div class="row">
+            <div class="col-1 col-s-1"></div>
+            <div class="col-10 col-s-10">
+                <div class="row">
+                    <div class="col-3 col-s-3"><strong>How many user you want to create:</strong></div>
+                    <div class="col-9 col-s-9"><input type="text" value="" style="width:80px" /></div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-s-12"></div>
+                </div>
+                <div class="row">
+                    <div class="col-2 col-s-2"><strong>Requester Email:</strong></div>
+                    <div class="col-10 col-s-10"><input type="text" value="" style="width:300px" /></div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-s-12"></div>
+                </div>
+                <div class="row">
+                    <div class="col-2 col-s-2"><strong>For Quiz</strong></div>
+                    <div class="col-10 col-s-10">
+                        <select name="optQuiz" id="optQuiz" class="multi" multiple size="5">
+                            <option value="quiz1">Quiz 1</option>
+                            <option value="quiz2">Quiz 2</option>
+                            <option value="quiz3">Quiz 3</option>
+                            <option value="quiz4">Quiz 4</option>
+                            <option value="quiz5">Quiz 5</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-s-12"></div>
+                </div>
+                <div class="row">
+                    <div class="col-2 col-s-2"><strong>Valid From:</strong></div>
+                    <div class="col-2 col-s-2">
+                        <div class="input-group date" data-provide="datepicker">
+                            <input type="text" class="form-control">
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-th"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2 col-s-2" style="width:20px"><strong>To: </strong></div>
+                    <div class="col-2 col-s-2">
+                        <div class="input-group date" data-provide="datepicker">
+                            <input type="text" class="form-control" />
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-th"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 col-s-4"></div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-s-12"></div>
+                </div>
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-2" style="text-align:center">
+                        <input type="button" class="button" value="Save" />
+                    </div>
+                    <div class="col-2" style="text-align:center">
+                        <input type="reset" class="button" value="Reset" />
+                    </div>
+                    <div class="col-6"></div>
+                </div>
+            </div>
+            <div class="col-1 col-s-1"></div>
+        </div>
+    </form>

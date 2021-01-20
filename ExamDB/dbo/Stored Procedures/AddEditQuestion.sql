@@ -1,13 +1,16 @@
 ﻿
 -- This SP is used to Add or Edit question
-CREATE   PROC AddEditQuestion(@questionId int, @questionTypeId int, @question nvarchar(1000), @noofOption int,
+CREATE   PROC [dbo].[AddEditQuestion](@questionId int, @questionTypeId int, @question nvarchar(1000), @noofOption int,
 		@markValue int, @complexityLevelId int, @examIds varchar(1000), @options varchar(8000), @adminUserId nvarchar(20))
-		--ExamIds like <Exam1_Id>,<Exam5_Id>,<Exam9_Id> and 
-		--Options like <QuestionOptionId>||SlNo||<Options>||<IsCorrect>||<Operation>#<QuestionOptionId>||<SlNo>||<Options>||<IsCorrect>||<Operation>
-				--Operation A for Add, E for Edit, D for Delete
+		--ExamIds like '1,2,4' and 
+		--Operation A for Add, E for Edit, D for Delete
 
 AS
 BEGIN
+DECLARE @Status VARCHAR(20) = 'Success'
+BEGIN TRY
+  BEGIN TRAN
+
   DECLARE @dt DateTime = GETDATE()
   DECLARE @optionTable Table (QuestionOptionId int, SlNo int, Options nvarchar(1000), IsCorrect char(1), Operation char(1)) 
   DECLARE @examIdsTable Table (ExamId int) 
@@ -15,15 +18,21 @@ BEGIN
   INSERT INTO @examIdsTable (ExamId)
 	SELECT CAST(value AS INT) AS ExamId FROM string_split(@examIds, ',')
 
-  INSERT INTO @optionTable (QuestionOptionId, SlNo, Options, IsCorrect, Operation) 
-	SELECT 
-		REVERSE(PARSENAME(REPLACE(REVERSE(value), '||', '.'), 1)) AS QuestionOptionId,
-		REVERSE(PARSENAME(REPLACE(REVERSE(value), '||', '.'), 2)) AS SlNo,
-		REVERSE(PARSENAME(REPLACE(REVERSE(value), '||', '.'), 3)) AS Options,
-		REVERSE(PARSENAME(REPLACE(REVERSE(value), '||', '.'), 4)) AS IsCorrect,
-		REVERSE(PARSENAME(REPLACE(REVERSE(value), '||', '.'), 5)) AS Operation
-		FROM string_split(@options, '#')  
+  DECLARE @xml Xml
+  SELECT @xml = Cast(@options AS xml)
 
+   INSERT INTO @optionTable (QuestionOptionId, SlNo, Options, IsCorrect, Operation)
+      SELECT
+      Options.value('(OptionId/text())[1]','INT') AS QuestionOptionId, 
+      Options.value('(SlNo/text())[1]','INT') AS SlNo,
+	  Options.value('(Text/text())[1]','VARCHAR(4000)') AS Options,
+	  Options.value('(IsCorrect/text())[1]','BIT') AS IsCorrect,
+	  Options.value('(Action/text())[1]','VARCHAR(1)') AS Operation
+      FROM
+      @xml.nodes('/Options/Option')AS TEMPTABLE(Options)
+
+		
+  --SELECT * FROM @optionTable
 
   IF @questionId = 0
   BEGIN
@@ -67,9 +76,17 @@ BEGIN
 
 		INSERT INTO QuestionOptions (QuestionId, SlNo, [Option], IsCorrect, CreatedBy, CreatedDate, ModifiedBy, ModifiedDate, IsActive)
 			SELECT @questionId, SlNo, Options, IsCorrect, @adminUserId, @dt, @adminUserId, @dt, 'Y' FROM @optionTable WHERE Operation = 'A'
+		
   END
+  
+	COMMIT
+  END TRY
+  BEGIN CATCH
+	ROLLBACK
+	SET @Status = 'Failed'
+  END CATCH
 
-  SELECT @questionId AS UpdatedId, 'Success' AS 'Status'
+
+  SELECT @questionId AS UpdatedId, @Status AS 'Status'
 
 END
-
