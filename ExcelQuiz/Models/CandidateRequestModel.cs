@@ -16,11 +16,4 @@ namespace ExcelQuiz.Models
         public DateTime ValidTo { get; set; }
         public string NoofAttempt { get; set; }
     }
-
-    public class CandidateRequestViewModel
-    {
-        public List<CandidateRequestModel> CandidateRequestModels { get; set; }
-        public List<ExamModel> ExamModels { get; set; }
-        public int SelectedExam { get; set; }
-    }
 }
