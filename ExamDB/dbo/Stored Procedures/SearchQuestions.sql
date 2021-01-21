@@ -3,7 +3,7 @@
 CREATE   PROC SearchQuestions(@examId int, @search nvarchar(250))
 AS
 BEGIN
-	SELECT a.QuestionId, QuestionType, Question, NoOfOption, MarkValue, ComplexityLevel
+	SELECT a.QuestionId, QuestionType, Question, NoOfOption, d.MarkValue, ComplexityLevel
 		FROM Question a 
 			INNER JOIN QuestionType b ON a.QuestionTypeId = b.QuestionTypeId
 			INNER JOIN ComplexityLevel c ON a.ComplexityLevelId = c.ComplexityLevelId

@@ -22,7 +22,9 @@ BEGIN
 	  )
 	BEGIN
 		SET @isAnswerCorrect = 'Y'
-		SELECT @score = MarkValue FROM Question WHERE QuestionId = @questionId AND IsActive = 'Y'
+		SELECT @score = b.MarkValue FROM Question a
+			INNER JOIN ExamQuestion b ON a.QuestionId = b.QuestionId AND b.ExamId = @examId AND b.IsActive = 'Y'
+			WHERE a.QuestionId = @questionId AND a.IsActive = 'Y'
 	END
 
 		UPDATE ExamCandidateAttemptQuestions SET  IsAnswerCorrect = @isAnswerCorrect, GainScore = @score, AttemptTime = GETDATE()

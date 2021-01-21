@@ -11,6 +11,7 @@ BEGIN
 		INNER JOIN ExamCandidate c ON b.CandidateLoginId = c.CandidateLoginId
 		INNER JOIN Exam d ON c.ExamId = d.ExamId 
 			WHERE a.IsActive = 'Y' AND b.IsActive = 'Y' AND c.IsActive = 'Y' AND d.IsActive = 'Y'
-			AND b.UserId = @userId 
+			AND b.UserId = @userId AND (TotalNoofAttempts = 0 OR TotalNoofAttempts < NoofAttempted) 
+			
 END
 
