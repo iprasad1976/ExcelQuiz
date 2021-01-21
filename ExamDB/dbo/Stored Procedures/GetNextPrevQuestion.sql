@@ -6,10 +6,11 @@ BEGIN
 	DECLARE @candidateLoginId INT
 	SELECT @candidateLoginId = CandidateLoginId FROM CandidateLogin WHERE UserId = @userId AND IsActive = 'Y'
 
-	SELECT a.QuestionId, a.Question, a.QuestionTypeId, a.MarkValue FROM Question a 
-					INNER JOIN ExamCandidateAttemptQuestions b ON a.QuestionId = b.QuestionId
-					INNER JOIN ExamCandidateAttempt c ON b.ExamCandidateAttemptId = c.ExamCandidateAttemptId
-					WHERE a.IsActive = 'Y' AND c.CandidateLoginId = @candidateLoginId AND c.ExamId = @examId AND b.SeqNo = @seqNo AND Token = @token
+	SELECT a.QuestionId, a.Question, a.QuestionTypeId, d.MarkValue FROM Question a 
+					INNER JOIN ExamQuestion d ON a.QuestionId = d.QuestionId AND d.ExamId = @examId AND d.IsActive = 'Y'
+					INNER JOIN ExamCandidateAttemptQuestions b ON a.QuestionId = b.QuestionId AND b.SeqNo = @seqNo 
+					INNER JOIN ExamCandidateAttempt c ON b.ExamCandidateAttemptId = c.ExamCandidateAttemptId AND c.ExamId = @examId AND c.CandidateLoginId = @candidateLoginId
+					WHERE  a.IsActive = 'Y' AND c.Token = @token
 			
 END
 

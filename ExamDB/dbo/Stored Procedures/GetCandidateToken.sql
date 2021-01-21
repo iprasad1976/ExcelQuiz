@@ -13,7 +13,7 @@ AS
 BEGIN
    DECLARE @candidateLoginId int = 0
    DECLARE @token varchar(50) = ''
-   SELECT @candidateLoginId = CandidateLoginId FROM CandidateLogin  WHERE UserId = @userId AND Password = @password AND IsActive = 'Y'
+   SELECT @candidateLoginId = CandidateLoginId FROM CandidateLogin  WHERE UserId = @userId AND Password = @password AND IsActive = 'Y' AND GETDATE() BETWEEN ValidFrom AND DATEADD(d, 1, ValidTo)
    IF @candidateLoginId > 0
    BEGIN
 		SET @token = newid() 
