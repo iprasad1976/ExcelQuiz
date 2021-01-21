@@ -2,6 +2,45 @@
 @{
     Layout = "../Shared/_AdminLayout.cshtml";
 }
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var urlSubmitNewCandiate = '@Url.Action("Candidate")';
+
+        $("#btnSave").click(function () {   
+
+            alert($("#optQuiz").val());
+            
+
+            var data = {};
+            data.UserId = $("#divNoOfUsers").val();
+            data.RequestId = $("#divRequestorEmail").val();
+            data.ExamName = $("#optQuiz").val();
+           
+            data.TotalNoofAttempts = $("#divNoOfAttempts").val();
+            data.ValidFrom = $("#divValidFrom").val();
+            data.ValidTo = $("#divValidTill").val();
+           
+            $.ajax({
+                url: urlSubmitNewCandiate,
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data),
+                success: function (data) {
+                    if (data == true) {
+                        window.location = "candidateList";
+                    }
+                    
+                },
+                error: function () {
+                    alert("New Candidate Creation failed, Try Again");
+
+                }
+            });
+        });
+        
+    });
+</script>
     <form id="candidateForm" action="#" method="post">
         <div class="row">
             <div class="col-12 col-s-12"></div>
@@ -10,15 +49,15 @@
             <div class="col-1 col-s-1"></div>
             <div class="col-10 col-s-10">
                 <div class="row">
-                    <div class="col-3 col-s-3"><strong>How many user you want to create:</strong></div>
-                    <div class="col-9 col-s-9"><input type="text" value="" style="width:80px" /></div>
+                    <div class="col-3 col-s-3"><strong>How many user you want to create</strong></div>
+                    <div class="col-9 col-s-9"><input type="text" value="" style="width:80px" id="divNoOfUsers"/></div>
                 </div>
                 <div class="row">
                     <div class="col-12 col-s-12"></div>
                 </div>
                 <div class="row">
-                    <div class="col-2 col-s-2"><strong>Requester Email:</strong></div>
-                    <div class="col-10 col-s-10"><input type="text" value="" style="width:300px" /></div>
+                    <div class="col-2 col-s-2"><strong>Requester Email</strong></div>
+                    <div class="col-10 col-s-10"><input type="text" value="" style="width:300px" id="divRequestorEmail"/></div>
                 </div>
                 <div class="row">
                     <div class="col-12 col-s-12"></div>
@@ -27,11 +66,10 @@
                     <div class="col-2 col-s-2"><strong>For Quiz</strong></div>
                     <div class="col-10 col-s-10">
                         <select name="optQuiz" id="optQuiz" class="multi" multiple size="5">
-                            <option value="quiz1">Quiz 1</option>
-                            <option value="quiz2">Quiz 2</option>
-                            <option value="quiz3">Quiz 3</option>
-                            <option value="quiz4">Quiz 4</option>
-                            <option value="quiz5">Quiz 5</option>
+                            @foreach(var item in ViewBag.ExamList)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
                         </select>
                     </div>
                 </div>
@@ -40,31 +78,31 @@
                 </div>
                 <div class="row">
                     <div class="col-2 col-s-2"><strong>No of attempt:</strong></div>
-                    <div class="col-10 col-s-10"><input type="text" value="" style="width:80px" /></div>
+                    <div class="col-10 col-s-10"><input type="text" value="" style="width:80px" id="divNoOfAttempts"/></div>
                 </div>
                 <div class="row">
                     <div class="col-12 col-s-12"></div>
                 </div>
                 <div class="row">
                     <div class="col-2 col-s-2"><strong>Valid From:</strong></div>
-                    <div class="col-2 col-s-2">
+                    <div class="col-3 col-s-3">
                         <div class="input-group date" data-provide="datepicker">
-                            <input type="text" class="form-control">
-                            <div class="input-group-addon">
+                            <input type="date" class="form-control" id="divValidFrom">
+                            @*<div class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                     <div class="col-2 col-s-2" style="width:20px"><strong>To: </strong></div>
-                    <div class="col-2 col-s-2">
+                    <div class="col-3 col-s-3">
                         <div class="input-group date" data-provide="datepicker">
-                            <input type="text" class="form-control" />
-                            <div class="input-group-addon">
+                            <input type="date" class="form-control" id="divValidTill"/>
+                            @*<div class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
-                    <div class="col-4 col-s-4"></div>
+                    <div class="col-2 col-s-2"></div>
                 </div>
                 <div class="row">
                     <div class="col-12 col-s-12"></div>
@@ -72,7 +110,7 @@
                 <div class="row">
                     <div class="col-2"></div>
                     <div class="col-2" style="text-align:center">
-                        <input type="button" class="button" value="Save" />
+                        <input type="button" class="button" value="Save" id="btnSave"/>
                     </div>
                     <div class="col-2" style="text-align:center">
                         <input type="reset" class="button" value="Reset" />

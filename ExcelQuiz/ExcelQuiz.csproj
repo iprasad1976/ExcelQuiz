@@ -135,6 +135,7 @@
     <Compile Include="Models\ExamModel.cs" />
     <Compile Include="Models\TokenModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\UpdateCommandModel.cs" />
     <Compile Include="Models\WebApiProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
