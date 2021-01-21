@@ -552,7 +552,7 @@ namespace ExamQuizAPI.Models.DB
 
             try
             {
-                return await this.AddCandidateLogins.FromSqlInterpolated<SpAddCadidateLogins>($"Execute AddCadidateLogins {requestedPersonEmail}, {noOfRequestedUserId}, {noOfAttempt}, {examIds}, {validFrom.ToString("YYYY-MM-DD")}, {validTo.ToString("YYYY-MM-DD")}, {adminUserId}").ToListAsync();
+                return await this.AddCandidateLogins.FromSqlInterpolated<SpAddCadidateLogins>($"Execute AddCadidateLogins {requestedPersonEmail}, {noOfRequestedUserId}, {noOfAttempt}, {examIds}, {validFrom},{validTo}, {adminUserId}").ToListAsync();
             }
             catch (Exception ex)
             {

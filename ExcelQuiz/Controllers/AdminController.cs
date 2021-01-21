@@ -29,6 +29,25 @@ namespace ExcelQuiz.Controllers
             return View(result);
         }
 
+        public ActionResult CandidateDelete(int candidateLoginRequestId)
+        {
+            List<CandidateRequestModel> result = new List<CandidateRequestModel>();
+            try
+            {
+                if (candidateLoginRequestId > 0)
+                {
+                    result = WebApiProxy.WebAPIGetCall<List<CandidateRequestModel>>($"Admin/DeleteRequestedLogin?candidateLoginRequestId={candidateLoginRequestId}").Result;
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+            }
+
+            //return View("candidateList");
+            return RedirectToAction("CandidateList", new { search = string.Empty });
+        }
+
         public ActionResult Candidate()
         {
             ViewBag.ExamList = GetExamList().Select(x => new SelectListItem
@@ -45,8 +64,7 @@ namespace ExcelQuiz.Controllers
             bool isSuccessful = false;
             try
             {
-                candidateLoginModel.RequestDate = DateTime.Now;             
-                var result = WebApiProxy.WebAPIPostCall<CandidateLoginModel, CandidateLoginModel>("Admin/AddCadidateLogins", candidateLoginModel);
+                var result = WebApiProxy.WebAPIPostCall<CandidateLoginModel, CandidateRequestModel>("Admin/AddCadidateLogins", candidateLoginModel);
 
                 if (result.Result != null)
                 {
@@ -93,15 +111,20 @@ namespace ExcelQuiz.Controllers
 
             bool isSuccessful = false;
             try
-            {                
+            {
                 var result = WebApiProxy.WebAPIPostCall<ExamModel, UpdateCommandModel>("Admin/AddEditExam", examModel);
-                isSuccessful = result.Result.Status.Equals("Success") ? true : false;                
+                isSuccessful = result.Result.Status.Equals("Success") ? true : false;
             }
             catch (Exception)
             {
                 return Json(isSuccessful);
             }
             return Json(isSuccessful);
+        }
+
+        public ActionResult QuizEdit(ExamModel exam)
+        {
+            return View(exam);
         }
 
         public ActionResult QuizList(string search)
@@ -119,6 +142,26 @@ namespace ExcelQuiz.Controllers
             }
 
             return View(result);
+        }
+
+
+        public ActionResult DeleteQuiz(int examId)
+        {
+            List<ExamModel> result = new List<ExamModel>();
+            try
+            {
+                if (examId > 0)
+                {
+                    result = WebApiProxy.WebAPIGetCall<List<ExamModel>>($"Admin/DeleteExam?examId={examId}").Result;
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+            }
+
+
+            return RedirectToAction("QuizList", new { search = string.Empty });
         }
 
         public ActionResult Question()
@@ -150,7 +193,7 @@ namespace ExcelQuiz.Controllers
             try
             {
                 if (search == null) search = string.Empty;
-                
+
                 if (!examid.HasValue) examid = 0;
                 if (examid.Value == 0 && questionView.ExamModels.Count > 0) examid = questionView.ExamModels[0].ExamId;
 

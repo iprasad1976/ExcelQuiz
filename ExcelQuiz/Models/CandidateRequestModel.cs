@@ -15,5 +15,6 @@ namespace ExcelQuiz.Models
         public DateTime ValidFrom { get; set; }
         public DateTime ValidTo { get; set; }
         public string NoofAttempt { get; set; }
+        public string ExamIds { get; set; }
     }
 }

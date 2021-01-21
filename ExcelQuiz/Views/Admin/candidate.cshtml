@@ -1,4 +1,4 @@
-﻿@model ExcelQuiz.Models.CandidateLoginModel
+﻿@model ExcelQuiz.Models.CandidateRequestModel
 @{
     Layout = "../Shared/_AdminLayout.cshtml";
 }
@@ -8,16 +8,14 @@
         var urlSubmitNewCandiate = '@Url.Action("Candidate")';
 
         $("#btnSave").click(function () {   
-
-            alert($("#optQuiz").val());
+           
             
 
             var data = {};
-            data.UserId = $("#divNoOfUsers").val();
-            data.RequestId = $("#divRequestorEmail").val();
-            data.ExamName = $("#optQuiz").val();
-           
-            data.TotalNoofAttempts = $("#divNoOfAttempts").val();
+            data.NoOfRequestedUserId = $("#divNoOfUsers").val();
+            data.RequestedPersonEmail = $("#divRequestorEmail").val();
+            data.ExamIds = $("#optQuiz").val().join(",");           
+            data.NoOfAttempt = $("#divNoOfAttempts").val();
             data.ValidFrom = $("#divValidFrom").val();
             data.ValidTo = $("#divValidTill").val();
            

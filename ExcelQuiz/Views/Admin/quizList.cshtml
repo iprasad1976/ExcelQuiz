@@ -3,8 +3,20 @@
 @{
     Layout = "../Shared/_AdminLayout.cshtml";
 }
-
 <script type="text/javascript">
+
+    function DeleteRecord(id) {
+
+        alert(id);
+        if (confirm("Are you sure you want to delete this?")) {
+
+            window.location = 'DeleteQuiz?examId=' + id;
+        }
+        else {
+            return false;
+        }
+    }
+
     $(document).ready(function () {
         var searchText = getUrlVars()["search"];
 
@@ -52,17 +64,19 @@
                     @foreach (ExamModel examModel in Model)
                     {
                         <div class="row">
+                            <div hidden><input id="examId" value="@examModel.ExamId" /></div>
                             <div class="col-4 col-s-4">@examModel.ExamName</div>
                             <div class="col-2 col-s-2">@examModel.Duration</div>
                             <div class="col-2 col-s-2">@examModel.TotalMarks</div>
                             <div class="col-2 col-s-2">@examModel.PassingPercentage</div>
-                            <div class="col-1 col-s-1"><a href="quiz">Edit</a></div>
-                            <div class="col-1 col-s-1"><a href="#">Delete</a></div>
+                            <div class="col-1 col-s-1"><a href="@Url.Action("QuizEdit","Admin", new { ExamId=@examModel.ExamId, ExamName=@examModel.ExamName,TotalMarks=@examModel.TotalMarks,PassingPercentage=@examModel.PassingPercentage,Duration=@examModel.Duration,Instructions=examModel.Instructions })">Edit</a></div>
+                            <div class="col-1 col-s-1"><a href="#" onclick="DeleteRecord(id=@examModel.ExamId);">Delete</a></div>
                         </div>
                     }
-                 </div>
+                </div>
             </div>
         }
-        </div>
+    </div>
     <div class="col-1 col-s-1"></div>
 </div>
+
