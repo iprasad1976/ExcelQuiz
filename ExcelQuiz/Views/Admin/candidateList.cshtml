@@ -7,7 +7,7 @@
 
     function DeleteRecord(id) {
 
-        alert(id);
+        
         if (confirm("Are you sure you want to delete this?")) {           
                         
             window.location = 'CandidateDelete?candidateLoginRequestId=' + id;
@@ -74,7 +74,7 @@
                             <div class="col-2 col-s-2">@candidateRequestModel.ValidFrom.ToString("dd-MMM-yyyy")</div>
                             <div class="col-2 col-s-2">@candidateRequestModel.ValidTo.ToString("dd-MMM-yyyy")</div>
                             <div class="col-1 col-s-1"><a href="#" onclick="DeleteRecord(id=@candidateRequestModel.CandidateLoginRequestId);">Delete</a></div>
-                            <div class="col-1 col-s-1"><a href="#">Download</a></div>
+                            <div class="col-1 col-s-1"><a href="@Url.Action("CandidateListExcelDownload","Admin", new { requestedCandidateId=@candidateRequestModel.CandidateLoginRequestId })" >Download</a></div>
                         </div>
                     }
                 </div>

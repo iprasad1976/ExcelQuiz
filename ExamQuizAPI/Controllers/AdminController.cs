@@ -58,9 +58,9 @@ namespace ExamQuizAPI.Controllers
         }
 
         [HttpGet("DownloadCadidateLoginIds")]
-        public List<SpDownloadCadidateLoginIds> DownloadCadidateLoginIds(int requestedPersonEmail)
+        public List<SpDownloadCadidateLoginIds> DownloadCadidateLoginIds(int requestedCandidateId)
         {
-            var result = _context.DownloadCadidateLoginIds(requestedPersonEmail).Result;
+            var result = _context.DownloadCadidateLoginIds(requestedCandidateId).Result;
             return result;
         }
 
