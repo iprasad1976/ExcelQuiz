@@ -14,7 +14,7 @@ BEGIN
 	BEGIN
 
 		SELECT @totalmarks = TotalMarks FROM Exam WHERE ExamId = @examId AND IsActive = 'Y'
-		SELECT @minQuestionMark = MIN(MarkValue), @totalQestions = Count(1) FROM Question a 
+		SELECT @minQuestionMark = MIN(b.MarkValue), @totalQestions = Count(1) FROM Question a 
 			INNER JOIN ExamQuestion b ON a.QuestionId = b.QuestionId 
 				Where ExamId = @examId AND a.IsActive = 'Y' AND b.IsActive = 'Y'
 
