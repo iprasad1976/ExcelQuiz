@@ -151,7 +151,7 @@ namespace ExcelQuiz.Controllers
             int portNumber = 587;
             bool enableSSL = true;
             string emailFromAddress = "dharmeshbarmera@gmail.com"; //Sender Email Address  
-            string password = "Db@9929383788"; //Sender Password  
+            string password = "12345"; //Sender Password  
             string emailToAddress = "dharmeshbarmera.db@gmail.com"; //Receiver Email Address  
             string subject = "Hello";
             string body = "Hello, This is Email sending test using gmail.";
