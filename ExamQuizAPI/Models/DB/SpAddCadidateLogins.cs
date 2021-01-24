@@ -6,6 +6,7 @@ namespace ExamQuizAPI.Models.DB
     [Keyless]
     public class SpAddCadidateLogins
     {
+        public int CandidateLoginRequestId { get; set; }
         public string RequestId { get; set; }
         public DateTime RequestDate { get; set; }
         public string UserId { get; set; }

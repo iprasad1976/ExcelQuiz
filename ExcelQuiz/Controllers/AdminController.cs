@@ -10,6 +10,7 @@ using OfficeOpenXml;
 using System.Net.Mail;
 using System.Net;
 using System.IO;
+using System.Windows.Forms;
 
 namespace ExcelQuiz.Controllers
 {
@@ -85,19 +86,22 @@ namespace ExcelQuiz.Controllers
             return Json(isSuccessful);
         }
 
-        public void CandidateListExcelDownload(int requestedCandidateId, char isDownload)
+        public void CandidateListExcelDownload(int requestedCandidateId)
         {
             List<DownloadCadidateLoginIdsModel> downloadCadidateLoginIdsModels = new List<DownloadCadidateLoginIdsModel>();
             try
             {
                 downloadCadidateLoginIdsModels = WebApiProxy.WebAPIGetCall<List<DownloadCadidateLoginIdsModel>>($"Admin/DownloadCadidateLoginIds?requestedCandidateId={requestedCandidateId}").Result;
+
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 ExcelPackage excelPackage = new ExcelPackage();
                 excelPackage = DataToExcel(downloadCadidateLoginIdsModels);
                 Response.Clear();
                 Response.ContentType = "application/vnd.ms-excel";
-                Response.AddHeader("content-disposition", "attachment; filename=" + "Report.xls");
+                Response.AddHeader("content-disposition", "attachment; filename=" + "Report_"+downloadCadidateLoginIdsModels[0].RequestId.ToString()+".xlsx");
                 Response.BinaryWrite(excelPackage.GetAsByteArray());
                 Response.End();
+
 
             }
             catch (Exception ex)
@@ -143,15 +147,12 @@ namespace ExcelQuiz.Controllers
         {
             MemoryStream ms;
             ms = new MemoryStream(excelPackage.GetAsByteArray());
-            //using (ExcelPackage ep = new ExcelPackage())
-            //{
-
-            //}
+            
             string smtpAddress = "smtp.gmail.com";
             int portNumber = 587;
             bool enableSSL = true;
             string emailFromAddress = "dharmeshbarmera@gmail.com"; //Sender Email Address  
-            string password = "12345"; //Sender Password  
+            string password = "My Password"; //Sender Password  
             string emailToAddress = "dharmeshbarmera.db@gmail.com"; //Receiver Email Address  
             string subject = "Hello";
             string body = "Hello, This is Email sending test using gmail.";
