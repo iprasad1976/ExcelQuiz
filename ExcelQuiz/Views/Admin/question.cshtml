@@ -125,8 +125,8 @@
                             @foreach (var item in ViewBag.QuizList)
                             {
                                 <div class="row">
-                                    <div class="col-1 col-s-1"><input type="checkbox" /></div>
-                                    <div class="col-6 col-s-6" value="@item.Value">@item.Text</div>
+                                    <div class="col-1 col-s-1"><input type="checkbox" value="@item.Value" /></div>
+                                    <div class="col-6 col-s-6">@item.Text</div>
                                     <div class="col-4 col-s-4" style="text-align:center"><input type="text" value="" style="width:50px;" /></div>
                                 </div>
                             }
