@@ -21,6 +21,14 @@ namespace ExcelQuiz.Models
         public List<ExamModel> ExamModels { get; set; }
         public int SelectedExam { get; set; }
 
+        public List<OptionViewModel> Options { get; set; }
         public string SearchText { get; set; }
+    }
+
+    public class OptionViewModel
+    {
+        public string OptionNumber { get; set; }
+        public string OptionName { get; set; }
+        public char IsCorrect { get; set; }
     }
 }

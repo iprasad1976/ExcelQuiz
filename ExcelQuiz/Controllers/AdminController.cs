@@ -70,7 +70,7 @@ namespace ExcelQuiz.Controllers
             try
             {
                 var result = WebApiProxy.WebAPIPostCall<CandidateLoginModel, CandidateRequestModel>("Admin/AddCadidateLogins", candidateLoginModel);
-                
+
                 if (result.Result != null)
                 {
                     isSuccessful = true;
@@ -98,11 +98,9 @@ namespace ExcelQuiz.Controllers
                 excelPackage = DataToExcel(downloadCadidateLoginIdsModels);
                 Response.Clear();
                 Response.ContentType = "application/vnd.ms-excel";
-                Response.AddHeader("content-disposition", "attachment; filename=" + "Report_"+downloadCadidateLoginIdsModels[0].RequestId.ToString()+".xlsx");
+                Response.AddHeader("content-disposition", "attachment; filename=" + "Report_" + downloadCadidateLoginIdsModels[0].RequestId.ToString() + ".xlsx");
                 Response.BinaryWrite(excelPackage.GetAsByteArray());
                 Response.End();
-
-
             }
             catch (Exception ex)
             {
@@ -147,7 +145,7 @@ namespace ExcelQuiz.Controllers
         {
             MemoryStream ms;
             ms = new MemoryStream(excelPackage.GetAsByteArray());
-            
+
             string smtpAddress = "smtp.gmail.com";
             int portNumber = 587;
             bool enableSSL = true;
@@ -174,7 +172,7 @@ namespace ExcelQuiz.Controllers
                 }
             }
             return true;
-        }        
+        }
 
         private List<ExamModel> GetExamList()
         {
@@ -264,7 +262,11 @@ namespace ExcelQuiz.Controllers
 
         public ActionResult Question()
         {
-            //var a = WebApiProxy.WebAPIGetCall<ExamModel>("Admin/GetExam?examId=1");
+            ViewBag.QuizList = GetQuizList().Select(x => new SelectListItem
+            {
+                Text = x.ExamName.ToString(),
+                Value = x.ExamId.ToString()
+            });
             return View();
         }
         private List<ExamModel> GetQuizList()
