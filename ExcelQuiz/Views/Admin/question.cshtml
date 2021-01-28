@@ -36,6 +36,10 @@
 
         });
 
+        $('#divQuizList > div > div > input:checkbox').change(function () {
+            alert($($(this).parent().parent().children()[2]).children().val());
+        });
+
         $('select[name="optNoofOption"]').change(function () {
 
             var val = $('#optNoofOption').val();
@@ -66,45 +70,25 @@
             if (optQuestionType == "yesNo") {
 
 
-
+                data.QuestionId = 0;
                 data.Question = $("#txtQuestion").val();
-                alert($("#txtQuestion").val());
                 data.NoofOption = $("#optNoofOption").val();
 
-                alert($("#optNoofOption").val());
-
-
-                var questions = $('<Options>');
+                var options = '<Options>';
+                var optId = 0;
                 for (var num = 1; num <= 2; num++) {
-                    //alert(num);
-                    var opt = {};
-                    var question = $('<Question' + num + '>');
-                    question.append('<OptionId>');
-                    question.append('<SlNo>');
-                    var slNo = question.children().eq(1);
-                    $(slNo).text($('#yesNo_opt' + num + '>div>strong').text());
-                    question.append('<Text>').text($('#yesNo_opt1>#yes').text());
+                    options+='<Option>';
+                    options+='<OptionId>' + $('#yesNo_opt' + num + ' > div > input:hidden').val() + '<OptionId>';
+                    options+='<Text>' + $('#yesNo_opt' + num + ' > div > textarea').text() + '</Text>';
+                    options+='<SlNo>' + num + '</SlNo>';
+                    options+='<IsCorrect>' + ($('#yesNo_opt' + num + ' > div > input[type="radio"]:checked').val() == 'on' ? 1 : 0) + '</IsCorrect>';
+                    options+='</Option>';
+                }
+                options+='</Options>';
 
-                    //opt.QuestionNumber = $('#yesNo_opt' + num + '>div>strong').text();
-                    //opt.OptionText = $('#yesNo_opt1>#yes').text();
-                    var isSel = $("#yesNo_opt" + num + ">div>input[type='radio']:checked");
-                    if (isSel.val() == "on") {
-                        //alert('Y');
-                        opt.IsCorrect = 'Y';
-                        question.append('<IsCorrect>').text('Y');
-                    }
-                    else {
-                        opt.IsCorrect = 'N';
-                        //alert('N');
-                        question.append('<IsCorrect>').text('N');
-                    }
-                    question.append('<Action>');
-                    //data.Options = data.Options + opt;
-                    questions.append(question);
-                }                
+                alert(options);
+
             }
-
-
             else if (optQuestionType == "mcqSs") {
 
             }
@@ -122,7 +106,7 @@
         <div class="col-12 col-s-12"></div>
     </div>
     <div class="row">
-        <div class="col-1 col-s-1"></div>
+        <div class="col-1 col-s-1"><input type="hidden" value="0" id="hdnQuestionId" /></div>
         <div class="col-10 col-s-10">
             <div class="row">
                 <div class="col-2 col-s-2"><strong>Question:</strong></div>
@@ -137,7 +121,7 @@
                         <div class="col-4 col-s-4" style="text-align:center">Marks</div>
                     </div>
                     <div class="row tablecontent">
-                        <div class="col-12 col-s-12">
+                        <div class="col-12 col-s-12" id="divQuizList">
                             @foreach (var item in ViewBag.QuizList)
                             {
                                 <div class="row">
@@ -181,15 +165,15 @@
                 <div class="col-12 col-s-12">
                     <div class="row" id="yesNo_opt1">
                         <div class="col-2 col-s-2"><strong>Option 1</strong></div>
-                        <div class="col-6 col-s-6" id="yes">Yes</div>
+                        <div class="col-6 col-s-6"><textarea maxlength="200">Yes</textarea></div>
                         <div class="col-2 col-s-2"><input type="radio" name="rdYesNo" /></div>
                         <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
                     </div>
                     <div class="row" id="yesNo_opt2">
                         <div class="col-2 col-s-2"><strong>Option 2</strong></div>
-                        <div class="col-6 col-s-6" id="no">No</div>
+                        <div class="col-6 col-s-6"><textarea maxlength="200">No</textarea></div>
                         <div class="col-2 col-s-2"><input type="radio" name="rdYesNo" /></div>
-                        <div class="col-2 col-s-2"></div>
+                        <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
                     </div>
                 </div>
             </div>
@@ -199,37 +183,37 @@
                         <div class="col-2 col-s-2"><strong>Option 1</strong></div>
                         <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
                         <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
-                        <div class="col-2 col-s-2"></div>
+                        <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
                     </div>
                     <div class="row" id="mcqSs_opt2">
                         <div class="col-2 col-s-2"><strong>Option 2</strong></div>
                         <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
                         <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
-                        <div class="col-2 col-s-2"></div>
+                        <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
                     </div>
                     <div class="row" id="mcqSs_opt3">
                         <div class="col-2 col-s-2"><strong>Option 3</strong></div>
                         <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
                         <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
-                        <div class="col-2 col-s-2"></div>
+                        <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
                     </div>
                     <div class="row" id="mcqSs_opt4">
                         <div class="col-2 col-s-2"><strong>Option 4</strong></div>
                         <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
                         <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
-                        <div class="col-2 col-s-2"></div>
+                        <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
                     </div>
                     <div class="row" id="mcqSs_opt5">
                         <div class="col-2 col-s-2"><strong>Option 5</strong></div>
                         <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
                         <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
-                        <div class="col-2 col-s-2"></div>
+                        <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
                     </div>
                     <div class="row" id="mcqSs_opt6">
                         <div class="col-2 col-s-2"><strong>Option 6</strong></div>
                         <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
                         <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
-                        <div class="col-2 col-s-2"></div>
+                        <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
                     </div>
                 </div>
             </div>
@@ -239,7 +223,7 @@
                         <div class="col-2 col-s-2"><strong>Option 1</strong></div>
                         <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
                         <div class="col-2 col-s-2"><input type="checkbox" /></div>
-                        <div class="col-2 col-s-2"></div>
+                        <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
                     </div>
                     <div class="row" id="mcqMs_opt2">
                         <div class="col-2 col-s-2"><strong>Option 2</strong></div>
@@ -251,25 +235,25 @@
                         <div class="col-2 col-s-2"><strong>Option 3</strong></div>
                         <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
                         <div class="col-2 col-s-2"><input type="checkbox" /></div>
-                        <div class="col-2 col-s-2"></div>
+                        <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
                     </div>
                     <div class="row" id="mcqMs_opt4">
                         <div class="col-2 col-s-2"><strong>Option 4</strong></div>
                         <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
                         <div class="col-2 col-s-2"><input type="checkbox" /></div>
-                        <div class="col-2 col-s-2"></div>
+                        <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
                     </div>
                     <div class="row" id="mcqMs_opt5">
                         <div class="col-2 col-s-2"><strong>Option 5</strong></div>
                         <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
                         <div class="col-2 col-s-2"><input type="checkbox" /></div>
-                        <div class="col-2 col-s-2"></div>
+                        <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
                     </div>
                     <div class="row" id="mcqMs_opt6">
                         <div class="col-2 col-s-2"><strong>Option 6</strong></div>
                         <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
                         <div class="col-2 col-s-2"><input type="checkbox" /></div>
-                        <div class="col-2 col-s-2"></div>
+                        <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
                     </div>
                 </div>
             </div>
