@@ -269,6 +269,24 @@ namespace ExcelQuiz.Controllers
             });
             return View();
         }
+
+        [HttpPost]
+        public ActionResult Question(QuestionAddModel questionAddModel)
+        {
+
+            bool isSuccessful = false;
+            try
+            {
+                var result = WebApiProxy.WebAPIPostCall<QuestionAddModel, UpdateCommandModel>("Admin/AddEditQuestion", questionAddModel);
+                isSuccessful = result.Result.Status.Equals("Success") ? true : false;
+            }
+            catch (Exception)
+            {
+                return Json(isSuccessful);
+            }
+            return Json(isSuccessful);
+        }
+
         private List<ExamModel> GetQuizList()
         {
             List<ExamModel> result = new List<ExamModel>();
