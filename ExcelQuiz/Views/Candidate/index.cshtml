@@ -1,56 +1,143 @@
 ﻿@{
     Layout = "../Shared/_CandidateLayout.cshtml";
 }
-<div class="row">
-    <div class="col-12 col-s-12"></div>
-</div>
-<div class="row">
-    <div class="col-1 col-s-1"></div>
-    <div class="col-10 col-s-10">
+
+<script type="text/javascript">
+    var counter = 1;
+
+    $(document).ready(function () {
+
+        var urlGetExam = '@Url.Action("GetExam")';
+        var urlStartExam = '@Url.Action("StartExam")'
+          $('select[id="ddlQuiz"]').change(function () {
+              
+            var examid = $('#ddlQuiz').val();
+
+            var data = {};            
+            data.examId = examid;
+             $.ajax({
+                url: urlGetExam,
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data),
+                 success: function (data) {
+                     alert(data);
+                     if (data != null) {
+                         alert(data.ExamName);
+                        $("#divInstruction").html(data.Instructions);
+                        $("#spnDuration").html(data.Duration);
+                        $("#spnTotalMarks").html(data.TotalMarks);
+                        $("#spnPassingPercentage").html(data.PassingPercentage);
+                    }
+
+                },
+                 error: function () {
+                     alert('error');
+                    alert("Failed to load exam information, reselect exam again");
+
+                }
+             });
+
+              $('#btnStart').click(function () {
+
+                     var data = {};            
+                      data.ExamId = $('#ddlQuiz').val();
+                      data.CandidateName = $('#txtName').val();
+                      data.CandidateEmailId = $('#txtEmail').val();
+                      data.CandidatePhone = $('#txtPhone').val();
+                    $.ajax({
+                        url: urlStartExam,
+                        type: "POST",
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(data),
+                         success: function (data) {
+                             alert(data);
+                             if (data) {
+                                 window.location = "question";
+                             }
+                             else {
+                                 alert("Failed to start exam, please re-start again.");
+                             }
+
+                        },
+                         error: function () {
+                            alert("Failed to load exam information, reselect exam again");
+
+                        }
+                     });
+              });
+        });
+    });
+</script>
+   <form id="candidateForm" action="#" method="post">
         <div class="row">
-            <div class="col-1 col-s-1 right"><strong>Quiz:</strong></div>
-            <div class="col-11 col-s-11 left">
-                <select name="optQuiz" id="optQuestionType" class="multi">
-                    <option value="quiz1">Quiz 1</option>
-                    <option value="quiz2">Quiz 2</option>
-                    <option value="quiz3">Quiz 3</option>
-                </select>
+            <div class="col-12 col-s-12"><input type="hidden" value='@TempData["userId"]' id="hdnUserId" /></div>
+        </div>
+        <div class="row">
+            <div class="col-1 col-s-1"></div>
+            <div class="col-10 col-s-10">
+                <div class="row">
+                    <div class="col-1 col-s-1 right"><strong>Quiz:</strong></div>
+                    <div class="col-11 col-s-11 left">
+                        <select id="ddlQuiz" class="multi">
+                            <option value="0">Select Exam</option>
+                            @foreach (var item in ViewBag.QuizList)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row"><div class="col-12 col-s-12"><strong>Instructions</strong></div></div>
+                <div class="row">
+                    <div class="col-12 col-s-12" id="divInstruction">
+                            Select Exam from drop down to know the instruction and start your exam.
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2 col-s-2">
+                        <strong>Duration: </strong>
+                    </div>
+                    <div class="col-2 col-s-2">
+                        <span id="spnDuration">0</span> mins
+                    </div>
+                    <div class="col-2 col-s-2">
+                        <strong>Total Marks: </strong>
+                    </div>
+                    <div class="col-2 col-s-2">
+                        <span id="spnTotalMarks">0</span>
+                    </div>
+                    <div class="col-2 col-s-2">
+                        <strong>Passing Percentage: </strong>
+                    </div>
+                    <div class="col-2 col-s-2">
+                        <span id="spnPassingPercentage">0</span>%
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3 col-s-3 right"><strong>Name:</strong></div>
+                    <div class="col-9 col-s-9 left"><input type="text" value="" id="txtName" /></div>
+                </div>
+                <div class="row">
+                    <div class="col-3 col-s-3 right"><strong>Phone:</strong></div>
+                    <div class="col-9 col-s-9 left"><input type="text" value="" id="txtPhone" /></div>
+                </div>
+                <div class="row">
+                    <div class="col-3 col-s-3 right"><strong>Email:</strong></div>
+                    <div class="col-9 col-s-9 left"><input type="text" value="" id="txtEmail" /></div>
+                </div>
+                <div class="row">
+                    <div class="col-4 col-s-4"></div>
+                    <div class="col-2 col-s-2 center-block">
+                        <input type="button" class="button" value="Start" id="btnStart"/>
+                    </div>
+                    <div class="col-2 col-s-2 center-block">
+                        <input type="reset" class="button" value="Reset" />
+                    </div>
+                    <div class="col-4 col-s-4"></div>
+                </div>
             </div>
+            <div class="col-1 col-s-1"></div>
         </div>
-        <div class="row"><div class="col-12 col-s-12"><strong>Instructions</strong></div></div>
-        <div class="row">
-            <div class="col-12 col-s-12">
-                <p>
-                    The examination answer<br />
-                    You must only use paper handed out at the examination venue. ...<br />
-                    Your paper must be written with a black or blue ballpoint pen. ...<br />
-                    At digital examinations, you write your answer directly in the program. ...<br />
-                    You may work on your exam paper until the time allotted for the examination expires.<br />
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-3 col-s-3 right"><strong>Name:</strong></div>
-            <div class="col-9 col-s-9 left"><input type="text" value="" /></div>
-        </div>
-        <div class="row">
-            <div class="col-3 col-s-3 right"><strong>Phone:</strong></div>
-            <div class="col-9 col-s-9 left"><input type="text" value="" /></div>
-        </div>
-        <div class="row">
-            <div class="col-3 col-s-3 right"><strong>Email:</strong></div>
-            <div class="col-9 col-s-9 left"><input type="text" value="" /></div>
-        </div>
-        <div class="row">
-            <div class="col-4 col-s-4"></div>
-            <div class="col-2 col-s-2 center-block">
-                <input type="button" class="button" value="Start" />
-            </div>
-            <div class="col-2 col-s-2 center-block">
-                <input type="button" class="button" value="Reset" />
-            </div>
-            <div class="col-4 col-s-4"></div>
-        </div>
-    </div>
-    <div class="col-1 col-s-1"></div>
-</div>
+   </form>

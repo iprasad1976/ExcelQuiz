@@ -6,26 +6,37 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Configuration;
-using System.Net.Http;
 using System.Net.Http.Formatting;
 using Newtonsoft.Json;
 
 namespace ExcelQuiz.Models
 {
     public class WebApiProxy
-    {        
-        
-        public static async Task<RP> WebAPIPostCall<RE,RP>(string actionName, RE obj)
+    {
+       
+        public static async Task<RP> WebAPIPostCall<RE, RP>(string actionName, RE obj)
         {
+            return await WebAPIPostCall<RE, RP>(actionName, obj, string.Empty, string.Empty);
+        }
+
+        public static async Task<RP> WebAPIPostCall<RE, RP>(string actionName, RE obj, string userId)
+        {
+            return await WebAPIPostCall<RE, RP>(actionName, obj, userId, string.Empty);
+        }
+
+        public static async Task<RP> WebAPIPostCall<RE,RP>(string actionName, RE obj, string userId, string token)
+        { 
             string baseUrl = ConfigurationManager.AppSettings["baseURI"];
             Uri uri = new Uri(baseUrl + actionName);
             HttpClient client = new HttpClient();
             MediaTypeFormatter jsonFormatter = new JsonMediaTypeFormatter();
             HttpContent content = new ObjectContent<RE>(obj, jsonFormatter);
             
-
-            //client.DefaultRequestHeaders.Add(token,tokenValue);
-
+            if(!string.IsNullOrEmpty(userId))
+                client.DefaultRequestHeaders.Add("UserId", userId);
+            if (!string.IsNullOrEmpty(token))
+                client.DefaultRequestHeaders.Add("Token", token);
+         
             var response = client.PostAsync(uri, content).GetAwaiter().GetResult();
 
             string apiResponse = await response.Content.ReadAsStringAsync();
@@ -34,16 +45,27 @@ namespace ExcelQuiz.Models
             return responseDTO;
         }
 
+
         public static async Task<RP> WebAPIGetCall<RP>(string actionName)
+        {
+            return await WebAPIGetCall<RP>(actionName, string.Empty, string.Empty);
+        }
+
+        public static async Task<RP> WebAPIGetCall<RP>(string actionName, string userId)
+        {
+            return await WebAPIGetCall<RP>(actionName, userId, string.Empty);
+        }
+
+        public static async Task<RP> WebAPIGetCall<RP>(string actionName, string userId, string token)
         {
             string baseUrl = ConfigurationManager.AppSettings["baseURI"];
             Uri uri = new Uri(baseUrl + actionName);
             HttpClient client = new HttpClient();
-            //MediaTypeFormatter jsonFormatter = new JsonMediaTypeFormatter();
-            //HttpContent content = new ObjectContent<RE>(obj, jsonFormatter);
-
-
-            //client.DefaultRequestHeaders.Add(token,tokenValue);
+           
+            if (!string.IsNullOrEmpty(userId))
+                client.DefaultRequestHeaders.Add("UserId", userId);
+            if (!string.IsNullOrEmpty(token))
+                client.DefaultRequestHeaders.Add("Token", token);
 
             var response = client.GetAsync(uri).GetAwaiter().GetResult();
 

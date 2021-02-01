@@ -41,9 +41,9 @@ namespace ExamQuizAPI.Controllers
         }
 
         [HttpGet("GetListExam")]
-        public List<SpListExam> GetListExam(string userId)
+        public List<SpListExam> GetListExam()
         {
-            var result = _context.GetListExam(userId).Result;
+            var result = _context.GetListExam(_userId).Result;
             return result;
         }
 
@@ -100,8 +100,8 @@ namespace ExamQuizAPI.Controllers
 
         }
 
-        [HttpPost("CandidateExamStart")]
-        public SpUpdateCommand CandidateExamStart(ExamStartModel examStartModel)
+        [HttpPost("ExamStart")]
+        public SpUpdateCommand ExamStart(ExamStartModel examStartModel)
         {
             var result = _context.CandidateExamStart(examStartModel.ExamId, _userId, _token, examStartModel.CandidateName, examStartModel.CandidateEmailId, examStartModel.CandidatePhone).Result;
             if (result != null)
