@@ -37,7 +37,14 @@
         });
 
         $('#divQuizList > div > div > input:checkbox').change(function () {
-            alert($($(this).parent().parent().children()[2]).children().val());
+
+            if ($($(this).parent().parent().children()[2]).children().is(':disabled')) {
+                $($(this).parent().parent().children()[2]).children().removeAttr("disabled");
+            }
+            else {
+                $($(this).parent().parent().children()[2]).children().val("");
+                $($(this).parent().parent().children()[2]).children().attr("disabled", "disabled");
+            }
         });
 
         $('select[name="optNoofOption"]').change(function () {
@@ -63,39 +70,94 @@
 
         $("#btnSave").click(function () {
 
-
-            var optQuestionType = $("#optQuestionType").val();
+            var urlSubmitNewQuestion = '@Url.Action("Question")';
 
             var data = {};
-            if (optQuestionType == "yesNo") {
 
+            data.QuestionId = 0;
+            data.QuestionTypeId = $("#optQuestionType").val();
+            data.Question = $("#txtQuestion").val();
+            data.ExamIds = '';
+            var ckbox = document.getElementsByClassName("examData");
+            for (var i = 0; i < ckbox.length; i++) {
+                element = ckbox[i];
 
-                data.QuestionId = 0;
-                data.Question = $("#txtQuestion").val();
-                data.NoofOption = $("#optNoofOption").val();
+                if (element.children[0].checked) {
+
+                    var examId = element.children[0].id;
+                    var marks = element.parentNode.children[2].children[0].value;
+                    data.ExamIds += examId + '|' + marks + ',';
+                }
+            }
+
+            data.NoOfOption = $("#optNoofOption").val();
+            data.Options = '';
+
+            if (data.QuestionTypeId == "yesNo") {
 
                 var options = '<Options>';
-                var optId = 0;
-                for (var num = 1; num <= 2; num++) {
-                    options+='<Option>';
-                    options+='<OptionId>' + $('#yesNo_opt' + num + ' > div > input:hidden').val() + '<OptionId>';
-                    options+='<Text>' + $('#yesNo_opt' + num + ' > div > textarea').text() + '</Text>';
-                    options+='<SlNo>' + num + '</SlNo>';
-                    options+='<IsCorrect>' + ($('#yesNo_opt' + num + ' > div > input[type="radio"]:checked').val() == 'on' ? 1 : 0) + '</IsCorrect>';
-                    options+='</Option>';
+
+                for (var num = 1; num <= data.NoOfOption; num++) {
+
+                    options += '<Option>';
+                    options += '<OptionId>' + $('#yesNo_opt' + num + ' > div > input:hidden').val() + '<OptionId>';
+                    options += '<Text>' + $('#yesNo_opt' + num + ' > div > textarea').text() + '</Text>';
+                    options += '<SlNo>' + num + '</SlNo>';
+                    options += '<IsCorrect>' + ($('#yesNo_opt' + num + ' > div > input[type="radio"]:checked').val() == 'on' ? 1 : 0) + '</IsCorrect>';
+                    options += '</Option>';
                 }
-                options+='</Options>';
-
-                alert(options);
-
+                options += '</Options>';
+                data.Options = options;
             }
-            else if (optQuestionType == "mcqSs") {
+            else if (data.QuestionTypeId == "mcqSs") {
+               
+                var options = '<Options>';
 
+                for (var num = 1; num <= data.NoOfOption; num++) {
+
+                    options += '<Option>';
+                    options += '<OptionId>' + $('#mcqSs_opt' + num + ' > div > input:hidden').val() + '<OptionId>';
+                    options += '<Text>' + $('#mcqSs_opt' + num + ' > div > textarea').text() + '</Text>';
+                    options += '<SlNo>' + num + '</SlNo>';
+                    options += '<IsCorrect>' + ($('#mcqSs_opt' + num + ' > div > input[type="radio"]:checked').val() == 'on' ? 1 : 0) + '</IsCorrect>';
+                    options += '</Option>';
+                }
+                options += '</Options>';               
+                data.Options = options;
             }
             else {
 
+                var options = '<Options>';
+
+                for (var num = 1; num <= data.NoOfOption; num++) {
+
+                    options += '<Option>';
+                    options += '<OptionId>' + $('#mcqMs_opt' + num + ' > div > input:hidden').val() + '<OptionId>';
+                    options += '<Text>' + $('#mcqMs_opt' + num + ' > div > textarea').val() + '</Text>';
+                    options += '<SlNo>' + num + '</SlNo>';
+                    options += '<IsCorrect>' + ($('#mcqMs_opt' + num + ' > div > input[type="checkbox"]:checked').val() == 'on' ? 1 : 0) + '</IsCorrect>';
+                    options += '</Option>';
+                }
+                options += '</Options>';
+                data.Options = options;
             }
 
+            $.ajax({
+                url: urlSubmitNewQuestion,
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data),
+                success: function (data) {
+                    if (data == true) {
+                        window.location = "questionList";
+                    }
+
+                },
+                error: function () {
+                    alert("New question Creation failed, Try Again");
+
+                }
+            });
         });
     });
 
@@ -125,9 +187,9 @@
                             @foreach (var item in ViewBag.QuizList)
                             {
                                 <div class="row">
-                                    <div class="col-1 col-s-1"><input type="checkbox" value="@item.Value" /></div>
-                                    <div class="col-6 col-s-6">@item.Text</div>
-                                    <div class="col-4 col-s-4" style="text-align:center"><input type="text" value="" style="width:50px;" /></div>
+                                    <div class="col-1 col-s-1 examData"><input type="checkbox" id="@item.Value" /></div>
+                                    <div class="col-6 col-s-6"><span>@item.Text </span></div>
+                                    <div class="col-4 col-s-4" style="text-align:center"><input type="text" value="" style="width:50px;" disabled="disabled" /></div>
                                 </div>
                             }
                         </div>
