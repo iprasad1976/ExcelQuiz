@@ -1,6 +1,6 @@
 ﻿
 -- This SP is used to Add or Edit question
-CREATE   PROC [dbo].[AddEditQuestion](@questionId int, @questionTypeId int, @question nvarchar(1000), @noofOption int,
+CREATE  PROC [dbo].[AddEditQuestion](@questionId int, @questionTypeId int, @question nvarchar(1000), @noofOption int,
 		@complexityLevelId int, @examIds varchar(1000), @options varchar(8000), @adminUserId nvarchar(20))
 		--ExamIds <ExamId>|<Mark>,... like '1|2,2|1,4|1' and  
 		--Operation A for Add, E for Edit, D for Delete
@@ -12,27 +12,28 @@ BEGIN TRY
   BEGIN TRAN
 
   DECLARE @dt DateTime = GETDATE()
-  DECLARE @optionTable Table (QuestionOptionId int, SlNo int, Options nvarchar(1000), IsCorrect char(1), Operation char(1)) 
+  DECLARE @optionTable Table (QuestionOptionId int, SlNo int, Options nvarchar(1000), IsCorrect char(1)) 
   DECLARE @examIdsTable Table (ExamId int, MarkValue int) 
 
   INSERT INTO @examIdsTable (ExamId, MarkValue)
 	SELECT CAST(left(value,charindex('|',value) - 1) AS INT) AS ExamId, CAST(Right(value, LEN(value) - charindex('|', value)) AS INT) AS MarkValue FROM string_split(@examIds, ',')
-
+	SELECT * FROM @examIdsTable
+  
   DECLARE @xml Xml
   SELECT @xml = Cast(@options AS xml)
 
-   INSERT INTO @optionTable (QuestionOptionId, SlNo, Options, IsCorrect, Operation)
+  
+   INSERT INTO @optionTable (QuestionOptionId, SlNo, Options, IsCorrect)
       SELECT
-      Options.value('(OptionId/text())[1]','INT') AS QuestionOptionId, 
-      Options.value('(SlNo/text())[1]','INT') AS SlNo,
-	  Options.value('(Text/text())[1]','VARCHAR(4000)') AS Options,
-	  Options.value('(IsCorrect/text())[1]','BIT') AS IsCorrect,
-	  Options.value('(Action/text())[1]','VARCHAR(1)') AS Operation
+      Options.value('(OptionId)[1]','INT') AS QuestionOptionId, 
+      Options.value('(SlNo)[1]','INT') AS SlNo,
+	  Options.value('(Text)[1]','VARCHAR(4000)') AS Options,
+	  Options.value('(IsCorrect)[1]','INT') AS IsCorrect
       FROM
       @xml.nodes('/Options/Option')AS TEMPTABLE(Options)
 
 		
-  --SELECT * FROM @optionTable
+  SELECT * FROM @optionTable
 
   IF @questionId = 0
   BEGIN
@@ -69,17 +70,17 @@ BEGIN TRY
 			a.ModifiedBy = @adminUserId, a.ModifiedDate = @dt, a.IsActive = 'Y' 
 			FROM QuestionOptions a 
 			INNER JOIN @optionTable b ON a.QuestionOptionsId = b.QuestionOptionId
-			WHERE a.QuestionId = @questionId AND b.QuestionOptionId > 0 AND b.Operation = 'E'
+			WHERE a.QuestionId = @questionId AND b.QuestionOptionId > 0
 
-		UPDATE a SET a.ModifiedBy = @adminUserId, a.ModifiedDate = @dt, a.IsActive = 'N' 
-			FROM QuestionOptions a 
-			INNER JOIN @optionTable b ON a.QuestionOptionsId = b.QuestionOptionId
-			WHERE a.QuestionId = @questionId AND b.QuestionOptionId > 0 AND b.Operation = 'D'
+		UPDATE QuestionOptions SET ModifiedBy = @adminUserId, ModifiedDate = @dt, IsActive = 'N' 
+			WHERE QuestionId = @questionId AND QuestionOptionsId NOT IN (SELECT QuestionOptionsId FROM @optionTable WHERE QuestionOptionId > 0)
+        
 
 		INSERT INTO QuestionOptions (QuestionId, SlNo, [Option], IsCorrect, CreatedBy, CreatedDate, ModifiedBy, ModifiedDate, IsActive)
-			SELECT @questionId, SlNo, Options, IsCorrect, @adminUserId, @dt, @adminUserId, @dt, 'Y' FROM @optionTable WHERE Operation = 'A'
+			SELECT @questionId, SlNo, Options, IsCorrect, @adminUserId, @dt, @adminUserId, @dt, 'Y' FROM @optionTable WHERE QuestionOptionId = 0
 		
   END
+  
   
 	COMMIT
   END TRY
@@ -92,3 +93,4 @@ BEGIN TRY
   SELECT @questionId AS UpdatedId, @Status AS 'Status'
 
 END
+

@@ -260,14 +260,37 @@ namespace ExcelQuiz.Controllers
             return RedirectToAction("QuizList", new { search = string.Empty });
         }
 
-        public ActionResult Question()
+        public ActionResult Question(int questionId)
         {
             ViewBag.QuizList = GetQuizList().Select(x => new SelectListItem
             {
                 Text = x.ExamName.ToString(),
                 Value = x.ExamId.ToString()
             });
-            return View();
+
+            ViewBag.QuestionTypes = GetQuestionTypes().Select(x => new SelectListItem
+            {
+                Text = x.QuestionTypeDesc.ToString(),
+                Value = x.QuestionTypeId.ToString()
+            });
+            QuestionModel questionModel = null;
+            if(questionId == 0)
+            {
+                questionModel = new QuestionModel();
+                questionModel.QuestionTypeId = 1;
+                questionModel.QuestionExams = new List<QuestionExam>();
+                questionModel.QuestionOptions = new List<QuestionOption>();
+            }
+            else
+            {
+                questionModel = WebApiProxy.WebAPIGetCall<QuestionModel>($"Admin/GetQuestion?questionId={questionId}").Result;
+                questionModel.QuestionExams = WebApiProxy.WebAPIGetCall<List<QuestionExam>>($"Admin/GetQuestionExams?questionId={questionId}").Result;
+                if (questionModel.QuestionExams == null) questionModel.QuestionExams = new List<QuestionExam>();
+                questionModel.QuestionOptions = WebApiProxy.WebAPIGetCall<List<QuestionOption>>($"Admin/GetQuestionOptions?questionId={questionId}").Result;
+                if (questionModel.QuestionOptions == null) questionModel.QuestionOptions = new List<QuestionOption>();
+            }
+                
+            return View(questionModel);
         }
 
         [HttpPost]
@@ -275,15 +298,15 @@ namespace ExcelQuiz.Controllers
         {
 
             bool isSuccessful = false;
-            //try
-            //{
-            //    var result = WebApiProxy.WebAPIPostCall<QuestionAddModel, UpdateCommandModel>("Admin/AddEditQuestion", questionAddModel);
-            //    isSuccessful = result.Result.Status.Equals("Success") ? true : false;
-            //}
-            //catch (Exception)
-            //{
-            //    return Json(isSuccessful);
-            //}
+            try
+            {
+                var result = WebApiProxy.WebAPIPostCall<QuestionAddModel, UpdateCommandModel>("Admin/AddEditQuestion", questionAddModel);
+                isSuccessful = result.Result.Status.Equals("Success") ? true : false;
+            }
+            catch (Exception)
+            {
+                return Json(isSuccessful);
+            }
             return Json(isSuccessful);
         }
 
@@ -302,6 +325,20 @@ namespace ExcelQuiz.Controllers
             return result;
         }
 
+        private List<QuestionTypeModel> GetQuestionTypes()
+        {
+            List<QuestionTypeModel> result = new List<QuestionTypeModel>();
+            try
+            {
+                result = WebApiProxy.WebAPIGetCall<List<QuestionTypeModel>>($"Admin/GetQuestionTypes").Result;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+            }
+
+            return result;
+        }
         public ActionResult QuestionList(int? examid, string search)
         {
             QuestionViewModel questionView = new QuestionViewModel();

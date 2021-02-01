@@ -9,6 +9,6 @@ namespace ExamQuizAPI.Models.DB
         public int QuestionOptionsId { get; set; }
         public int SlNo { get; set; }
         public string Option { get; set; }
-        public int IsCorrect { get; set; }
+        public bool IsCorrect { get; set; }
     }
 }

@@ -10,7 +10,5 @@ namespace ExamQuizAPI.Models.DB
         public string QuestionType { get; set; }
         public string Question { get; set; }
         public int NoOfOption { get; set; }
-        public int MarkValue { get; set; }
-        public string ComplexityLevel { get; set; }
     }
 }

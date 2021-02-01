@@ -10,9 +10,21 @@ namespace ExcelQuiz.Models
         public int QuestionId { get; set; }
         public string Question { get; set; }
         public string QuestionType  { get; set; }
+
+        public int QuestionTypeId { get; set; }
         public int NoOfOption { get; set; }
-        public int MarkValue { get; set; }
-        public string ComplexityLevel { get; set; }
+
+        public List<QuestionExam> QuestionExams { get; set; }
+
+        public List<QuestionOption> QuestionOptions { get; set; }
+    }
+
+    public class QuestionOption
+    {
+        public int OptionId { get; set; }
+        public int SlNo { get; set; }
+        public string Option { get; set; }
+        public bool IsCorrect { get; set; }
     }
 
     public class QuestionViewModel
@@ -24,13 +36,19 @@ namespace ExcelQuiz.Models
         public string SearchText { get; set; }
     }
 
+
+
+    public class QuestionExam
+    {
+        public int ExamId { get; set; }
+        public int MarkValue { get; set; }
+    }
     public class QuestionAddModel
     {
         public int QuestionId { get; set; }
         public int QuestionTypeId { get; set; }
         public string Question { get; set; }
         public int NoOfOption { get; set; }
-        public int ComplexityLevelId { get; set; }
         public string ExamIds { get; set; }
         public string Options { get; set; }        
     }

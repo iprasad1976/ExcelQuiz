@@ -54,8 +54,7 @@ namespace ExamQuizAPI.Models.DB
         public virtual DbSet<SpSearchQuestions> SearchQuestion { get; set; }
         public virtual DbSet<SpUpdateCommand> UpdatedRows { get; set; }
         public virtual DbSet<SpGetQuestionExam> QuestionExams { get; set; }
-
-
+       
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -429,10 +428,10 @@ namespace ExamQuizAPI.Models.DB
 
                 entity.ToTable("QuestionType");
 
-                entity.Property(e => e.QuestionType1)
+                entity.Property(e => e.QuestionTypeDesc)
                     .IsRequired()
                     .HasMaxLength(100)
-                    .HasColumnName("QuestionType");
+                    .HasColumnName("QuestionTypeDesc");
             });
 
             //modelBuilder.Entity<SpGetAdminToken>();
@@ -645,6 +644,20 @@ namespace ExamQuizAPI.Models.DB
             }
         }
 
+        public async Task<List<QuestionType>> GetQuestionTypes()
+        {
+            SpGetToken result = new SpGetToken();
+
+            try
+            {
+                return await this.QuestionTypes.FromSqlInterpolated<QuestionType>($"Execute GetQuestionTypes").ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public async Task<List<SpGetQuestionOptions>> GetQuestionOptions(int questionId)
         {
             SpGetToken result = new SpGetToken();
@@ -729,13 +742,13 @@ namespace ExamQuizAPI.Models.DB
             }
         }
 
-        public async Task<List<SpUpdateCommand>> AddEditQuestion(int questionId, int questionTypeId, string question, int noofOption, int complexityLevelId, string examIds, string options, string adminUserId)
+        public async Task<List<SpUpdateCommand>> AddEditQuestion(int questionId, int questionTypeId, string question, int noofOption, string examIds, string options, string adminUserId)
         {
             SpGetToken result = new SpGetToken();
 
             try
             {
-                return await this.UpdatedRows.FromSqlInterpolated<SpUpdateCommand>($"Execute AddEditQuestion {questionId}, {questionTypeId}, {question}, {noofOption},  {complexityLevelId}, {examIds}, {options}, {adminUserId}").ToListAsync();
+                return await this.UpdatedRows.FromSqlInterpolated<SpUpdateCommand>($"Execute AddEditQuestion {questionId}, {questionTypeId}, {question}, {noofOption}, {examIds}, {options}, {adminUserId}").ToListAsync();
             }
             catch (Exception ex)
             {

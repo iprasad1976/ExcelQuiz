@@ -7,7 +7,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#addNew").click(function () {
-            window.location = "question";
+            window.location = "question?questionId=0";
         });
 
           $("#selQuiz").change(function () {
@@ -66,10 +66,8 @@
         </div>
         <div class="row" style="text-align:right"><div class="col-12 col-s-12" id="addNew"><strong><u>Add New</u></strong></div></div>
         <div class="row headerRow">
-            <div class="col-3 col-s-3">Question</div>
+            <div class="col-6 col-s-6">Question</div>
             <div class="col-3 col-s-3">Question Type</div>
-            <div class="col-2 col-s-2">Complexity Level</div>
-            <div class="col-1 col-s-1">Score</div>
             <div class="col-1 col-s-1">No of Opt</div>
             <div class="col-2 col-s-2" style="text-align:center">Actions</div>
         </div>
@@ -84,12 +82,10 @@
                     @foreach (var questionModel in Model.QuestionModels)
                     {
                     <div class="row">
-                        <div class="col-3 col-s-3 text" title="@questionModel.Question">@questionModel.Question</div>
+                        <div class="col-6 col-s-6 text" title="@questionModel.Question">@questionModel.Question</div>
                         <div class="col-3 col-s-3">@questionModel.QuestionType</div>
-                        <div class="col-2 col-s-2">@questionModel.ComplexityLevel</div>
-                        <div class="col-1 col-s-1" style="text-align:center">@questionModel.MarkValue</div>
                         <div class="col-1 col-s-1" style="text-align:center">@questionModel.NoOfOption</div>
-                        <div class="col-1 col-s-1" style="text-align:center"><a href="question">Edit</a></div>
+                        <div class="col-1 col-s-1" style="text-align:center"><a href="question?questionId=@questionModel.QuestionId">Edit</a></div>
                         <div class="col-1 col-s-1" style="text-align:center"><a href="#">Delete</a></div>
                     </div>
                     }

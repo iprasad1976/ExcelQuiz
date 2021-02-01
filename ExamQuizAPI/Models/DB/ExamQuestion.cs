@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Microsoft.EntityFrameworkCore;
 #nullable disable
 
 namespace ExamQuizAPI.Models.DB
 {
+    [Keyless]
     public partial class ExamQuestion
     {
         public int ExamQuestionId { get; set; }

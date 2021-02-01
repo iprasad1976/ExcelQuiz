@@ -100,5 +100,7 @@
     <Build Include="dbo\Stored Procedures\SearchRequests.sql" />
     <Build Include="dbo\Stored Procedures\GetListRequestsByRequestedEmail.sql" />
     <Build Include="dbo\Stored Procedures\AddEditExam.sql" />
+    <Build Include="dbo\Stored Procedures\GetQuestionType.sql" />
+    <Build Include="dbo\Stored Procedures\GetQuestionExams.sql" />
   </ItemGroup>
 </Project>

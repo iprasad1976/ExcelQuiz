@@ -106,6 +106,15 @@ namespace ExamQuizAPI.Controllers
 
         }
 
+        [HttpGet("GetQuestionTypes")]
+        public List<QuestionType> GetQuestionTypes()
+        {
+            var result = _context.GetQuestionTypes().Result;
+           
+            return result;
+
+        }
+
         [HttpGet("GetQuestionOptions")]
         public List<SpGetQuestionOptions> GetQuestionOptions(int questionId)
         {
@@ -146,13 +155,13 @@ namespace ExamQuizAPI.Controllers
         }
 
         [HttpPost("AddEditQuestion")]
-        public SpUpdateCommand AddEditQuestion(QuestionAddEditModel questionAddEditModel, int questionId, int questionTypeId, string question, int noofOption, int complexityLevelId, string examIds, string options)
+        public SpUpdateCommand AddEditQuestion(QuestionAddEditModel questionAddEditModel)
         {
-            var result = _context.AddEditQuestion(questionAddEditModel.QuestionId,questionAddEditModel.QuestionTypeId,questionAddEditModel.Question,questionAddEditModel.NoOfOption,questionAddEditModel.ComplexityLevelId,questionAddEditModel.ExamIds,questionAddEditModel.Options, _userId).Result;            
+            var result = _context.AddEditQuestion(questionAddEditModel.QuestionId, questionAddEditModel.QuestionTypeId, questionAddEditModel.Question, questionAddEditModel.NoOfOption, questionAddEditModel.ExamIds, questionAddEditModel.Options, _userId).Result;            
             return result.FirstOrDefault();
         }
 
-        [HttpPost("GetQuestionExams")]
+        [HttpGet("GetQuestionExams")]
         public List<SpGetQuestionExam> GetQuestionExams(int questionId)
         {
             var result = _context.GetQuestionExams(questionId).Result;

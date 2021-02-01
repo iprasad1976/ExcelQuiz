@@ -3,7 +3,8 @@
 CREATE   PROC GetQuestion(@questionId int)
 AS
 BEGIN
-	SELECT QuestionId, QuestionTypeId, Question, NoOfOption, ComplexityLevelId
-		FROM Question WHERE IsActive = 'Y' AND QuestionId = @questionId
+	SELECT QuestionId, QuestionType, a.QuestionTypeId Question, NoOfOption
+		FROM Question a INNER JOIN QuestionType b ON a.QuestionTypeId = b.QuestionTypeId
+		 WHERE IsActive = 'Y' AND QuestionId = @questionId
 END
 

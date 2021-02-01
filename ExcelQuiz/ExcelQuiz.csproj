@@ -148,6 +148,7 @@
     <Compile Include="Models\ExamStartModel.cs" />
     <Compile Include="Models\QuestionModel.cs" />
     <Compile Include="Models\ExamModel.cs" />
+    <Compile Include="Models\QuestionTypeModel.cs" />
     <Compile Include="Models\TokenModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\UpdateCommandModel.cs" />
