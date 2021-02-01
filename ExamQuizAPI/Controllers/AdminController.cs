@@ -146,10 +146,17 @@ namespace ExamQuizAPI.Controllers
         }
 
         [HttpPost("AddEditQuestion")]
-        public SpUpdateCommand AddEditQuestion(int questionId, int questionTypeId, string question, int noofOption, int markValue, int complexityLevelId, string examIds, string options)
+        public SpUpdateCommand AddEditQuestion(QuestionAddEditModel questionAddEditModel, int questionId, int questionTypeId, string question, int noofOption, int complexityLevelId, string examIds, string options)
         {
-            var result = _context.AddEditQuestion(questionId, questionTypeId, question, noofOption, markValue, complexityLevelId, examIds, options, _userId).Result;
+            var result = _context.AddEditQuestion(questionAddEditModel.QuestionId,questionAddEditModel.QuestionTypeId,questionAddEditModel.Question,questionAddEditModel.NoOfOption,questionAddEditModel.ComplexityLevelId,questionAddEditModel.ExamIds,questionAddEditModel.Options, _userId).Result;            
             return result.FirstOrDefault();
+        }
+
+        [HttpPost("GetQuestionExams")]
+        public List<SpGetQuestionExam> GetQuestionExams(int questionId)
+        {
+            var result = _context.GetQuestionExams(questionId).Result;
+            return result;
         }
 
         [HttpGet("DeleteQuestion")]

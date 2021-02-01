@@ -117,7 +117,7 @@
 
                     options += '<Option>';
                     options += '<OptionId>' + $('#mcqSs_opt' + num + ' > div > input:hidden').val() + '<OptionId>';
-                    options += '<Text>' + $('#mcqSs_opt' + num + ' > div > textarea').text() + '</Text>';
+                    options += '<Text>' + $('#mcqSs_opt' + num + ' > div > textarea').val() + '</Text>';
                     options += '<SlNo>' + num + '</SlNo>';
                     options += '<IsCorrect>' + ($('#mcqSs_opt' + num + ' > div > input[type="radio"]:checked').val() == 'on' ? 1 : 0) + '</IsCorrect>';
                     options += '</Option>';
