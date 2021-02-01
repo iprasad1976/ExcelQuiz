@@ -3,7 +3,7 @@
 CREATE   PROC GetQuestion(@questionId int)
 AS
 BEGIN
-	SELECT QuestionId, QuestionTypeId, Question, NoOfOption, MarkValue, ComplexityLevelId
+	SELECT QuestionId, QuestionTypeId, Question, NoOfOption, ComplexityLevelId
 		FROM Question WHERE IsActive = 'Y' AND QuestionId = @questionId
 END
 

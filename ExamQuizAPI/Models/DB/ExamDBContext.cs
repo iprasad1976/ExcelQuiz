@@ -53,6 +53,7 @@ namespace ExamQuizAPI.Models.DB
         public virtual DbSet<SpGetQuestionOptions> GetQuestionOptionsDtl { get; set; }
         public virtual DbSet<SpSearchQuestions> SearchQuestion { get; set; }
         public virtual DbSet<SpUpdateCommand> UpdatedRows { get; set; }
+        public virtual DbSet<SpGetQuestionExam> QuestionExams { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -728,13 +729,27 @@ namespace ExamQuizAPI.Models.DB
             }
         }
 
-        public async Task<List<SpUpdateCommand>> AddEditQuestion(int questionId, int questionTypeId, string question, int noofOption, int markValue, int complexityLevelId, string examIds, string options, string adminUserId)
+        public async Task<List<SpUpdateCommand>> AddEditQuestion(int questionId, int questionTypeId, string question, int noofOption, int complexityLevelId, string examIds, string options, string adminUserId)
         {
             SpGetToken result = new SpGetToken();
 
             try
             {
-                return await this.UpdatedRows.FromSqlInterpolated<SpUpdateCommand>($"Execute AddEditQuestion {questionId}, {questionTypeId}, {question}, {noofOption}, {markValue}, {complexityLevelId}, {examIds}, {options}, {adminUserId}").ToListAsync();
+                return await this.UpdatedRows.FromSqlInterpolated<SpUpdateCommand>($"Execute AddEditQuestion {questionId}, {questionTypeId}, {question}, {noofOption},  {complexityLevelId}, {examIds}, {options}, {adminUserId}").ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<SpGetQuestionExam>> GetQuestionExams(int questionId)
+        {
+            SpGetToken result = new SpGetToken();
+
+            try
+            {
+                return await this.QuestionExams.FromSqlInterpolated<SpGetQuestionExam>($"Execute GetQuestionExams {questionId}").ToListAsync();
             }
             catch (Exception ex)
             {
