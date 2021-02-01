@@ -76,7 +76,10 @@ namespace ExcelQuiz.Controllers
             TempData.Keep();
 
             if (result != null && !string.IsNullOrEmpty(result.Status) && result.Status.ToUpper() == "SUCCESS")
+            {
+                TempData["TotalQuestion"] = result.UpdatedId;
                 return Json(true);
+            }
             else
                 return Json(false);
         }

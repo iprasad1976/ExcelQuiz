@@ -3,7 +3,7 @@
 CREATE   PROC CandidateExamStart(@examId int, @userId nvarchar(20), @token varchar(50), @candidateName nvarchar(100), @candidateEmailId nvarchar(250), @candidatePhone nvarchar(12))
 AS
 BEGIN
-	DECLARE @totalmarks int = 0, @candidateLoginId int = 0, @minQuestionMark int = 0, @totalQestions int = 0, @questionTypeId int = 0,
+	DECLARE @totalmarks int = 0, @candidateLoginId int = 0, @totalQestions int = 0, @questionTypeId int = 0,
 		@examCandidateAttemptId INT = 0, @counter int = 1, @questId int = 0, @markval int = 0, @examCandidateAttemptQuestionsId int = 0
 	Declare @RandomQuestions Table(sqno int identity(1,1), questionId int, markValue int, questionTypeId int)
 	Declare @RandomOptions Table(sqno int identity(1,1), questionOptionsId int)
@@ -14,7 +14,7 @@ BEGIN
 	BEGIN
 
 		SELECT @totalmarks = TotalMarks FROM Exam WHERE ExamId = @examId AND IsActive = 'Y'
-		SELECT @minQuestionMark = MIN(b.MarkValue), @totalQestions = Count(1) FROM Question a 
+		SELECT @totalQestions = Count(1) FROM Question a 
 			INNER JOIN ExamQuestion b ON a.QuestionId = b.QuestionId 
 				Where ExamId = @examId AND a.IsActive = 'Y' AND b.IsActive = 'Y'
 
@@ -26,7 +26,7 @@ BEGIN
 
 		-- Logic for picking random questions
 		INSERT INTO @RandomQuestions(questionId, markValue, questionTypeId)
-		SELECT a.QuestionId, a.MarkValue, a.QuestionTypeId FROM Question a 
+		SELECT a.QuestionId, b.MarkValue, a.QuestionTypeId FROM Question a 
 				INNER JOIN ExamQuestion b ON a.QuestionId = b.QuestionId 
 					Where ExamId = @examId AND a.IsActive = 'Y' AND b.IsActive = 'Y' ORDER BY newid() 
 	
@@ -61,5 +61,5 @@ BEGIN
 		END
 	END
 
-	SELECT @examCandidateAttemptId AS UpdatedId, 'Success' AS 'Status'
+	SELECT @counter - 1 AS UpdatedId, 'Success' AS 'Status' FROM ExamCandidateAttemptQuestions 
 END
