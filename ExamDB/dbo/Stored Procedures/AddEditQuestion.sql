@@ -1,7 +1,7 @@
 ﻿
 -- This SP is used to Add or Edit question
-CREATE  PROC [dbo].[AddEditQuestion](@questionId int, @questionTypeId int, @question nvarchar(1000), @noofOption int,
-		@complexityLevelId int, @examIds varchar(1000), @options varchar(8000), @adminUserId nvarchar(20))
+CREATE PROC [dbo].[AddEditQuestion](@questionId int, @questionTypeId int, @question nvarchar(1000), @noofOption int,
+		@examIds varchar(1000), @options varchar(8000), @adminUserId nvarchar(20))
 		--ExamIds <ExamId>|<Mark>,... like '1|2,2|1,4|1' and  
 		--Operation A for Add, E for Edit, D for Delete
 
@@ -17,12 +17,13 @@ BEGIN TRY
 
   INSERT INTO @examIdsTable (ExamId, MarkValue)
 	SELECT CAST(left(value,charindex('|',value) - 1) AS INT) AS ExamId, CAST(Right(value, LEN(value) - charindex('|', value)) AS INT) AS MarkValue FROM string_split(@examIds, ',')
-	SELECT * FROM @examIdsTable
   
+  --select * from @examIdsTable
+
   DECLARE @xml Xml
   SELECT @xml = Cast(@options AS xml)
 
-  
+  --select @xml
    INSERT INTO @optionTable (QuestionOptionId, SlNo, Options, IsCorrect)
       SELECT
       Options.value('(OptionId)[1]','INT') AS QuestionOptionId, 
@@ -32,13 +33,11 @@ BEGIN TRY
       FROM
       @xml.nodes('/Options/Option')AS TEMPTABLE(Options)
 
-		
-  SELECT * FROM @optionTable
-
+    --select * from @optionTable
   IF @questionId = 0
   BEGIN
 	INSERT INTO Question(QuestionTypeId, Question, NoOfOption, MarkValue, ComplexityLevelId, CreatedBy, CreatedDate, ModifiedBy, ModifiedDate, IsActive)
-			VALUES (@questionTypeId, @question, @noofOption, 0, @complexityLevelId, @adminUserId, @dt, @adminUserId, @dt, 'Y')
+			VALUES (@questionTypeId, @question, @noofOption, 0, 1, @adminUserId, @dt, @adminUserId, @dt, 'Y')
 	
 	SET @questionId = SCOPE_IDENTITY()
 	
@@ -50,7 +49,7 @@ BEGIN TRY
   END
   ELSE
   BEGIN
-		UPDATE Question SET Question = @question, QuestionTypeId = @questionTypeId, NoOfOption= @noofOption, ComplexityLevelId= @complexityLevelId,
+		UPDATE Question SET Question = @question, QuestionTypeId = @questionTypeId, NoOfOption= @noofOption, ComplexityLevelId= 1,
 					ModifiedBy = @adminUserId, ModifiedDate = @dt WHERE IsActive = 'Y' AND QuestionId = @questionId
 
 		UPDATE ExamQuestion SET ModifiedBy = @adminUserId, ModifiedDate = @dt, IsActive = 'N' 
@@ -93,4 +92,6 @@ BEGIN TRY
   SELECT @questionId AS UpdatedId, @Status AS 'Status'
 
 END
+
+
 

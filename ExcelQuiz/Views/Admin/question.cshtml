@@ -4,40 +4,16 @@
 }
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#yesNo').css('display', 'block');
-        $('#mcqSs').css('display', 'none');
-        $('#mcqMs').css('display', 'none');
-        $('#optNoofOption').attr("disabled", "disabled");
+        var qtypeId = $('#optQuestionType').val();
+        var qType = 'yesNo';
+        showHideOptionSection(qtypeId);
 
         $('select[name="optQuestionType"]').change(function () {
-            var qType = 'yesNo';
-            var val = $('#optQuestionType').val();
-            if (val == '2') {
-                qType = 'mcqSs';
-                $('#mcqSs').css('display', 'block');
-                $('#yesNo').css('display', 'none');
-                $('#mcqMs').css('display', 'none');
-                $('#optNoofOption').removeAttr("disabled");
-            }
-            else if (val == '3') {
-                qType = 'mcqMs';
-                $('#mcqMs').css('display', 'block');
-                $('#yesNo').css('display', 'none');
-                $('#mcqSs').css('display', 'none');
-                $('#optNoofOption').removeAttr("disabled");
-            }
-            else {
-                qType = 'yesNo';
-                $('#yesNo').css('display', 'block');
-                $('#mcqSs').css('display', 'none');
-                $('#mcqMs').css('display', 'none');
-                $('#optNoofOption').val('2');
-                $('#optNoofOption').attr("disabled", "disabled");
-            }
-
+           
+            qtypeId = $('#optQuestionType').val();
+            showHideOptionSection(qtypeId);
             var valOp = $('#optNoofOption').val();
             showHideOptions(valOp, qType);
-
         });
 
         $('#divQuizList > div > div > input:checkbox').change(function () {
@@ -74,13 +50,38 @@
 
         }
 
+        function showHideOptionSection(val) {
+             if (val == '2') {
+                qType = 'mcqSs';
+                $('#mcqSs').css('display', 'block');
+                $('#yesNo').css('display', 'none');
+                $('#mcqMs').css('display', 'none');
+                $('#optNoofOption').removeAttr("disabled");
+            }
+            else if (val == '3') {
+                qType = 'mcqMs';
+                $('#mcqMs').css('display', 'block');
+                $('#yesNo').css('display', 'none');
+                $('#mcqSs').css('display', 'none');
+                $('#optNoofOption').removeAttr("disabled");
+            }
+            else {
+                qType = 'yesNo';
+                $('#yesNo').css('display', 'block');
+                $('#mcqSs').css('display', 'none');
+                $('#mcqMs').css('display', 'none');
+                $('#optNoofOption').val('2');
+                $('#optNoofOption').attr("disabled", "disabled");
+            }
+        }
+
         $("#btnSave").click(function () {
 
             var urlSubmitNewQuestion = '@Url.Action("Question")';
 
             var data = {};
 
-            data.QuestionId = 0;
+            data.QuestionId = $("#hdnQuestionId").val();
             data.QuestionTypeId = $("#optQuestionType").val();
             data.Question = $("#txtQuestion").val();
             data.ExamIds = '';
@@ -251,173 +252,167 @@
                 <div class="col-2 col-s-2"><strong>Is Correct</strong></div>
                 <div class="col-2 col-s-2"></div>
             </div>
-            @if (Model.QuestionTypeId == 1)
+           @if (Model.QuestionTypeId == 1 && Model.QuestionOptions.Count > 0)
             {
-                if (Model.QuestionOptions.Count > 0)
-                {
-                    <div class="row" id="yesNo">
-                        <div class="col-12 col-s-12">
-                            @for (int counter = 1; counter <= Model.QuestionOptions.Count; counter++)
-                            {
-                                <div class="row" id='@("yesNo_opt" + counter)'>
-                                    <div class="col-2 col-s-2"><strong>Option @counter</strong></div>
-                                    <div class="col-6 col-s-6"><textarea maxlength="200" value="@Model.QuestionOptions[counter-1].Option">@Model.QuestionOptions[counter-1].Option</textarea></div>
-                                    <div class="col-2 col-s-2"><input type="radio" name="rdYesNo" @(Model.QuestionOptions[counter - 1].IsCorrect ? "checked" : string.Empty) /></div>
-                                    <div class="col-2 col-s-2"><input type="hidden" value="@Model.QuestionOptions[counter-1].OptionId" /></div>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="row" id="yesNo">
-                        <div class="col-12 col-s-12">
-                            <div class="row" id="yesNo_opt1">
-                                <div class="col-2 col-s-2"><strong>Option 1</strong></div>
-                                <div class="col-6 col-s-6"><textarea maxlength="200" value="Yes">Yes</textarea></div>
-                                <div class="col-2 col-s-2"><input type="radio" name="rdYesNo" /></div>
-                                <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
+                <div class="row" id="yesNo">
+                    <div class="col-12 col-s-12">
+                        @for (int counter = 1; counter <= Model.QuestionOptions.Count; counter++)
+                        {
+                            <div class="row" id='@("yesNo_opt" + counter)'>
+                                <div class="col-2 col-s-2"><strong>Option @counter</strong></div>
+                                <div class="col-6 col-s-6"><textarea maxlength="200" value="@Model.QuestionOptions[counter-1].Option">@Model.QuestionOptions[counter-1].Option</textarea></div>
+                                <div class="col-2 col-s-2"><input type="radio" name="rdYesNo" @(Model.QuestionOptions[counter - 1].IsCorrect ? "checked" : string.Empty) /></div>
+                                <div class="col-2 col-s-2"><input type="hidden" value="@Model.QuestionOptions[counter-1].OptionId" /></div>
                             </div>
-                            <div class="row" id="yesNo_opt2">
-                                <div class="col-2 col-s-2"><strong>Option 2</strong></div>
-                                <div class="col-6 col-s-6"><textarea maxlength="200" value="No">No</textarea></div>
-                                <div class="col-2 col-s-2"><input type="radio" name="rdYesNo" /></div>
-                                <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
-                            </div>
-                        </div>
+                        }
                     </div>
-                }
+                </div>
             }
-
-
-            @if (Model.QuestionTypeId == 2)
+            else
             {
-                if (Model.QuestionOptions.Count > 0)
-                {
-                    <div class="row" id="mcqSs">
-                        <div class="col-12 col-s-12">
-                            @for (int counter = 1; counter <= Model.QuestionOptions.Count; counter++)
-                            {
-                                <div class="row" id='@("mcqSs_opt" + counter)'>
-                                    <div class="col-2 col-s-2"><strong>Option @counter</strong></div>
-                                    <div class="col-6 col-s-6"><textarea maxlength="200" value="@Model.QuestionOptions[counter - 1].Option">@Model.QuestionOptions[counter - 1].Option</textarea></div>
-                                    <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" @(Model.QuestionOptions[counter - 1].IsCorrect ? "checked" : string.Empty) /></div>
-                                    <div class="col-2 col-s-2"><input type="hidden" value="@Model.QuestionOptions[counter - 1].OptionId" /></div>
-                                </div>
-
-                            }
+                <div class="row" id="yesNo">
+                    <div class="col-12 col-s-12">
+                        <div class="row" id="yesNo_opt1">
+                            <div class="col-2 col-s-2"><strong>Option 1</strong></div>
+                            <div class="col-6 col-s-6"><textarea maxlength="200" value="Yes">Yes</textarea></div>
+                            <div class="col-2 col-s-2"><input type="radio" name="rdYesNo" /></div>
+                            <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
+                        </div>
+                        <div class="row" id="yesNo_opt2">
+                            <div class="col-2 col-s-2"><strong>Option 2</strong></div>
+                            <div class="col-6 col-s-6"><textarea maxlength="200" value="No">No</textarea></div>
+                            <div class="col-2 col-s-2"><input type="radio" name="rdYesNo" /></div>
+                            <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
                         </div>
                     </div>
-                }
-                else
-                {
-                    <div class="row" id="mcqSs">
-                        <div class="col-12 col-s-12">
-                            <div class="row" id="mcqSs_opt1">
-                                <div class="col-2 col-s-2"><strong>Option 1</strong></div>
-                                <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
-                                <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
-                                <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
-                            </div>
-                            <div class="row" id="mcqSs_opt2">
-                                <div class="col-2 col-s-2"><strong>Option 2</strong></div>
-                                <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
-                                <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
-                                <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
-                            </div>
-                            <div class="row" id="mcqSs_opt3">
-                                <div class="col-2 col-s-2"><strong>Option 3</strong></div>
-                                <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
-                                <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
-                                <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
-                            </div>
-                            <div class="row" id="mcqSs_opt4">
-                                <div class="col-2 col-s-2"><strong>Option 4</strong></div>
-                                <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
-                                <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
-                                <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
-                            </div>
-                            <div class="row" id="mcqSs_opt5">
-                                <div class="col-2 col-s-2"><strong>Option 5</strong></div>
-                                <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
-                                <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
-                                <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
-                            </div>
-                            <div class="row" id="mcqSs_opt6">
-                                <div class="col-2 col-s-2"><strong>Option 6</strong></div>
-                                <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
-                                <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
-                                <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
-                            </div>
-                        </div>
-                    </div>
-                }
+                </div>
             }
+            
 
-            @if (Model.QuestionTypeId == 3)
+
+            @if (Model.QuestionTypeId == 2 && Model.QuestionOptions.Count > 0)
+             {
+                <div class="row" id="mcqSs">
+                    <div class="col-12 col-s-12">
+                        @for (int counter = 1; counter <= Model.QuestionOptions.Count; counter++)
+                        {
+                            <div class="row" id='@("mcqSs_opt" + counter)'>
+                                <div class="col-2 col-s-2"><strong>Option @counter</strong></div>
+                                <div class="col-6 col-s-6"><textarea maxlength="200" value="@Model.QuestionOptions[counter - 1].Option">@Model.QuestionOptions[counter - 1].Option</textarea></div>
+                                <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" @(Model.QuestionOptions[counter - 1].IsCorrect ? "checked" : string.Empty) /></div>
+                                <div class="col-2 col-s-2"><input type="hidden" value="@Model.QuestionOptions[counter - 1].OptionId" /></div>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+             }
+            else
             {
-                if (Model.QuestionOptions.Count > 0)
-                {
-                    <div class="row" id="mcqMs">
-                        <div class="col-12 col-s-12">
-                            @for (int counter = 1; counter <= Model.QuestionOptions.Count; counter++)
-                            {
-                                <div class="row" id='@("mcqMs_opt" + counter)'>
-                                    <div class="col-2 col-s-2"><strong>Option @counter</strong></div>
-                                    <div class="col-6 col-s-6"><textarea maxlength="200" value="@Model.QuestionOptions[counter-1].Option">@Model.QuestionOptions[counter-1].Option</textarea></div>
-                                    <div class="col-2 col-s-2"><input type="checkbox" @(Model.QuestionOptions[counter - 1].IsCorrect ? "checked" : string.Empty) /></div>
-                                    <div class="col-2 col-s-2"><input type="hidden" value="@Model.QuestionOptions[counter-1].OptionId" /></div>
-                                </div>
-                            }
+                <div class="row" id="mcqSs">
+                    <div class="col-12 col-s-12">
+                        <div class="row" id="mcqSs_opt1">
+                            <div class="col-2 col-s-2"><strong>Option 1</strong></div>
+                            <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                            <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
+                            <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
+                        </div>
+                        <div class="row" id="mcqSs_opt2">
+                            <div class="col-2 col-s-2"><strong>Option 2</strong></div>
+                            <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                            <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
+                            <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
+                        </div>
+                        <div class="row" id="mcqSs_opt3">
+                            <div class="col-2 col-s-2"><strong>Option 3</strong></div>
+                            <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                            <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
+                            <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
+                        </div>
+                        <div class="row" id="mcqSs_opt4">
+                            <div class="col-2 col-s-2"><strong>Option 4</strong></div>
+                            <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                            <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
+                            <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
+                        </div>
+                        <div class="row" id="mcqSs_opt5">
+                            <div class="col-2 col-s-2"><strong>Option 5</strong></div>
+                            <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                            <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
+                            <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
+                        </div>
+                        <div class="row" id="mcqSs_opt6">
+                            <div class="col-2 col-s-2"><strong>Option 6</strong></div>
+                            <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                            <div class="col-2 col-s-2"><input type="radio" name="rdMcqSs" /></div>
+                            <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
                         </div>
                     </div>
-                }
-                else
-                {
-                    <div class="row" id="mcqMs">
-                        <div class="col-12 col-s-12">
-                            <div class="row" id="mcqMs_opt1">
-                                <div class="col-2 col-s-2"><strong>Option 1</strong></div>
-                                <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
-                                <div class="col-2 col-s-2"><input type="checkbox" /></div>
-                                <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
-                            </div>
-                            <div class="row" id="mcqMs_opt2">
-                                <div class="col-2 col-s-2"><strong>Option 2</strong></div>
-                                <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
-                                <div class="col-2 col-s-2"><input type="checkbox" /></div>
-                                <div class="col-2 col-s-2"></div>
-                            </div>
-                            <div class="row" id="mcqMs_opt3">
-                                <div class="col-2 col-s-2"><strong>Option 3</strong></div>
-                                <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
-                                <div class="col-2 col-s-2"><input type="checkbox" /></div>
-                                <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
-                            </div>
-                            <div class="row" id="mcqMs_opt4">
-                                <div class="col-2 col-s-2"><strong>Option 4</strong></div>
-                                <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
-                                <div class="col-2 col-s-2"><input type="checkbox" /></div>
-                                <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
-                            </div>
-                            <div class="row" id="mcqMs_opt5">
-                                <div class="col-2 col-s-2"><strong>Option 5</strong></div>
-                                <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
-                                <div class="col-2 col-s-2"><input type="checkbox" /></div>
-                                <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
-                            </div>
-                            <div class="row" id="mcqMs_opt6">
-                                <div class="col-2 col-s-2"><strong>Option 6</strong></div>
-                                <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
-                                <div class="col-2 col-s-2"><input type="checkbox" /></div>
-                                <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
-                            </div>
-                        </div>
-                    </div>
-
-                }
+                </div>
             }
+            
+
+            @if (Model.QuestionTypeId == 3 && Model.QuestionOptions.Count > 0)
+            {
+                <div class="row" id="mcqMs">
+                    <div class="col-12 col-s-12">
+                        @for (int counter = 1; counter <= Model.QuestionOptions.Count; counter++)
+                        {
+                            <div class="row" id='@("mcqMs_opt" + counter)'>
+                                <div class="col-2 col-s-2"><strong>Option @counter</strong></div>
+                                <div class="col-6 col-s-6"><textarea maxlength="200" value="@Model.QuestionOptions[counter-1].Option">@Model.QuestionOptions[counter-1].Option</textarea></div>
+                                <div class="col-2 col-s-2"><input type="checkbox" @(Model.QuestionOptions[counter - 1].IsCorrect ? "checked" : string.Empty) /></div>
+                                <div class="col-2 col-s-2"><input type="hidden" value="@Model.QuestionOptions[counter-1].OptionId" /></div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row" id="mcqMs">
+                    <div class="col-12 col-s-12">
+                        <div class="row" id="mcqMs_opt1">
+                            <div class="col-2 col-s-2"><strong>Option 1</strong></div>
+                            <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                            <div class="col-2 col-s-2"><input type="checkbox" /></div>
+                            <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
+                        </div>
+                        <div class="row" id="mcqMs_opt2">
+                            <div class="col-2 col-s-2"><strong>Option 2</strong></div>
+                            <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                            <div class="col-2 col-s-2"><input type="checkbox" /></div>
+                            <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
+                        </div>
+                        <div class="row" id="mcqMs_opt3">
+                            <div class="col-2 col-s-2"><strong>Option 3</strong></div>
+                            <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                            <div class="col-2 col-s-2"><input type="checkbox" /></div>
+                            <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
+                        </div>
+                        <div class="row" id="mcqMs_opt4">
+                            <div class="col-2 col-s-2"><strong>Option 4</strong></div>
+                            <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                            <div class="col-2 col-s-2"><input type="checkbox" /></div>
+                            <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
+                        </div>
+                        <div class="row" id="mcqMs_opt5">
+                            <div class="col-2 col-s-2"><strong>Option 5</strong></div>
+                            <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                            <div class="col-2 col-s-2"><input type="checkbox" /></div>
+                            <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
+                        </div>
+                        <div class="row" id="mcqMs_opt6">
+                            <div class="col-2 col-s-2"><strong>Option 6</strong></div>
+                            <div class="col-6 col-s-6"><textarea maxlength="200"></textarea></div>
+                            <div class="col-2 col-s-2"><input type="checkbox" /></div>
+                            <div class="col-2 col-s-2"><input type="hidden" value="0" /></div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+            
 
             <div class="row">
                 <div class="col-4 col-s-4"></div>

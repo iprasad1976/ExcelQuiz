@@ -46,14 +46,14 @@
             </div>
         </div>
         <div class="row" style="text-align:right"><div class="col-12 col-s-12" id="addNew"><strong><u>Add New</u></strong></div></div>
-        <div class="row headerRow">
+        <div class="row headerRow" style="text-align:center">
             <div class="col-3 col-s-3">Requested Email</div>
             <div class="col-1 col-s-1">Request ID</div>
-            <div class="col-1 col-s-1">Req Date</div>
+            <div class="col-2 col-s-2">Req Date</div>
             <div class="col-1 col-s-1">No of Req</div>
             <div class="col-2 col-s-2">Valid From</div>
             <div class="col-2 col-s-2">Valid To</div>
-            <div class="col-2 col-s-2" style="text-align:center">Actions</div>
+            <div class="col-1 col-s-1">Actions</div>
         </div>
         @if (Model.Count == 0)
         {
@@ -66,15 +66,17 @@
                     @foreach (CandidateRequestModel candidateRequestModel in Model)
                     {
                         <div class="row">
-                            <div hidden><input id="candidateReqId" value="@candidateRequestModel.CandidateLoginRequestId"/></div>
-                            <div class="col-3 col-s-3">@candidateRequestModel.RequestedPersonEmail</div>
+                            <div class="col-3 col-s-3">@candidateRequestModel.RequestedPersonEmail<input id="candidateReqId" value="@candidateRequestModel.CandidateLoginRequestId" type="hidden"/></div>
                             <div class="col-1 col-s-1">@candidateRequestModel.RequestId</div>
-                            <div class="col-1 col-s-1">@candidateRequestModel.RequestDate.ToString("dd-MMM-yyyy")</div>
+                            <div class="col-2 col-s-2" style="text-align:center">@candidateRequestModel.RequestDate.ToString("dd-MMM-yyyy")</div>
                             <div class="col-1 col-s-1" style="text-align:center">@candidateRequestModel.NoofLoginRequest</div>
-                            <div class="col-2 col-s-2">@candidateRequestModel.ValidFrom.ToString("dd-MMM-yyyy")</div>
-                            <div class="col-2 col-s-2">@candidateRequestModel.ValidTo.ToString("dd-MMM-yyyy")</div>
-                            <div class="col-1 col-s-1"><a href="#" onclick="DeleteRecord(id=@candidateRequestModel.CandidateLoginRequestId);">Delete</a></div>
-                            <div class="col-1 col-s-1"><a href="@Url.Action("CandidateListExcelDownload","Admin", new { requestedCandidateId=@candidateRequestModel.CandidateLoginRequestId })" >Download</a></div>
+                            <div class="col-2 col-s-2" style="text-align:center">@candidateRequestModel.ValidFrom.ToString("dd-MMM-yyyy")</div>
+                            <div class="col-2 col-s-2" style="text-align:center">@candidateRequestModel.ValidTo.ToString("dd-MMM-yyyy")</div>
+                            <div class="col-1 col-s-1">
+                                <a href="#" onclick="DeleteRecord(id=@candidateRequestModel.CandidateLoginRequestId);">Delete</a>
+                                &nbsp;&nbsp;
+                                <a href="@Url.Action("CandidateListExcelDownload","Admin", new { requestedCandidateId=@candidateRequestModel.CandidateLoginRequestId })">Download</a>
+                            </div>
                         </div>
                     }
                 </div>
