@@ -78,15 +78,46 @@ namespace ExcelQuiz.Controllers
             if (result != null && !string.IsNullOrEmpty(result.Status) && result.Status.ToUpper() == "SUCCESS")
             {
                 TempData["TotalQuestion"] = result.UpdatedId;
+                TempData["SelectedExamId"] = examStartModel.ExamId;
                 return Json(true);
             }
             else
                 return Json(false);
         }
-        public ActionResult Question()
+
+        [HttpGet]
+        public ActionResult Question(int slNo)
         {
             TempData.Keep();
-            return View();
+            int examId = TempData.ContainsKey("SelectedExamId") ? Convert.ToInt32(TempData["SelectedExamId"]) : 0;
+            int totalQuestion = TempData.ContainsKey("TotalQuestion") ? Convert.ToInt32(TempData["TotalQuestion"]) : 0;
+            string userId = TempData.ContainsKey("userId") ? TempData["userId"].ToString() : string.Empty;
+            string token = TempData.ContainsKey("token") ? TempData["token"].ToString() : string.Empty;
+
+            CandidateQuestionParamModel param = new CandidateQuestionParamModel();
+            CandidateQuestionModel result = new CandidateQuestionModel();
+            try
+            {
+                param.ExamId = examId;
+                param.SeqNo = slNo;
+                result = WebApiProxy.WebAPIPostCall<CandidateQuestionParamModel, CandidateQuestionModel>($"Candidate/GetNextPrevQuestion", param, userId, token).Result;
+
+                result.QuestionOptions = WebApiProxy.WebAPIPostCall<CandidateQuestionParamModel, List<CandidateQuestionOption>>($"Candidate/GetQuestionOptions", param, userId, token).Result;
+
+                result.TotalQuestion = totalQuestion;
+                result.SlNo = slNo;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+            }
+            if (result == null)
+            {
+                result = new CandidateQuestionModel();
+                result.QuestionOptions = new List<CandidateQuestionOption>();
+            }
+
+            return View(result);
         }
 
         public ActionResult Score()

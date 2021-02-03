@@ -1,14 +1,32 @@
 ﻿
 -- This SP is used to Get list of assigned exam for Candidate
-CREATE   PROC CandidateExamStart(@examId int, @userId nvarchar(20), @token varchar(50), @candidateName nvarchar(100), @candidateEmailId nvarchar(250), @candidatePhone nvarchar(12))
+CREATE   PROC [dbo].[CandidateExamStart](@examId int, @userId nvarchar(20), @token varchar(50), @candidateName nvarchar(100), @candidateEmailId nvarchar(250), @candidatePhone nvarchar(12))
 AS
 BEGIN
-	DECLARE @totalmarks int = 0, @candidateLoginId int = 0, @totalQestions int = 0, @questionTypeId int = 0,
+
+	 DECLARE @totalmarks int = 0, @candidateLoginId int = 0, @totalQestions int = 0, @questionTypeId int = 0,
 		@examCandidateAttemptId INT = 0, @counter int = 1, @questId int = 0, @markval int = 0, @examCandidateAttemptQuestionsId int = 0
 	Declare @RandomQuestions Table(sqno int identity(1,1), questionId int, markValue int, questionTypeId int)
 	Declare @RandomOptions Table(sqno int identity(1,1), questionOptionsId int)
 
-	SELECT @candidateLoginId = CandidateLoginId FROM CandidateLogin WHERE UserId = @userId AND IsActive = 'Y'
+	
+   SELECT @candidateLoginId = CandidateLoginId FROM CandidateLogin WHERE UserId = @userId AND IsActive = 'Y'
+  
+   IF Exists(Select 1 FROM ExamCandidateAttempt WHERE CandidateLoginId = @candidateLoginId AND Token = @token AND ExamId = @examId)
+   BEGIN
+     DELETE [dbo].[ExamCandidateAttemptQuestionAnswers] 
+		WHERE ExamCandidateAttemptQuestionsId 
+			IN (SELECT ExamCandidateAttemptQuestionsId 
+					FROM ExamCandidateAttemptQuestions 
+					WHERE ExamCandidateAttemptId = (Select ExamCandidateAttemptId FROM ExamCandidateAttempt WHERE CandidateLoginId = @candidateLoginId AND Token = @token AND ExamId = @examId))
+	 DELETE FROM ExamCandidateAttemptQuestions 
+					WHERE ExamCandidateAttemptId = (Select ExamCandidateAttemptId FROM ExamCandidateAttempt WHERE CandidateLoginId = @candidateLoginId AND Token = @token AND ExamId = @examId)
+	
+	 DELETE FROM ExamCandidateAttempt WHERE CandidateLoginId = @candidateLoginId AND Token = @token AND ExamId = @examId
+	
+   END
+
+  
 
 	IF @candidateLoginId > 0
 	BEGIN
@@ -44,7 +62,7 @@ BEGIN
 				IF(@questionTypeId <> 1)
 				BEGIN
 					INSERT INTO @RandomOptions(questionOptionsId)
-						SELECT QuestionOptionsId FROM QuestionOptions WHERE QuestionId = @questId ORDER BY newid() 
+						SELECT QuestionOptionsId FROM QuestionOptions WHERE QuestionId = @questId AND IsActive = 'Y' ORDER BY newid() 
 				END
 				ELSE 
 				BEGIN
@@ -61,5 +79,6 @@ BEGIN
 		END
 	END
 
-	SELECT @counter - 1 AS UpdatedId, 'Success' AS 'Status' FROM ExamCandidateAttemptQuestions 
+	SELECT @counter - 1 AS UpdatedId, 'Success' AS 'Status' 
 END
+

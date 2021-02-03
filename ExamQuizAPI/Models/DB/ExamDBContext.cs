@@ -515,14 +515,14 @@ namespace ExamQuizAPI.Models.DB
             }
 
         }
-
+        
         public async Task<List<SpQuestionOptions>> GetQuestionOptions(int examId, string userId, string token, int seqNo)
         {
             SpGetToken result = new SpGetToken();
 
             try
             {
-                return await this.GetQuesOptions.FromSqlInterpolated<SpQuestionOptions>($"Execute GetQuestionOptions {examId}, {userId}, {token}, {seqNo}").ToListAsync();
+                return await this.GetQuesOptions.FromSqlInterpolated<SpQuestionOptions>($"Execute GetNextPrevQuestionOptions {examId}, {userId}, {token}, {seqNo}").ToListAsync();
             }
             catch (Exception ex)
             {
