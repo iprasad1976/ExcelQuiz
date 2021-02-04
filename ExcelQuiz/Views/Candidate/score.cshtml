@@ -1,76 +1,43 @@
-﻿@{
+﻿@model ExcelQuiz.Models.ScoreModel
+
+@{
     Layout = "../Shared/_CandidateLayout.cshtml";
 }
 <script type="text/javascript">
-    var counter = 1;
-
     $(document).ready(function () {
-        $("#questNumber").html('Question ' + counter);
-        $('#yesNo').css('display', 'block');
-        $('#mcqSs').css('display', 'none');
-        $('#mcqMs').css('display', 'none');
-        $("#btnPrev").attr('disabled', 'disabled');
-        $('input:button').click(function () {
-
-            var randomnumber = Math.floor(Math.random() * 4) + 2;
-            var val = $(this).val();
-            if(val== 'Next')
-                counter++;
-            if(val== 'Previous')
-               counter--;
-
-             $("#questNumber").html('Question ' + counter);
-
-             if (counter == 1)
-                 $("#btnPrev").attr('disabled', 'disabled');
-             if (counter == 2)
-                 $("#btnPrev").removeAttr('disabled');
-             if (counter == 20)
-                   $("#btnNext").val('Submit');
-             if (counter == 19)
-                 $("#btnNext").val('Next');
-
-            if (counter%3 == 1) {
-                $('#mcqSs').css('display', 'block');
-                $('#yesNo').css('display', 'none');
-                $('#mcqMs').css('display', 'none');
-                showHideOptions(randomnumber, 'mcqSs');
-            }
-            else if (counter%3 == 2) {
-                 $('#mcqMs').css('display', 'block');
-                 $('#yesNo').css('display', 'none');
-                $('#mcqSs').css('display', 'none');
-                showHideOptions(randomnumber, 'mcqMs');
-            }
-            else
-            {
-                $('#yesNo').css('display', 'block');
-                $('#mcqSs').css('display', 'none');
-                $('#mcqMs').css('display', 'none');
-            }
-
-        });
-
-        function showHideOptions(number, optionTypeId) {
-            for (var num = 1; num <= 6; num++) {
-
-                if (num <= parseInt(number))
-                    $('#' + optionTypeId + '_opt' + num).css('display', 'block');
-                else
-                    $('#' + optionTypeId + '_opt' + num).css('display', 'none');
-            }
-        }
+       
     });
 </script>
 <div class="row">
     <div class="col-12 col-s-12"></div>
 </div>
 <div class="row">
-    <div class="col-1 col-s-1"></div>
+    <div class="col-1 col-s-1">
+        <input type="hidden" id="hdnCandidateName" value="@Model.CandidateName" />
+        <input type="hidden" id="hdnCandidatePhone" value="@Model.CandidatePhone" />
+        <input type="hidden" id="hdnCandidateEmail" value="@Model.CandidateEmailId" />
+        <input type="hidden" id="hdnRequestPersonEmail" value="@Model.RequestedPersonEmail" />
+        <input type="hidden" id="hdnExam" value="@Model.ExamName" />
+        <input type="hidden" id="hdnIsPassed" value="@Model.IsPassed" />
+        <input type="hidden" id="hdnGainScore" value="@Model.GainScore" />
+        <input type="hidden" id="hdnTotalScore" value="@Model.TotalScore" />
+        <input type="hidden" id="hdnPercentageScore" value="@Model.PercentageScore" />
+        <input type="hidden" id="hdnStartTime" value="@(Model.StartTime.HasValue ? Model.StartTime.Value.ToString() : string.Empty)" />
+        <input type="hidden" id="hdnEndTime" value="@(Model.EndTime.HasValue ? Model.EndTime.Value.ToString() : string.Empty)" />
+    </div>
     <div class="col-10 col-s-10">
         <div class="row">
-            <div class="col-2 col-s-2"><strong>Result:</strong></div>
-            <div class="col-9 col-s-9"><strong><span>Congratulation, you have passed!!! 40 Questions are correct out of 54 and you have received 72% score.</span></strong></div>
+            <div class="col-2 col-s-2"><strong>Result:</strong></div>paint
+            @if (Model.IsPassed)
+            {
+                <div class="col-9 col-s-9"><strong><span>Congratulation, you have passed!!!</span></strong></div>
+            }
+            else
+            {
+                <div class="col-9 col-s-9"><strong><span>Sorry, you have not passed this exam, please try again.</span></strong></div>
+            }
+
+            <div class="col-9 col-s-9"><strong><span>You have received @Model.GainScore score in out of total @Model.TotalScore and your percentage score is @Model.PercentageScore</span></strong></div>
         </div>
         <div class="row">
             <div class="col-12 col-s-12">

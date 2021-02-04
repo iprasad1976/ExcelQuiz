@@ -90,9 +90,7 @@ namespace ExamQuizAPI.Controllers
         [HttpPost("SubmitAnswers")]
         public SpUpdateCommand SubmitAnswers(SubmitAnswerModel submitAnswerModel)
         {
-            string selectedOptionIds = string.Join(',', submitAnswerModel.SelectedOptionIds);
-
-            var result = _context.SubmitAnswers(submitAnswerModel.ExamId, _userId, _token, submitAnswerModel.SeqNo, selectedOptionIds).Result;
+            var result = _context.SubmitAnswers(submitAnswerModel.ExamId, _userId, _token, submitAnswerModel.SeqNo, submitAnswerModel.SelectedOptionIds).Result;
             if (result != null)
                 return result.FirstOrDefault();
             else

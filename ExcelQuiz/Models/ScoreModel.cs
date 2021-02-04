@@ -1,10 +1,11 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
-namespace ExamQuizAPI.Models.DB
+namespace ExcelQuiz.Models
 {
-    [Keyless]
-    public class SpCalculateMarks
+    public class ScoreModel
     {
         public string ExamName { get; set; }
         public string RequestedPersonEmail { get; set; }

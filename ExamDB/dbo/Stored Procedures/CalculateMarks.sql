@@ -1,6 +1,6 @@
 ﻿
 -- This SP is used to Calculate total obtained marks for Candidate
-CREATE   PROC CalculateMarks(@examId int, @userId nvarchar(20), @token varchar(50))
+CREATE  PROC [dbo].[CalculateMarks](@examId int, @userId nvarchar(20), @token varchar(50))
 AS
 BEGIN
 	DECLARE @candidateLoginId INT, @totalGainScore int
@@ -17,7 +17,9 @@ BEGIN
 	UPDATE ExamCandidate SET NoofAttempted = NoofAttempted + 1, ModifiedBy = 'System', ModifiedDate = GETDATE() 
 		WHERE IsActive = 'Y' AND ExamId = @examId AND CandidateLoginId = @candidateLoginId 
 	
-	SELECT ExamName, RequestedPersonEmail, CandidateName, CandidateEmailId, CandidatePhone, TotalScore, GainScore, PercentageScore, StartTime, EndTime 
+	SELECT ExamName, RequestedPersonEmail, CandidateName, CandidateEmailId, CandidatePhone, ISNULL(TotalScore, 0) AS TotalScore, 
+			ISNULL(GainScore, 0) AS GainScore, ISNULL(PercentageScore, 0) As PercentageScore, StartTime, EndTime, 
+	    CASE WHEN d.PassingPercentage <= PercentageScore THEN 1 ELSE 0 END AS IsPassed
 		FROM ExamCandidateAttempt a
 		INNER JOIN CandidateLogin b ON a.CandidateLoginId = b.CandidateLoginId
 		INNER JOIN CandidateLoginRequest c ON b.CandidateLoginRequestId = c.CandidateLoginRequestId

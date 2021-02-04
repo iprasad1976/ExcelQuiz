@@ -85,6 +85,31 @@ namespace ExcelQuiz.Controllers
                 return Json(false);
         }
 
+        [HttpPost]
+        public ActionResult SubmitAnswers(SubmitAnswerModel submitAnswerModel)
+        {
+            string userId = TempData.ContainsKey("userId") ? TempData["userId"].ToString() : string.Empty;
+            string token = TempData.ContainsKey("token") ? TempData["token"].ToString() : string.Empty;
+            TempData.Keep();
+
+            UpdateCommandModel result = null;
+            try
+            {
+                result = WebApiProxy.WebAPIPostCall<SubmitAnswerModel, UpdateCommandModel>($"Candidate/SubmitAnswers", submitAnswerModel, userId, token).Result;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+            }
+
+            if (result != null && !string.IsNullOrEmpty(result.Status) && result.Status.ToUpper() == "SUCCESS")
+            {
+                return Json(true);
+            }
+            else
+                return Json(false);
+        }
+
         [HttpGet]
         public ActionResult Question(int slNo)
         {
@@ -103,7 +128,7 @@ namespace ExcelQuiz.Controllers
                 result = WebApiProxy.WebAPIPostCall<CandidateQuestionParamModel, CandidateQuestionModel>($"Candidate/GetNextPrevQuestion", param, userId, token).Result;
 
                 result.QuestionOptions = WebApiProxy.WebAPIPostCall<CandidateQuestionParamModel, List<CandidateQuestionOption>>($"Candidate/GetQuestionOptions", param, userId, token).Result;
-
+                result.ExamId = examId;
                 result.TotalQuestion = totalQuestion;
                 result.SlNo = slNo;
             }
@@ -122,7 +147,24 @@ namespace ExcelQuiz.Controllers
 
         public ActionResult Score()
         {
-            return View();
+            string userId = TempData.ContainsKey("userId") ? TempData["userId"].ToString() : string.Empty;
+            string token = TempData.ContainsKey("token") ? TempData["token"].ToString() : string.Empty;
+            int examId = TempData.ContainsKey("SelectedExamId") ? Convert.ToInt32(TempData["SelectedExamId"]) : 0;
+
+            TempData.Keep();
+
+            ScoreModel result = null;
+            try
+            {
+                result = WebApiProxy.WebAPIGetCall<ScoreModel>($"Candidate/CalculateMarks?examId={examId}", userId, token).Result;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+            }
+
+            if (result == null) result = new ScoreModel();
+            return View(result);
         }
 
         [HttpGet]

@@ -5,27 +5,88 @@
 }
 <script type="text/javascript">
     var counter = 1;
+    var urlSubmitAnswer = '@Url.Action("SubmitAnswer")';
 
     $(document).ready(function () {
+        var isDirty = false;
+
+        $('input:radio').click(function () {
+            isDirty = true;
+        });
+
+        $('input:checkbox').click(function () {
+            isDirty = true;
+        });
 
         $('input:button').click(function () {
             var btn = $(this).val();
-            if (btn == "Next")
-                window.location = "question?slNo=@(Model.SlNo + 1)";
+            if (btn == "Next") {
+                if (isDirty) {
+                    if (submitAnswer())
+                        window.location = "question?slNo=@(Model.SlNo + 1)";
+                }
+            }
+            if (btn == "Finish") {
+                if (submitAnswer())
+                    window.location = "score";
+            }
 
-           if (btn == "Finish")
-                window.location = "score";
-
-           if (btn == "Previous")
-                window.location = "question?slNo=@(Model.SlNo - 1)";
+            if (btn == "Previous") {
+                if (submitAnswer())
+                    window.location = "question?slNo=@(Model.SlNo - 1)";
+            }
         });
+
+        function submitAnswer()
+        {
+            var result = false;
+            var selectedOptionIds = '';
+            
+            var qTypeId = $("#hdnQuestionId").val();
+            if (qTypeId == 1) {
+                selectedOptionIds = $('input[name="rdYesNo"]:checked').val();
+            }
+
+            if (qTypeId == 2) {
+                selectedOptionIds = $('input[name="rdMcqSs"]:checked').val();
+            }
+
+            if (qTypeId == 3) {
+                $('input[name="chkMcqMs"]:checked').each(function () {
+                    selectedOptionIds += (selectedOptionIds == '' ? $(this).val() : ',' + $(this).val());
+                });
+            }
+
+            var data = {};            
+            data.ExamId = @(Model.ExamId);
+            data.SeqNo = @(Model.SlNo);
+            data.SelectedOptionIds = selectedOptionIds;
+
+            $.ajax({
+            url: urlSubmitAnswer,
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data),
+                 success: function (data) {
+                    if (data != null) {
+                        result = data;    
+                    }
+                },
+                 error: function () {
+                    alert("Failed to submit answer, re-submit again");
+                }
+            });
+
+            return result;
+        }
+
     });
 </script>
 <div class="row">
     <div class="col-12 col-s-12"></div>
 </div>
 <div class="row">
-    <div class="col-1 col-s-1" style="height:35vw;"><input type="hidden" id="hdnTotalQuestion" value="@Model.TotalQuestion" /></div>
+    <div class="col-1 col-s-1" style="height:35vw;"><input type="hidden" id="hdnTotalQuestion" value="@Model.TotalQuestion" /><input type="hidden" id="hdnExamId" value="@Model.ExamId" /></div>
     <div class="col-10 col-s-10">
         <div class="row">
             <div class="col-2 col-s-2"><strong>Question <span id="questNumber">@Model.SlNo</span>:</strong></div>
@@ -46,7 +107,7 @@
                     {
                         <div class="row">
                             <div class="col-2 col-s-2"><input type="hidden" id="hdnQuestionOptionId" value="@opt.QuestionOptionsId" /></div>
-                            <div class="col-1 col-s-1"><input type="radio" name="rdYesNo" @(opt.IsSelected == "Y" ? "checked" : string.Empty) /></div>
+                            <div class="col-1 col-s-1"><input type="radio" name="rdYesNo" value="@opt.QuestionOptionsId" @(opt.IsSelected == "Y" ? "checked" : string.Empty) /></div>
                             <div class="col-9 col-s-9"><strong>@opt.Option</strong></div>
                         </div>
                     }
@@ -63,7 +124,7 @@
                     {
                         <div class="row">
                             <div class="col-2 col-s-2"><input type="hidden" id="hdnQuestionOptionId" value="@opt.QuestionOptionsId" /></div>
-                            <div class="col-1 col-s-1"><input type="radio" name="rdMcqSs" @(opt.IsSelected == "Y" ? "checked" : string.Empty) /></div>
+                            <div class="col-1 col-s-1"><input type="radio" name="rdMcqSs" value="@opt.QuestionOptionsId" @(opt.IsSelected == "Y" ? "checked" : string.Empty) /></div>
                             <div class="col-9 col-s-9"><strong>@opt.Option</strong></div>
                         </div>
                     }
@@ -79,7 +140,7 @@
                     {
                         <div class="row">
                             <div class="col-2 col-s-2"><input type="hidden" id="hdnQuestionOptionId" value="@opt.QuestionOptionsId" /></div>
-                            <div class="col-1 col-s-1"><input type="checkbox" @(opt.IsSelected == "Y" ? "checked" : string.Empty) /></div>
+                            <div class="col-1 col-s-1"><input type="checkbox" name="chkMcqMs" value="@opt.QuestionOptionsId" @(opt.IsSelected == "Y" ? "checked" : string.Empty) /></div>
                             <div class="col-9 col-s-9"><strong>@opt.Option</strong></div>
                         </div>
                     }
